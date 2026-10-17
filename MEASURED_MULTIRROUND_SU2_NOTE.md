@@ -91,7 +91,26 @@ These figures count uniformly enumerated *fault labels*, not physical probabilit
 
 An example begins with a preexisting \(X\) error on module 0 and a further two-body error after data gate 2 of the first extraction gadget. The first two rounds disagree, correctly triggering a third measurement, but the standard single-error decoder leaves a logical fault; another paired fault raises a flag whose (flag, later-syndrome) lookup key is **undefined**. Repeating a noiseless syndrome by itself cannot convert a two-error pattern into a correctable one-module pattern.
 
-The difference between **one fault from a clean input** and **one incoming data error plus one fresh fault** is therefore decisive. The latter must not be silently inferred from the former. The full-output recovery of all 11,760 cases would require a substantially stronger decoder/schedule and may be obstructed by measurement-record ambiguities; the subsequent exact transcript-collision analysis is intended to establish which failures are fundamentally unresolvable without extra measurements.
+The difference between **one fault from a clean input** and **one incoming data error plus one fresh fault** is therefore decisive. The latter must not be silently inferred from the former.
+
+### Exact indistinguishability result (stronger than an inadequate decoder)
+
+For each of the 11,760 stress cases the verifier independently reconstructs the complete actually observed transcript
+
+\[
+T=(b^{(1)},f^{(1)},b^{(2)},f^{(2)},
+    b^{(3)}\ \text{if triggered})
+\]
+
+and the resulting *uncorrected* data Pauli. For a deliberately **stronger-than-physical** diagnostic it also groups cases by the pair \((T,s_{\rm true})\), where \(s_{\rm true}\) is the exact final full stabilizer syndrome obtained **only by the verifier**. It then distinguishes the two-bit logical Pauli class of each data error after removing the standard syndrome representative.
+
+**Result: 344 distinct \((T,s_{\rm true})\) groups contain different logical-error classes.** At least two allowed stress histories therefore produce **identical recorded bits and even identical true final syndromes** while differing by a nontrivial logical Pauli. The verifier prints reproducible pairs of input-error/fault labels and their common record.
+
+For the perfect \([[5,1,3]]\) code, every one of the 16 stabilizer syndromes has exactly **one** logical error class corresponding to an error of weight at most one (up to stabilizers). Two different logical classes with the same final syndrome cannot both be brought into that correctable radius-one class by the **same recovery**. In fact, their relative error is a nontrivial undetectable logical operation, so Knill–Laflamme already rules out jointly reversing both histories using only this indistinguishable classical record.
+
+This is a **source-scoped no-go for the specific two-round-plus-adaptive-third observation schedule** and the **specified combined-input-error/gadget-fault model**. The decoder cannot fix these ambiguous pairs by choosing a different lookup entry or merely repeating the **same** perfectly measured four stabilizers. It needs more information from a redesigned extraction protocol—such as a different temporal flag pattern, auxiliary checks that do not commute with the relative logical operation during extraction, or a fault-tolerant scheme with additional verified ancillas.
+
+It is **not** a no-go theorem for all five-qubit-code fault-tolerant correction circuits, all SU(2) singlet encodings, or all protocols employing more rounds and different measurements.
 
 ## Fault-tolerance limits and next decisions
 
