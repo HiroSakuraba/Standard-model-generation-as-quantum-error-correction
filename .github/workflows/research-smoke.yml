@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/published-qutrit-matrix-comparison
+      - research/reed-muller-family-exclusion
 
 jobs:
   exact-math:
@@ -26,3 +26,5 @@ jobs:
         run: python local_purity.py
       - name: External published qutrit matrices and same-length comparison
         run: python published_qutrit_family.py
+      - name: Reed-Muller published-family obstruction
+        run: python reed_muller_family_exclusion.py
