@@ -94,6 +94,9 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`OPEN_STEPS_NOTE.md`](OPEN_STEPS_NOTE.md) | Technical note, part 3: flavour Lagrangian, exact logical channels, equivalence, operational setting, distance-4 / entangling-gate searches |
 | [`open_steps.py`](open_steps.py), [`charge_lattice_tools.py`](charge_lattice_tools.py) | Verification script for part 3 (asserts every reported number) and its exact mod-p toolkit (needs numpy) |
 | [`open_steps_results.txt`](open_steps_results.txt) | Recorded output of a completed run |
+| [`OPERATIONAL_GAUGE_QEC.md`](OPERATIONAL_GAUGE_QEC.md) | Exact Knill–Laflamme recovery versus gauge constraints: what works for a simulator and what remains unproved for the Standard Model |
+| [`operational_gauge_qec.py`](operational_gauge_qec.py) | Pure-Python gauge-ring Gauss-only failure and 3×3 lattice-gauge toric-code recovery verification |
+| [`abstract_stabilizer_recovery.py`](abstract_stabilizer_recovery.py) | Full single-site Weyl syndrome and recovery verification for the original charge CSS codes (requires NumPy) |
 
 ## Reproduce
 
@@ -107,6 +110,8 @@ python3 local_purity.py                 # exact four-site reduced-projector puri
 python3 published_qutrit_family.py     # reproduces external 2025 paper matrices
 python3 reed_muller_family_exclusion.py # source-scoped 2026 family no-go and exact charge moments
 python3 walsh_character_lattice.py       # all-prime rigidity and masked direct-sum theorem
+python3 operational_gauge_qec.py         # Gauss-only failure vs genuine lattice-gauge recovery
+python3 abstract_stabilizer_recovery.py  # all single-site Pauli errors on charge-code qudits
 ```
 
 Existing checks:
@@ -130,6 +135,7 @@ The original five steps are addressed in Part 4 and [`OPEN_STEPS_NOTE.md`](OPEN_
 - **Published matrix comparison:** [Prakash–Saha 2025 qutrit code family, exact reconstruction and comparison](PUBLISHED_CODE_COMPARISON.md), verified with [published_qutrit_family.py](published_qutrit_family.py). Their m=4,k=6 code has length 30 and six X checks, but encodes six logical qutrits at distance 2; the coupled matter construction encodes two at distance 3. The entire specified [[9m−k,k,2]]₃ family is excluded by parameters, **not** all odd-prime Reed–Muller/triorthogonal codes.
 - **Further source-checked exclusion:** [Saha–Prakash 2026 full-evaluation punctured Reed–Muller comparison](FULL_REED_MULLER_COMPARISON.md), verified by [reed_muller_family_exclusion.py](reed_muller_family_exclusion.py). Under that paper's full-rank puncture construction, n+k must be p^m; ours have n+k=32 or 48, neither an odd-prime power at p=3 or 5. The original charge lattice is cubic-orthogonal but not pairwise self-orthogonal, unlike the unpunctured construction in that paper. This **does not exclude arbitrary Reed–Muller variants or all known qudit codes**.
 - **Walsh-character theorems:** [exact single-family rigidity and the disguised direct-sum construction](WALSH_CHARACTER_THEOREMS.md), independently checked by [walsh_character_lattice.py](walsh_character_lattice.py). No additional single-family row can preserve all cubic Cartan constraints over any odd prime. All compatible five-row, pure-Walsh two-family extensions are exactly two original 15-qudit codes after a coordinate permutation—even when 44 of their 50 minimum-weight logical supports span the *original* family labels. Cross-family support counts alone are not proofs of genuine coupling; the earlier B3/B5 indecomposability proof remains essential.
+- **Operational interpretation:** [physical gauge-state and Knill–Laflamme benchmark](OPERATIONAL_GAUGE_QEC.md) shows that the *formal* generation-based codes correct arbitrary single-qudit register errors, but this is not physical Standard Model protection. A three-link gauge ring fails for local gauge-invariant phase noise; an engineered 3×3 toric code succeeds only with additional magnetic checks. A physically justified SM-Hilbert-space encoding and measurable SM-compatible syndromes remain unconstructed.
 - Compare the joined codes against **same-(n,k,p)** explicit check matrices of other published odd-prime codes, especially shortened/affine-variety constructions. That broader novelty question is open.
 - Explain why nonlinear charge rows appear only for p ≡ 1 (mod 3), and whether the floor of 8 weight-3 weak spots can be broken.
 - Extend the gate search to non-diagonal and permutation-assisted ("fold") transversal gates, and to the p = 3 ninth-root gates.
