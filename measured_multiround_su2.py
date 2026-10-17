@@ -35,7 +35,7 @@ from itertools import product
 
 from flagged_su2_measurement import (
     CHECKS, DATA_COUNT, FLAG, MEASURE, LOGICAL_X, LOGICAL_Z,
-    conjugate, commute_bit, fault_injections, from_word, label,
+    class_after_simple_decoder, conjugate, commute_bit, fault_injections, from_word, label,
     multiply, recovery_classes, simulate, single, standard_decoder,
     syndrome_circuit, syndrome_data,
 )
@@ -244,10 +244,44 @@ def stress_preexisting_plus_fault():
     counts = Counter()
     examples = []
     cases = tuple(enumerate_faults())
+    seen_observations = {}
+    intrinsically_ambiguous = set()
+    witness = []
+    ordinary_decoder = standard_decoder()
     for i in range(DATA_COUNT):
         for op in "XYZ":
             prior = single(i, op)
             for injection in cases:
+                # Diagnostic-only reconstruction of the data Pauli and
+                # measured transcript, independent of the runtime decoder.
+                injected_one = ((injection[1], injection[2])
+                                if injection[0] == 0 else None)
+                injected_two = ((injection[1], injection[2])
+                                if injection[0] == 1 else None)
+                first = full_round(prior, injected_one)
+                second = full_round(first[0], injected_two)
+                trigger = (any(first[2]) or any(second[2]) or
+                           first[1] != second[1])
+                third_measured = (full_round(second[0])[1]
+                                  if trigger else None)
+                # Include even a TRUE final syndrome in the lookup key.
+                # A collision with different logical classes here proves
+                # insufficiency of the whole measured transcript EVEN
+                # IF an ideal true syndrome were additionally supplied.
+                key = (first[1], first[2], second[1], second[2],
+                       third_measured, syndrome_data(second[0]))
+                logical = class_after_simple_decoder(
+                    second[0], ordinary_decoder)
+                description = (i, op, injection[0], injection[1],
+                               injection[2][0], label(second[0]))
+                previous = seen_observations.get(key)
+                if previous is None:
+                    seen_observations[key] = (logical, description)
+                elif previous[0] != logical:
+                    intrinsically_ambiguous.add(key)
+                    if len(witness) < 4:
+                        witness.append((previous, (logical, description),
+                                        "same full observed transcript and true syndrome"))
                 try:
                     after, trace = run_protocol(
                         injection=injection,
@@ -266,6 +300,9 @@ def stress_preexisting_plus_fault():
     print("STRESS: one preexisting module error PLUS one circuit fault:")
     print(dict(counts))
     print("First uncorrectable/undefined examples:", examples)
+    print("Distinct transcript+true-syndrome groups with conflicting "
+          "logical error classes:", len(intrinsically_ambiguous))
+    print("First ambiguity witnesses:", witness[:2])
     print("This is a DIAGNOSTIC, not a claim of fault tolerance.")
     return counts
 
