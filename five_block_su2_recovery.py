@@ -173,6 +173,38 @@ def exact_knill_laflamme():
     return syndromes
 
 
+def correlated_two_module_counterexample():
+    """Show a two-block Pauli fault can masquerade as one block.
+
+    With only 4 syndrome bits, a weight-two operator inevitably
+    shares a syndrome with one of the 16 perfect-code single-error
+    representatives. The naive single-error correction then induces
+    a nontrivial logical operator in this explicit example.
+    """
+    basis = logical_codewords()
+    errors = one_module_error_basis()
+    lookup = {syndrome(word): word for word in errors.values()}
+    simultaneous = "XXIII"  # X on modules 0 and 1
+    sig = syndrome(simultaneous)
+    correction = lookup[sig]
+    assert correction != "IIIII"
+    # Apply E then the decoder's one-block correction.
+    corrected = tuple(
+        apply(correction, apply(simultaneous, psi)) for psi in basis
+    )
+    logical = sp.Matrix(2, 2, lambda i, j:
+                        inner(basis[i], corrected[j]))
+    assert logical * logical.T == sp.eye(2)
+    assert logical != logical[0, 0] * sp.eye(2)
+    assert all(sum(int(v != 0) for v in logical.row(i)) == 1
+               for i in range(2))
+    print("Two-module XX fault has syndrome", sig,
+          "matching correction", correction)
+    print("Wrong single-module correction produces logical operator",
+          logical)
+    return logical
+
+
 def source_local_gauge_exchange_matrices():
     """Verify outer X/Z are built from actual on-site SU(2) exchanges.
 
@@ -203,6 +235,7 @@ def source_local_gauge_exchange_matrices():
 def test():
     source_local_gauge_exchange_matrices()
     table = exact_knill_laflamme()
+    correlated_two_module_counterexample()
     print("Syndrome table:", dict(sorted(table.items())))
     print("ALL FIVE-BLOCK SU2 RECOVERY CHECKS PASSED")
 
