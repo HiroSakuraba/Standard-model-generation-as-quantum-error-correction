@@ -101,6 +101,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su2_matter_singlet.py`](su2_matter_singlet.py) | Exact 64-state, two-vertex SU(2) Gauss law kernels, singlet wavefunctions, and logical-Z counterexample (requires SymPy) |
 | [`FOUR_LINK_SU2_DFS.md`](FOUR_LINK_SU2_DFS.md) | Constructive two-dimensional SU(2) matter/rishon decoherence-free subspace against occupation noise, and exact failure for local color exchange |
 | [`four_link_su2_subspace.py`](four_link_su2_subspace.py) | Exact four-link singlet states, Gauss checks, noise algebra and projected local SU(2) spin-exchange matrices (requires SymPy) |
+| [`SU2_EXCHANGE_HAMILTONIAN_AND_NO_GO.md`](SU2_EXCHANGE_HAMILTONIAN_AND_NO_GO.md) | Exact gapped two-dimensional SU(2) ground-space Hamiltonian, three exchange-coupling balance conditions, and complete local-algebra Knill–Laflamme obstruction |
+| [`su2_exchange_algebra.py`](su2_exchange_algebra.py) | Verifies all eight spin-singlet sectors, on-site swap matrices, Hamiltonian gap, and full endpoint/exchange operator algebra (requires SymPy) |
 
 ## Reproduce
 
@@ -118,6 +120,7 @@ python3 operational_gauge_qec.py         # Gauss-only failure vs genuine lattice
 python3 abstract_stabilizer_recovery.py  # all single-site Pauli errors on charge-code qudits
 python3 su2_matter_singlet.py           # SU(2) with matter: Gauss-invariant error fails KL (requires sympy)
 python3 four_link_su2_subspace.py       # fixed-sector SU(2) DFS, failure under local exchange
+python3 su2_exchange_algebra.py        # engineered SU(2) ground gap, balance conditions, full local-noise algebra
 ```
 
 Existing checks:
@@ -144,6 +147,7 @@ The original five steps are addressed in Part 4 and [`OPEN_STEPS_NOTE.md`](OPEN_
 - **Operational interpretation:** [physical gauge-state and Knill–Laflamme benchmark](OPERATIONAL_GAUGE_QEC.md) shows that the *formal* generation-based codes correct arbitrary single-qudit register errors, but this is not physical Standard Model protection. A three-link gauge ring fails for local gauge-invariant phase noise; an engineered 3×3 toric code succeeds only with additional magnetic checks. A physically justified SM-Hilbert-space encoding and measurable SM-compatible syndromes remain unconstructed.
 - **Next non-Abelian matter result:** [two-vertex SU(2) matter singlets and exact Gauss-only KL obstruction](SU2_MATTER_GAUSS_KL.md), verified in [su2_matter_singlet.py](su2_matter_singlet.py). The full color-singlet sector of a deliberately truncated 64-state rishon/matter model has dimension two, but a link-local SU(2)-invariant electric Casimir distinguishes its logical states and produces an undetectable phase error. This is *not* a Standard Model encoding or a general SU(2) no-go theorem.
 - **Restricted positive physical-code result:** [four-link SU(2) decoherence-free qubit](FOUR_LINK_SU2_DFS.md), verified by [four_link_su2_subspace.py](four_link_su2_subspace.py). In the four-link model a **proper 2D subspace** of the 16D color-singlet Hilbert space exactly protects a logical qubit from all diagonal link-end occupancy noise. Nevertheless a gauge-invariant matter–rishon color exchange acts as a logical Z phase error. This makes the protected error model explicit but leaves Hamiltonian-based protection and the full SM interpretation unproved.
+- **Engineered Hamiltonian and no-go result:** [exact SU(2) exchange Hamiltonian and full-noise algebra](SU2_EXCHANGE_HAMILTONIAN_AND_NO_GO.md), verified by [su2_exchange_algebra.py](su2_exchange_algebra.py). An engineered SU(2)-invariant penalty plus collective exchange Hamiltonian makes the encoded qubit an exactly degenerate, gapped ground sector. The six local pair couplings preserve degeneracy iff three opposite-pair sums match; generic allowed exchanges split it at first order despite the gap. Complete local occupancy + conditional exchange errors generate eight full 2×2 operator blocks, precluding any 2D code correcting *that entire error algebra*. This is not a universal gauge-code no-go.
 - Compare the joined codes against **same-(n,k,p)** explicit check matrices of other published odd-prime codes, especially shortened/affine-variety constructions. That broader novelty question is open.
 - Explain why nonlinear charge rows appear only for p ≡ 1 (mod 3), and whether the floor of 8 weight-3 weak spots can be broken.
 - Extend the gate search to non-diagonal and permutation-assisted ("fold") transversal gates, and to the p = 3 ninth-root gates.
