@@ -61,6 +61,7 @@ def matched_twin_faults(masks):
     Their relative equations have binary rank r, leaving 2^(4-r)
     sign assignments; subtract the punctured all-plus singlet.
     """
+    masks = tuple(sorted(masks))
     if not masks:
         return 15
     r = binary_rank([mask ^ masks[0] for mask in masks[1:]])
