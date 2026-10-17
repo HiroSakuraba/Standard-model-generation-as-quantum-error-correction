@@ -231,5 +231,46 @@ def test():
     print("ALL MEASURED MULTIROUND SU2 CHECKS PASSED")
 
 
+
+def stress_preexisting_plus_fault():
+    """Diagnostic only: one preexisting module error PLUS one new fault.
+
+    This is more demanding than the certified one-fault-from-clean
+    experiment. Some flags and syndrome pairs may lack valid lookup
+    entries, or the resulting residual may be a logical fault.
+    Neither case is silently called success.
+    """
+    decoder_maps = flag_recovery_maps()
+    counts = Counter()
+    examples = []
+    cases = tuple(enumerate_faults())
+    for i in range(DATA_COUNT):
+        for op in "XYZ":
+            prior = single(i, op)
+            for injection in cases:
+                try:
+                    after, trace = run_protocol(
+                        injection=injection,
+                        preexisting=prior,
+                        maps=decoder_maps,
+                    )
+                    outcome = classify_residual(after)
+                except (AssertionError, KeyError, ValueError) as exc:
+                    outcome = "decoder_undefined"
+                    trace = {"reason": str(exc)[:180]}
+                counts[outcome] += 1
+                if outcome in ("logical_failure", "decoder_undefined") and len(examples) < 5:
+                    examples.append((i, op, injection[0], injection[1],
+                                     injection[2][0], outcome, trace))
+    assert sum(counts.values()) == DATA_COUNT * 3 * len(cases) == 11760
+    print("STRESS: one preexisting module error PLUS one circuit fault:")
+    print(dict(counts))
+    print("First uncorrectable/undefined examples:", examples)
+    print("This is a DIAGNOSTIC, not a claim of fault tolerance.")
+    return counts
+
+
 if __name__ == "__main__":
     test()
+    if "--stress" in __import__("sys").argv[1:]:
+        stress_preexisting_plus_fault()
