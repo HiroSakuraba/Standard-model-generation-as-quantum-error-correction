@@ -94,7 +94,45 @@ For the error set \(\{I,U\}\), the Knill–Laflamme condition would require \(PI
 
 This is a **physically meaningful class of errors in the defined quantum-link/rishon model**, not an arbitrary non-gauge-invariant Pauli fault. Its presence does not depend on choosing the basis of encoded logical states: non-scalar operator restriction is basis invariant on the full two-dimensional sector.
 
-## 5. Interpretation boundaries
+## 5. A whole-family theorem for parallel links
+
+The SU(2) obstruction is not peculiar to two links. Keep the **same two matter doublets**, but use \(m\ge 1\) parallel links, each carrying exactly one rishon doublet at one endpoint. An endpoint pattern with \(l\) rishons on vertex 0 has \(1+l\) fundamental doublets at that vertex and \(1+(m-l)\) at vertex 1.
+
+The number of color singlets in \(2r\) spin-half tensor factors is the Catalan number
+
+\[
+c_r=\binom{2r}{r}-\binom{2r}{r+1}
+=\frac1{r+1}\binom{2r}{r}.
+\]
+
+For an odd number of spin-half factors the singlet multiplicity is zero. Writing \(s(n)=0\) for odd \(n\), and \(s(2r)=c_r\), the **exact gauge-invariant Hilbert-space dimension** is
+
+\[
+D(m)=\sum_{l=0}^m \binom{m}{l}\,s(1+l)\,s(1+m-l).
+\]
+
+The executable verifier computes this integer sum, and also separates singlets by whether the **first** rishon occupies its left or right endpoint:
+
+| Number of links \(m\) | Total gauge-singlet dimension \(D(m)\) | First-end-left/right multiplicities |
+|---:|---:|---:|
+| 1 | 0 | 0 / 0 |
+| 2 | 2 | 1 / 1 |
+| 3 | 0 | 0 / 0 |
+| 4 | 16 | 8 / 8 |
+| 5 | 0 | 0 / 0 |
+| 6 | 140 | 70 / 70 |
+| 7 | 0 | 0 / 0 |
+| 8 | 1,344 | 672 / 672 |
+
+**Proposition.** For every **even** \(m\ge2\) in this fixed-matter, one-rishon-per-link model, the *entire* gauge-singlet subspace fails the KL condition for the local gauge-invariant error set \(\{I,(-1)^{N_{0,L}}\}\).
+
+**Proof.** For odd \(m\), both sites cannot have even numbers of spin-half factors, so no singlets exist. For even \(m\ge2\), choose an endpoint pattern with precisely one left rishon. Either the first link or another link can be that one, producing physical singlet sectors with first-link occupation \(N_{0,L}=1\) **and** \(N_{0,L}=0\). Each choice has a nonzero spin-zero tensor component, because each vertex has a positive even number of doublets. Therefore \((-1)^{N_{0,L}}\) has both eigenvalues \(+1\) and \(-1\) within the *full* gauge-singlet subspace, while commuting with every SU(2) Gauss generator. Its restriction cannot be scalar, so the KL condition for the two errors fails. QED.
+
+The two-link result was additionally verified by **explicit exact matrix rank**, not only representation theory. The larger-link cases are verified by exact combinatorial representation multiplicities, not by constructing exponentially large matrices.
+
+This theorem **does not** rule out a smaller deliberately encoded subspace, a different matter-occupancy sector, additional stabilizing operators or couplings, or a different gauge-theory realization.
+
+## 6. Interpretation boundaries
 
 **What this proves:** In this explicit finite SU(2)-kinematic model with matter, the *entire Gauss-singlet space* cannot correct even the particular local gauge-invariant dephasing error \(\{I,(-1)^{N_{0,L}}\}\). Non-Abelian color-singlet constraints alone do not make that entire two-dimensional sector a quantum error-correcting code against that error set.
 
@@ -107,7 +145,7 @@ This is a **physically meaningful class of errors in the defined quantum-link/ri
 
 The explicit microscopic single-rishon model should also **not** be confused with the **pure-gauge** error-correcting constructions in Yao (2026), which use a different truncated Hilbert space and additional encoded checks.
 
-## 6. Reproduce and extend
+## 7. Reproduce and extend
 
 \`\`\`bash
 python -m pip install sympy==1.14.0
