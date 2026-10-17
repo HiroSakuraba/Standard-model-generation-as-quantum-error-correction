@@ -3,8 +3,9 @@
 Usage: python3 code_fingerprints.py [--extended]
 Dependencies: numpy and the repository's charge_lattice_tools.py.
 
-The fingerprints exclude equivalence to SELECTED reference codes; they do not
-establish novelty among all codes or equivalence under arbitrary local unitaries.
+The fingerprints distinguish SELECTED reference codes and support the existing
+projector-factorization argument against direct sums under local unitaries;
+they do not establish novelty among all known indecomposable codes.
 """
 from __future__ import annotations
 
