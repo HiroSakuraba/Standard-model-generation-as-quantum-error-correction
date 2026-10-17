@@ -63,7 +63,7 @@ a,b in F_p.
 
 All basis states in these superpositions have zero divergence and hence obey the Gauss constraints. The uniform sum is invariant under adding a face boundary and therefore obeys all magnetic checks. The \`p^2\` distinct homology cosets are orthogonal. Noncontractible X and Z loops serve as logical Weyl operators; their symplectic intersection pairing is verified in the script.
 
-**Exact recovery test:** For each edge i and each nonidentity single-edge Weyl error \`E_i(a,b)=X_i^a Z_i^b\`, the script computes the full **16-component** syndrome (nine Gauss plus nine face values are reported with two redundancies; the program stores 18 entries, each type of rank eight). For p=3 and p=5:
+**Exact recovery test:** For each edge i and each nonidentity single-edge Weyl error \`E_i(a,b)=X_i^a Z_i^b\`, the script computes the full **18-component** syndrome (nine Gauss and nine face-check values; each nine-component group has one linear dependence and rank eight). For p=3 and p=5:
 
 | p | Encoded code | Number of identity + single-edge Pauli syndromes | Collisions |
 |---:|---|---:|---:|
