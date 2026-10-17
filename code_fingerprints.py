@@ -50,21 +50,47 @@ def family_partition(code, weight):
 
 
 def mixed_two_plus_two(code):
-    """Check only 2+2 cross-family support candidates (no 3+1 supersets)."""
+    """Fast exact projective-syndrome match for 2+2 logical supports.
+
+    For each two-coordinate pair, enumerate all nonzero coefficient choices,
+    quotient by their first nonzero stabilizer-syndrome entry, and compare
+    canonical full charge images between pairs of different generations.
+    Equal quotient syndromes but unequal full charge images yield a nonzero
+    logical Z class after cancellation. This avoids a slow rank test for
+    each cross-family four-coordinate set.
+    """
     nf = max(code.families) + 1
     by_family = [[j for j, f in enumerate(code.families) if f == i]
                  for i in range(nf)]
-    r_removed = rank(code.GR, code.p)
+    p = code.p
+    sx = code.SX % p
+    gp = code.GP % p
+    pair_maps = []
+    for positions in by_family:
+        family_maps = []
+        for ab in combinations(positions, 2):
+            opts = {}
+            i, j = ab
+            for a in range(1, p):
+                for b in range(1, p):
+                    syndrome = (a * sx[:, i] + b * sx[:, j]) % p
+                    if not syndrome.any():
+                        raise AssertionError('weight-2 undetectable pair needs separate treatment')
+                    nz = next(int(v) for v in syndrome if v)
+                    inv = pow(nz, -1, p)
+                    key = tuple(int(v) for v in (syndrome * inv) % p)
+                    charge = tuple(int(v) for v in ((a * gp[:, i] + b * gp[:, j]) * inv) % p)
+                    opts.setdefault(key, set()).add(charge)
+            family_maps.append(opts)
+        pair_maps.append(family_maps)
     total = 0
     for f1, f2 in combinations(range(nf), 2):
-        for ab in combinations(by_family[f1], 2):
-            for cd in combinations(by_family[f2], 2):
-                cols = code.GP[:, list(ab + cd)]
-                if (rank(np.column_stack((code.GR, cols)), code.p)
-                        < r_removed + rank(cols, code.p)):
+        for A in pair_maps[f1]:
+            for B in pair_maps[f2]:
+                common = A.keys() & B.keys()
+                if any(x != y for key in common for x in A[key] for y in B[key]):
                     total += 1
     return total
-
 
 def fingerprint(name, code):
     return {
