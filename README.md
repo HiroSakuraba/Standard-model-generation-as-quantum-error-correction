@@ -105,6 +105,7 @@ python3 code_fingerprints.py            # requires numpy
 python3 code_fingerprints.py --extended # adds three-generation codes
 python3 local_purity.py                 # exact four-site reduced-projector purities; requires numpy
 python3 published_qutrit_family.py     # reproduces external 2025 paper matrices
+python3 reed_muller_family_exclusion.py # source-scoped 2026 family no-go and exact charge moments
 ```
 
 Existing checks:
@@ -126,7 +127,8 @@ The original five steps are addressed in Part 4 and [`OPEN_STEPS_NOTE.md`](OPEN_
 - **New:** [exact Yukawa theorem and classification fingerprints](EXACT_SYMMETRY_AND_CLASSIFICATION.md), with [deterministic single-Higgs verification](exact_yukawa.py) and [code-fingerprint comparison](code_fingerprints.py). The latter distinguishes the joined codes from direct sums but does not establish novelty among all qudit codes.
 - **New:** [four-qudit reduced-state purity invariant](LOCAL_PURITY_NOTE.md), computed by [local_purity.py](local_purity.py). For the two-family coupled codes there are 184 (p=3) or 249 (p=5) four-site purity hotspots, versus 150 for independent copies. The three-family counts are 327/522, versus 225. These are local-unitary invariants, not logical error rates; matching existing indecomposable qudit codes remains open.
 - **Published matrix comparison:** [Prakash–Saha 2025 qutrit code family, exact reconstruction and comparison](PUBLISHED_CODE_COMPARISON.md), verified with [published_qutrit_family.py](published_qutrit_family.py). Their m=4,k=6 code has length 30 and six X checks, but encodes six logical qutrits at distance 2; the coupled matter construction encodes two at distance 3. The entire specified [[9m−k,k,2]]₃ family is excluded by parameters, **not** all odd-prime Reed–Muller/triorthogonal codes.
-- Compare the joined codes against **same-(n,k,p)** explicit check matrices of other published odd-prime codes. That broader novelty question is open.
+- **Further source-checked exclusion:** [Saha–Prakash 2026 full-evaluation punctured Reed–Muller comparison](FULL_REED_MULLER_COMPARISON.md), verified by [reed_muller_family_exclusion.py](reed_muller_family_exclusion.py). Under that paper's full-rank puncture construction, n+k must be p^m; ours have n+k=32 or 48, neither an odd-prime power at p=3 or 5. The original charge lattice is cubic-orthogonal but not pairwise self-orthogonal, unlike the unpunctured construction in that paper. This **does not exclude arbitrary Reed–Muller variants or all known qudit codes**.
+- Compare the joined codes against **same-(n,k,p)** explicit check matrices of other published odd-prime codes, especially shortened/affine-variety constructions. That broader novelty question is open.
 - Explain why nonlinear charge rows appear only for p ≡ 1 (mod 3), and whether the floor of 8 weight-3 weak spots can be broken.
 - Extend the gate search to non-diagonal and permutation-assisted ("fold") transversal gates, and to the p = 3 ninth-root gates.
 - Run a circuit-level simulation, with noisy checks of weight 15–16, to see whether the ε⁴ correlated errors matter in a full distillation factory.
