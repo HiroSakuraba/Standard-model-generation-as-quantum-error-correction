@@ -113,6 +113,24 @@ For two arbitrary one-module physical errors \(E_i,F_j\), project \(W^\dagger E_
 
 Thus the mathematical outer code actually satisfies Knill–Laflamme for **arbitrary errors acting on at most one physical module**, even ones that leak outside the chosen two-dimensional singlet block, as long as errors are single-module operators and *ideal global recovery* is allowed. The provided executable checks cover the complete Pauli basis **inside** the 32-dimensional inner-register space. The leakage extension is an algebraic corollary, not a simulated SU(2) leakage/recovery circuit. If only gauge-invariant operations are allowed, their detailed implementation remains to be established.
 
+### Correlated two-module failure and syndrome exhaustion
+
+The exact script also injects the simultaneous error \`XXIII\`: an \(X\)-type logical exchange disturbance on **modules 0 and 1 together**. Its syndrome coincides with one of the 15 single-module errors because the four-bit syndrome space is fully occupied by the perfect-code error basis. The naive one-module correction therefore performs a **nontrivial logical operator**, instead of restoring the encoded state. The code prints the matching syndrome, the mistaken correction, and the exact resulting \(2\times2\) logical matrix.
+
+This illustrates why **error locality and syndrome-extraction fault propagation are part of the physical claim**. A correct mathematical one-module recovery map alone does not establish protection against realistic correlated noise or faulty stabilizer-measurement gates.
+
+### About defining the stabilizers outside the code subspace
+
+The projected inner operators \(X_\mathrm{in}\), \(Z_\mathrm{in}\) are gauge-invariant within each selected singlet sector. They are not by themselves a complete specification of globally commuting, measurable observables on every kinematic state, especially in states that have **leaked out** of the selected endpoint sector.
+
+A formal gauge-invariant extension exists at the operator-algebra level: let \(Q\) project onto the entire five-fold chosen inner space, and define for each encoded-register stabilizer \(g_i\)
+\[
+\widehat g_i = Q g_i Q + (I-Q),
+\]
+with the meaning that \(g_i\) acts on \(Q\mathcal H\) and the identity acts on its complement. The resulting Hermitian involutions commute on the full Hilbert space because the \(g_i\) commute on \(Q\mathcal H\), while the complement carries the identity. Since \(Q\) and each \(g_i\) are made from local color-singlet subspace projectors and SU(2)-invariant exchanges, their extensions also commute with gauge transformations.
+
+This is **a mathematical extension, not a physical measurement protocol**. In particular, these operators report trivial syndromes for leakage states in the orthogonal complement; separate measurements of the gauge-invariant local sector projectors and erasure-aware recovery would be necessary. The required multi-module controlled measurements may be nonlocal and fault-prone.
+
 ## 4. Why five modules?
 
 With each SU(2) singlet block used strictly as a **two-level subsystem**, correcting arbitrary unknown-location single-block errors requires an encoded \([[n,1,3]]_2\) code. The quantum Singleton bound states
