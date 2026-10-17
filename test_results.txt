@@ -1,0 +1,12 @@
+second generation alone p= 3 {'n': 15, 'k': 1, 'charge_rank': 5, 'X_stabilizer_rank': 4, 'Z_stabilizer_rank': 10, 'Z_distance': 3, 'weight_3_logical_supports': 25}
+second generation alone p= 5 {'n': 15, 'k': 1, 'charge_rank': 5, 'X_stabilizer_rank': 4, 'Z_stabilizer_rank': 10, 'Z_distance': 3, 'weight_3_logical_supports': 25}
+shared gauge only p= 5 {'n': 30, 'k': 1, 'charge_rank': 5, 'X_stabilizer_rank': 4, 'Z_stabilizer_rank': 25, 'Z_distance': 3, 'weight_3_logical_supports': 200, 'weight_3_partition': {'0': 25, '1': 75, '2': 75, '3': 25}}
+shared gauge + family number p= 5 {'n': 30, 'k': 2, 'charge_rank': 6, 'X_stabilizer_rank': 4, 'Z_stabilizer_rank': 24, 'Z_distance': 2}
+coupled differential Cartan p= 3 {'n': 30, 'k': 2, 'charge_rank': 8, 'X_stabilizer_rank': 6, 'Z_stabilizer_rank': 22, 'Z_distance': 3, 'weight_3_logical_supports': 50, 'weight_3_partition': {'0': 25, '3': 25}, 'X_distance': 7, 'min_X_count': 8}
+coupled differential Cartan p= 5 {'n': 30, 'k': 2, 'charge_rank': 7, 'X_stabilizer_rank': 5, 'Z_stabilizer_rank': 23, 'Z_distance': 3, 'weight_3_logical_supports': 50, 'weight_3_partition': {'0': 25, '3': 25}, 'X_distance': 9, 'min_X_count': 8}
+coupled differential Cartan p= 7 {'n': 30, 'k': 2, 'charge_rank': 7, 'X_stabilizer_rank': 5, 'Z_stabilizer_rank': 23, 'Z_distance': 3, 'weight_3_logical_supports': 50, 'weight_3_partition': {'0': 25, '3': 25}}
+direct sum p= 3 {'n': 30, 'k': 2, 'charge_rank': 10, 'X_stabilizer_rank': 8, 'Z_stabilizer_rank': 20, 'Z_distance': 3, 'weight_3_logical_supports': 50, 'weight_3_partition': {'0': 25, '3': 25}}
+EXHAUSTIVE p=3 m=1: 81 admissible row-spaces, all have distance-2 logical pairs
+EXHAUSTIVE p=3 m=2: 1080 admissible row-spaces, all have distance-2 logical pairs
+second generation qubit Reed-Muller p= 2 {'n': 15, 'k': 1, 'charge_rank': 5, 'X_stabilizer_rank': 4, 'Z_stabilizer_rank': 10, 'Z_distance': 3, 'weight_3_logical_supports': 35, 'X_distance': 7, 'min_X_count': 15}
+ALL CHECKS PASSED

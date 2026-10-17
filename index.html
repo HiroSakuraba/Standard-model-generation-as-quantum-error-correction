@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Matter as a Quantum Code</title>
+<meta name="description" content="A plain-language guide to an exploratory study: can two generations of Standard Model particles form a quantum error-correcting code?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0e17;--pane:#131a29;--pane2:#1a2336;--line:#2c384c;
+  --text:#e8edf5;--soft:#a8b8d0;--faint:#7d8ea8;
+  --teal:#4ce2bf;--teal-bg:#123029;--amber:#eec187;--amber-bg:#2a2418;--coral:#ff8e8f;--coral-bg:#341c22;
+  --tile:#1c2639;--tile-line:#34445c;--pos:#1f5a4c;--pos-t:#b9ffdf;--neg:#5a3a56;--neg-t:#ffd4e2;
+  --glow:#203c4c55;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f6f4ee;--pane:#ffffff;--pane2:#f1efe8;--line:#ddd8cc;
+    --text:#161b26;--soft:#4a5468;--faint:#6b7488;
+    --teal:#0b8a72;--teal-bg:#e3f4ef;--amber:#9a5f12;--amber-bg:#fbf0dc;--coral:#c23b42;--coral-bg:#fbe6e6;
+    --tile:#f4f2ec;--tile-line:#cfc9bb;--pos:#cdeee3;--pos-t:#0b5b4a;--neg:#f1dcea;--neg-t:#7a2458;
+    --glow:#bfe6dc66;
+    color-scheme:light;
+  }
+}
+:root[data-theme="dark"]{color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(ellipse 100% 520px at 50% -100px,var(--glow),transparent),var(--bg);color:var(--text);font:17px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding-left:16px;padding-right:16px}
+.wide{max-width:1040px;margin:0 auto;padding-left:16px;padding-right:16px}
+h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:600;letter-spacing:-.015em;line-height:1.15}
+h1{font-size:clamp(36px,7vw,62px);margin:14px 0 18px}
+h2{font-size:clamp(26px,4.2vw,34px);margin:0 0 14px}
+h3{font-size:21px;margin:0 0 8px}
+p{margin:0 0 16px}
+a{color:var(--teal)}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em}
+code{background:var(--pane2);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:700}
+header{padding:64px 0 36px}
+.lead{font-size:20px;color:var(--soft)}
+.lead strong{color:var(--text);font-weight:600}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btn{display:inline-block;text-decoration:none;font-weight:600;font-size:15px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);color:var(--text);background:var(--pane)}
+.btn.primary{background:var(--teal);color:#06231c;border-color:var(--teal)}
+.btn:hover{border-color:var(--teal)}
+section{padding:40px 0;border-top:1px solid var(--line)}
+.soft{color:var(--soft)}
+.why{border-left:3px solid var(--teal);background:var(--teal-bg);padding:12px 16px;border-radius:0 10px 10px 0;margin:18px 0}
+.why b{color:var(--teal)}
+.aside{border:1px solid var(--line);background:var(--pane);border-radius:14px;padding:18px 20px;margin:22px 0}
+.aside h3{font-size:19px}
+.aside p:last-child{margin-bottom:0}
+.steps{display:grid;gap:14px;margin:22px 0}
+.card{border:1px solid var(--line);background:var(--pane);border-radius:14px;padding:18px 20px}
+.card .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 10px;border-radius:999px;margin-bottom:8px}
+.tag.bad{background:var(--coral-bg);color:var(--coral)}
+.tag.meh{background:var(--amber-bg);color:var(--amber)}
+.tag.good{background:var(--teal-bg);color:var(--teal)}
+.card .result{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;color:var(--soft);margin-top:4px}
+.card p:last-of-type{margin-bottom:6px}
+/* charge table figure */
+.fig{border:1px solid var(--line);background:var(--pane);border-radius:14px;padding:18px;margin:22px 0}
+.figscroll{overflow-x:auto}
+.ctab{border-collapse:separate;border-spacing:3px;margin:0 auto;font:12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.ctab th{color:var(--faint);font-weight:500;padding:4px 3px;white-space:nowrap}
+.ctab td{width:24px;height:24px;text-align:center;border-radius:4px}
+.ctab td.p{background:var(--pos);color:var(--pos-t)}
+.ctab td.n{background:var(--neg);color:var(--neg-t)}
+.ctab .hid{outline:2px solid var(--amber);outline-offset:1px}
+.ctab th.hid{outline:none;color:var(--amber);font-weight:700}
+.cap{font-size:14px;color:var(--soft);margin:12px 0 0}
+/* lab */
+.lab{border:1px solid var(--line);background:var(--pane);border-radius:18px;padding:20px;margin-top:22px}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 16px}
+.seg button,.presets button{font:inherit;font-size:14px;font-weight:600;color:var(--text);background:var(--pane2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#06231c}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 16px}
+.presets button{font-weight:500;background:transparent}
+.seg button:focus-visible,.presets button:focus-visible,.tile:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.lab-label{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.fam{margin:10px 0 14px}
+.fam .lab-label{margin-bottom:6px}
+.tiles{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:5px}
+.tile{position:relative;font:13px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--text);background:var(--tile);border:1px solid var(--tile-line);border-radius:8px;height:52px;cursor:pointer;padding:4px 0 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:0}
+.tile .v{font-size:12px;font-weight:700;opacity:.0}
+.tile.plus{background:var(--pos);color:var(--pos-t);border-color:transparent}
+.tile.minus{background:var(--neg);color:var(--neg-t);border-color:transparent}
+.tile.plus .v,.tile.minus .v{opacity:1}
+.tile.twin{box-shadow:0 0 0 2px var(--amber)}
+.verdict{border-radius:12px;padding:14px 16px;margin-top:6px;border-left:4px solid var(--line);background:var(--pane2)}
+.verdict.detected{border-left-color:var(--teal);background:var(--teal-bg)}
+.verdict.harmless{border-left-color:var(--amber);background:var(--amber-bg)}
+.verdict.silent{border-left-color:var(--coral);background:var(--coral-bg)}
+.verdict h3{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;margin:0 0 4px}
+.verdict.detected h3{color:var(--teal)}.verdict.harmless h3{color:var(--amber)}.verdict.silent h3{color:var(--coral)}
+.verdict p{margin:0;font-size:15px;color:var(--soft)}
+.labstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 14px}
+.labstats>div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--pane2)}
+.labstats .n{font-family:Newsreader,Georgia,serif;font-size:28px;font-weight:600;line-height:1.1}
+.labstats .t{font-size:12px;color:var(--soft)}
+.labnote{font-size:14px;color:var(--soft);margin:14px 0 0}
+@media (max-width:760px){
+  .tiles{grid-template-columns:repeat(8,minmax(0,1fr))}
+  .tile{height:46px}
+}
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:15px}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--pane)}
+.tbl th,.tbl td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:700}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td.num{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:nowrap}
+.tbl .hl td{background:var(--teal-bg)}
+.list{padding-left:20px;margin:0 0 16px}
+.list li{margin-bottom:10px}
+.chain{list-style:none;padding:0;margin:18px 0;counter-reset:c}
+.chain li{position:relative;padding:10px 0 10px 44px;border-bottom:1px dashed var(--line)}
+.chain li:last-child{border-bottom:0}
+.chain li::before{counter-increment:c;content:counter(c);position:absolute;left:0;top:10px;width:28px;height:28px;border-radius:50%;background:var(--pane2);border:1px solid var(--line);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;color:var(--teal)}
+.run{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;background:var(--pane2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;white-space:pre;color:var(--text)}
+footer{border-top:1px solid var(--line);padding:30px 0 60px;font-size:14px;color:var(--soft)}
+footer p{margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="eyebrow">Independent exploratory study · October 2026</div>
+  <h1>Matter as a quantum code</h1>
+  <p class="lead"><strong>The rule that keeps the Standard Model of particle physics mathematically consistent turns out to be the same rule a special quantum error-correcting code needs.</strong> A recent paper showed this for one family of particles. This project asks what happens with two.</p>
+  <div class="btns">
+    <a class="btn primary" href="#lab">Try the error game</a>
+    <a class="btn" href="interactive_charge_map.html">Technical charge map</a>
+    <a class="btn" href="https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction/blob/main/RESEARCH_NOTE.md">Research note</a>
+    <a class="btn" href="https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction">Code on GitHub</a>
+  </div>
+</header>
+
+<main>
+
+<section class="wrap">
+  <h2>First: what's a "generation"?</h2>
+  <p>Everything you touch is built from a small set of particles: the <em>up</em> and <em>down</em> quarks (which make protons and neutrons), the <em>electron</em>, and the ghostly <em>electron neutrino</em>. Count every variety, with each quark in three "colours" and separate left- and right-handed versions, and you get <strong>16 pieces</strong>. Physicists call that set one <em>generation</em>.</p>
+  <p>Then nature does something odd. It repeats the whole set twice more as heavier copies. The second generation is <em>charm</em>, <em>strange</em>, the <em>muon</em> and the <em>muon neutrino</em>. The third is top, bottom, tau and tau neutrino. The copies feel exactly the same forces as the originals. Only their masses differ. Nobody knows why there are three.</p>
+</section>
+
+<section class="wrap">
+  <h2>The surprise this builds on</h2>
+  <p>Every particle carries a few <strong>charges</strong>: numbers that say how it responds to the forces of nature. For the theory to make sense at the quantum level, those charges have to balance in a very particular way. Roughly, if you cube each particle's charge and add them all up, the total must be exactly zero. This is called <strong>anomaly cancellation</strong>. If it fails, the theory is mathematically broken.</p>
+  <p>Shiroman Prakash and K.&nbsp;L.&nbsp;Ramya noticed something striking (<a href="https://arxiv.org/abs/2610.21879">arXiv:2610.21879</a>). Write the charges as a table, with one column per particle. The anomaly-cancellation rule is then <em>exactly</em> the condition quantum engineers call <strong>triorthogonality</strong>. Triorthogonality is what lets a table define a quantum error-correcting code that can perform a special "magic" operation just by giving every piece of the code the same small nudge.</p>
+
+  <div class="fig" role="figure" aria-labelledby="figcap">
+    <div class="figscroll"><table class="ctab" id="ctab"></table></div>
+    <p class="cap" id="figcap">The real charge table for one generation, with 5 charge rows and 16 particle columns (green = +1, purple = −1). The highlighted column is the right-handed neutrino. On a phone, scroll the table sideways.</p>
+  </div>
+
+  <p>Remove the right-handed neutrino's column, and the remaining 15 particles become the 15 slots of a code that safely stores <strong>one</strong> protected quantum digit. It isn't just any code. It is the well-known 15-slot code used in <em>magic-state distillation</em>, a key ingredient for building fully capable quantum computers.</p>
+  <div class="why"><b>Why it matters:</b> a consistency rule from particle physics and a design rule from quantum computing turn out to be the same equation. Nobody designed it that way.</div>
+
+  <div class="aside">
+    <h3>A 30-second guide to error-correcting codes</h3>
+    <p>Imagine hiding a secret number by spreading it across 15 lockers, plus a set of <strong>checksums</strong> that should always come out a certain way. If someone tampers with a locker, a checksum lights up.</p>
+    <p>A code's <strong>distance</strong> is the smallest number of lockers a tamperer must touch to change the secret <em>without</em> tripping any check. Distance 3 means you can pinpoint and fix any single tampered locker, and you'll at least notice any two.</p>
+    <p>A <strong>qudit</strong> is a quantum digit. A qubit has 2 settings and a qutrit has 3; in general a qudit has <em>p</em> settings, where <em>p</em> is a prime number. This construction works for any prime, so you'll see results labelled p&nbsp;=&nbsp;3, p&nbsp;=&nbsp;5, and so on.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>The question: what about the second family?</h2>
+  <p>If one generation is a code, what about the next one up: charm, strange, muon and muon neutrino? And can the two be combined into something bigger?</p>
+
+  <h3>Step 1 · The second family on its own</h3>
+  <p>It gives <strong>exactly the same code</strong>. The muon is about 200 times heavier than the electron, but the code reads only charges, never masses. The muon family's table matches the electron family's column for column; only the names change.</p>
+  <div class="why"><b>Why it matters:</b> this is a negative result, but a clean one. Mass is invisible to this structure, so "which generation" can't be seen at this level of description.</div>
+
+  <h3>Step 2 · Both families together: the twins problem</h3>
+  <p>Put the two families side by side. That gives 30 slots, with both right-handed neutrinos pulled out as hidden spots. The hope is a 30-slot code holding <strong>two</strong> protected digits. The obstacle is that every particle in the first family has an identical twin in the second, as far as the forces are concerned. Three ways of handling the twins:</p>
+
+  <div class="steps">
+    <div class="card">
+      <span class="tag bad">Attempt A</span>
+      <h3>Shared charges only</h3>
+      <p>The forces can't tell an electron from a muon, so the two hidden neutrino spots look identical to every checksum. Two identical hiding places can only hold one secret.</p>
+      <div class="result">30 slots → only 1 protected digit. Not worth the extra slots.</div>
+    </div>
+    <div class="card">
+      <span class="tag meh">Attempt B</span>
+      <h3>Add a "family badge"</h3>
+      <p>Give every first-family particle an extra charge of +1 and every second-family particle −1. This still obeys the balancing rule, and the two hidden spots can now be told apart, so you get two digits. But it creates a blind spot. Nudge an electron-family particle one way and its muon-family twin the opposite way: everything the forces see cancels, and what's left over looks <em>exactly</em> like the difference between the two hidden digits. The tampering goes unnoticed and scrambles the secret.</p>
+      <div class="result">2 digits, but distance drops to 2. All 15 twin pairs are weak spots.</div>
+    </div>
+    <div class="card">
+      <span class="tag good">Attempt C · this study</span>
+      <h3>"Smart badges"</h3>
+      <p>Use badges that depend on <em>which particle</em> as well as which family. Technically, these are a few of the original charges again, with their sign flipped in the second family and combined in a carefully chosen way. They are picked so the leftover from a twin pair <em>never</em> looks like the difference between the hidden digits.</p>
+      <div class="result">30 slots, 2 protected digits, distance 3 restored. Needs 3 extra badge rows for qutrits (p = 3), and just 2 for every prime p ≥ 5.</div>
+    </div>
+  </div>
+  <div class="why"><b>Why it matters:</b> it locates exactly where the difficulty lives, in matched twins across families, and finds the smallest fix that works within this recipe.</div>
+</section>
+
+<section class="wide" id="lab">
+  <div class="wrap" style="padding:0">
+    <h2>Try to sneak an error past the checks</h2>
+    <p class="soft">Below are the 30 particle slots for both families, using 5-setting digits (p&nbsp;=&nbsp;5). Click a tile to nudge it: once for +1, twice for −1, three times to clear it. The verdict is computed live with exact arithmetic, the same way the research script does it. Hovering a tile highlights its twin in the other family.</p>
+  </div>
+  <div class="lab">
+    <div class="lab-label">Badge scheme</div>
+    <div class="seg" id="schemes" role="group" aria-label="Badge scheme">
+      <button data-s="shared" aria-pressed="false">A · Shared charges</button>
+      <button data-s="badge" aria-pressed="false">B · Family badge</button>
+      <button data-s="smart" aria-pressed="true">C · Smart badges</button>
+    </div>
+    <div class="labstats">
+      <div><div class="n" id="stK">2</div><div class="t">Protected digits</div></div>
+      <div><div class="n" id="stD">3</div><div class="t">Distance (fewest tiles for a silent error)</div></div>
+      <div><div class="n" id="stT">0</div><div class="t">Tiles you've touched</div></div>
+    </div>
+    <div class="lab-label">Quick tries</div>
+    <div class="presets" id="presets">
+      <button data-p="single">One tile</button>
+      <button data-p="twins">Twin pair: e +1, μ −1</button>
+      <button data-p="three">Three-tile sneak (one family)</button>
+      <button data-p="clear">Clear</button>
+    </div>
+    <div class="fam"><div class="lab-label">Electron family (1st generation)</div><div class="tiles" id="fam0"></div></div>
+    <div class="fam"><div class="lab-label">Muon family (2nd generation)</div><div class="tiles" id="fam1"></div></div>
+    <div class="verdict" id="verdict" aria-live="polite"><h3>No tampering yet</h3><p>Click some tiles, or pick a quick try above.</p></div>
+    <p class="labnote">Key: u/d = up/down-type quark (c/s in the 2nd family), e/μ = electron/muon, ν = neutrino, superscript ᶜ = the partner ("conjugate") field, subscript = quark colour. The demo covers phase-type errors. The code guards against the other type (bit-flip-like errors) by an even wider margin: distance 7 at p&nbsp;=&nbsp;3 and 9 at p&nbsp;=&nbsp;5.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>How few extra badges do you need?</h2>
+  <p>One extra badge row never works. With a single row, some twin pair always lines up with the hidden digits.</p>
+  <p>For qutrits (p&nbsp;=&nbsp;3), the computer checked <strong>all 1,080</strong> possible ways to add two badge rows that keep the hidden spots distinguishable. Every one still leaves a weak twin pair, and three rows work. For every prime p&nbsp;≥&nbsp;5, a short pencil-and-paper argument shows that one particular two-row choice always works.</p>
+  <p class="soft">One honest qualifier: "minimal" here means minimal <em>within this recipe</em> (keep the five shared charges and add family-flipped rows). It is not a claim about every possible quantum code.</p>
+</section>
+
+<section class="wrap">
+  <h2>What this does <em>not</em> show</h2>
+  <ul class="list">
+    <li><strong>Particles aren't secretly computing.</strong> Each particle is just a label for a column in a table. Building real hardware would need an actual physical system, measurements and noise modelling, and none of that follows from the mathematics.</li>
+    <li><strong>The smart badges aren't real forces.</strong> They are extra charges added by hand, not part of the observed Standard Model. Real quarks and neutrinos mix between families, and that mixing would break such badges unless some new physics protects them.</li>
+    <li><strong>It isn't better than two separate copies (yet).</strong> The weakest error patterns all stay inside one family; none cross between families. So for magic-state distillation, the leading error rate is the same as running two independent 15-slot codes. The combined code does use fewer checks (5 or 6 instead of 8). Whether that helps in practice is an open question.</li>
+    <li><strong>The magic operation acts on each digit separately.</strong> It doesn't link (entangle) the two protected digits.</li>
+    <li><strong>Novelty and review.</strong> No literature search has been done for equivalent known codes, and the work hasn't been peer-reviewed.</li>
+  </ul>
+</section>
+
+<section class="wrap">
+  <h2>The numbers</h2>
+  <div class="tblwrap">
+    <table class="tbl">
+      <thead><tr><th>Construction</th><th>p</th><th>Slots</th><th>Digits</th><th>Distance</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>2nd family on its own</td><td class="num">3, 5</td><td class="num">15</td><td class="num">1</td><td class="num">3</td><td>Same code as the 1st family</td></tr>
+        <tr><td>Both families, shared charges</td><td class="num">5</td><td class="num">30</td><td class="num">1</td><td class="num">3</td><td>Only one digit</td></tr>
+        <tr><td>Both families + family badge</td><td class="num">5</td><td class="num">30</td><td class="num">2</td><td class="num">2</td><td>Twin-pair blind spot</td></tr>
+        <tr class="hl"><td>Both families + smart badges (3 rows)</td><td class="num">3</td><td class="num">30</td><td class="num">2</td><td class="num">3</td><td>Works; 6 checks</td></tr>
+        <tr class="hl"><td>Both families + smart badges (2 rows)</td><td class="num">≥ 5</td><td class="num">30</td><td class="num">2</td><td class="num">3</td><td>Works; 5 checks</td></tr>
+        <tr><td>Two separate copies (baseline)</td><td class="num">3</td><td class="num">30</td><td class="num">2</td><td class="num">3</td><td>Works; 8 checks</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="soft" style="margin-top:14px">In code notation, the smart-badge codes are written <code>[[30,2,3]]</code>: 30 slots, 2 protected digits, distance 3.</p>
+</section>
+
+<section class="wrap">
+  <h2>Check it yourself</h2>
+  <p>Everything above is reproduced by one Python script. It needs no installs or internet, and it runs in a few seconds. It checks the balancing rule in exact whole-number arithmetic, counts protected digits, measures distances, and runs the exhaustive 1,080-case search.</p>
+  <div class="run">git clone https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction
+cd Standard-model-generation-as-quantum-error-correction
+python3 matter_qec_study.py      # ends with: ALL CHECKS PASSED</div>
+</section>
+
+<section class="wrap">
+  <h2>The whole story in one chain</h2>
+  <ol class="chain">
+    <li>The Standard Model's charge-balancing rule (anomaly cancellation) is the same equation as a quantum code's "triorthogonality."</li>
+    <li>So one generation of particles, minus its right-handed neutrino, is a 15-slot code with a built-in magic operation.</li>
+    <li>The second generation alone gives the identical code, because the code sees charges, not masses.</li>
+    <li>Combine the two and you hit the twins problem: identical-looking partners across families.</li>
+    <li>A simple family badge gets two digits but opens 15 two-tile blind spots (distance 2).</li>
+    <li>Carefully chosen "smart badges," 3 rows for qutrits and 2 for p ≥ 5, close every blind spot and restore distance 3.</li>
+    <li>But the result is no better than two separate codes for distillation, and the badges aren't real physics.</li>
+  </ol>
+  <p><strong>The deeper takeaway:</strong> this code lives entirely at the level of <em>symmetry</em>, where only charges exist. The generations differ only in mass, so at that level they are perfect twins, and you can't get a genuinely two-family code without adding structure that nature (as far as we know) doesn't supply. Seen this way, the mystery of why matter comes in three copies is a fact the charges alone can't express.</p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>An independent exploratory study by Benjamin John Schulz, extending Shiroman Prakash and K.&nbsp;L.&nbsp;Ramya, <em>One generation of the Standard Model as a quantum error-correcting code</em>, <a href="https://arxiv.org/abs/2610.21879">arXiv:2610.21879</a> (October 2026). The original authors' code is at <a href="https://github.com/spdei/standard-model-code">github.com/spdei/standard-model-code</a>.</p>
+  <p>Not peer-reviewed. This page runs entirely in your browser.</p>
+</footer>
+
+<script>
+(function(){
+  const P = 5;
+  const q0 = [1,1,1,1,1];
+  // Same weight order as matter_qec_study.py: SU(5) 10 then 5-bar (singlet q0 removed).
+  const W = [];
+  for (let i=0;i<5;i++) for (let j=i+1;j<5;j++){ const q=q0.slice(); q[i]=-1; q[j]=-1; W.push(q); }
+  for (let i=0;i<5;i++){ const q=[-1,-1,-1,-1,-1]; q[i]=1; W.push(q); }
+  const L1 = ['uᶜ₃','uᶜ₂','d₁','u₁','uᶜ₁','d₂','u₂','d₃','u₃','eᶜ','dᶜ₁','dᶜ₂','dᶜ₃','νₑ','e'];
+  const L2 = ['cᶜ₃','cᶜ₂','s₁','c₁','cᶜ₁','s₂','c₂','s₃','c₃','μᶜ','sᶜ₁','sᶜ₂','sᶜ₃','νμ','μ'];
+  const B5 = [[1,0,0,0,0],[0,1,1,1,1]];
+  const dot=(a,b)=>a.reduce((t,v,i)=>t+v*b[i],0);
+  const mod=x=>((x%P)+P)%P;
+
+  // ---- figure: one-generation charge table ----
+  (function(){
+    const cols=[q0].concat(W), labels=['νᶜ'].concat(L1);
+    let h='<thead><tr><th></th>'+labels.map((l,i)=>`<th class="${i===0?'hid':''}">${l}</th>`).join('')+'</tr></thead><tbody>';
+    for(let r=0;r<5;r++){
+      h+=`<tr><th>Q${r+1}</th>`+cols.map((c,i)=>`<td class="${c[r]>0?'p':'n'}${i===0?' hid':''}">${c[r]>0?'+':'−'}</td>`).join('')+'</tr>';
+    }
+    document.getElementById('ctab').innerHTML=h+'</tbody>';
+  })();
+
+  // ---- lab ----
+  const SCHEMES = {
+    shared:{k:1,d:3, col:(q,s)=>q.slice()},
+    badge: {k:2,d:2, col:(q,s)=>q.concat([s])},
+    smart: {k:2,d:3, col:(q,s)=>q.concat(B5.map(b=>s*dot(b,q)))}
+  };
+  let scheme='smart';
+  const e=new Array(30).fill(0);
+
+  function rank(vectors){
+    if(!vectors.length) return 0;
+    const m=vectors.map(v=>v.map(mod)); let r=0; const n=m[0].length;
+    for(let c=0;c<n && r<m.length;c++){
+      let piv=-1; for(let i=r;i<m.length;i++) if(m[i][c]){piv=i;break;}
+      if(piv<0) continue;
+      [m[r],m[piv]]=[m[piv],m[r]];
+      let inv=1; while((m[r][c]*inv)%P!==1) inv++;
+      m[r]=m[r].map(x=>(x*inv)%P);
+      for(let i=0;i<m.length;i++) if(i!==r && m[i][c]){const f=m[i][c]; m[i]=m[i].map((x,j)=>mod(x-f*m[r][j]));}
+      r++;
+    }
+    return r;
+  }
+  function classify(sch, err){
+    const S=SCHEMES[sch];
+    const removed=[S.col(q0,1),S.col(q0,-1)];
+    const phys=W.map(q=>S.col(q,1)).concat(W.map(q=>S.col(q,-1)));
+    if(err.every(x=>x===0)) return 'none';
+    const syn=phys[0].map((_,r)=>mod(err.reduce((t,v,j)=>t+v*phys[j][r],0)));
+    if(syn.every(x=>x===0)) return 'harmless';
+    return rank(removed.concat([syn]))===rank(removed) ? 'silent' : 'detected';
+  }
+  window.__classify=classify; // exposed for testing
+
+  const tiles=[];
+  function build(){
+    [0,1].forEach(f=>{
+      const box=document.getElementById('fam'+f);
+      (f?L2:L1).forEach((lab,i)=>{
+        const idx=15*f+i, b=document.createElement('button');
+        b.className='tile'; b.type='button';
+        b.innerHTML=`<span>${lab}</span><span class="v">0</span>`;
+        b.addEventListener('click',()=>{ e[idx]= e[idx]===0?1:(e[idx]===1?-1:0); render(); });
+        const twin=()=>tiles[idx<15?idx+15:idx-15];
+        b.addEventListener('mouseenter',()=>twin().classList.add('twin'));
+        b.addEventListener('mouseleave',()=>twin().classList.remove('twin'));
+        b.addEventListener('focus',()=>twin().classList.add('twin'));
+        b.addEventListener('blur',()=>twin().classList.remove('twin'));
+        tiles[idx]=b; box.appendChild(b);
+      });
+    });
+  }
+  const TEXT={
+    none:['No tampering yet','Click some tiles, or pick a quick try above.'],
+    detected:['Caught','At least one checksum lights up, so the code knows something went wrong and the hidden digits are safe.'],
+    harmless:['Harmless','Nothing lights up, but nothing was damaged either. This pattern is one the code simply shrugs off.'],
+    silent:['Silent corruption','Nothing lights up, yet the hidden digits have been changed. This is exactly the failure an error-correcting code exists to prevent.']
+  };
+  function render(){
+    const S=SCHEMES[scheme];
+    tiles.forEach((t,i)=>{ t.classList.toggle('plus',e[i]===1); t.classList.toggle('minus',e[i]===-1);
+      t.querySelector('.v').textContent=e[i]===1?'+1':(e[i]===-1?'−1':'0');
+      t.setAttribute('aria-label',(i<15?L1[i]:L2[i-15])+' nudge '+e[i]); });
+    const touched=e.filter(x=>x!==0).length;
+    document.getElementById('stK').textContent=S.k;
+    document.getElementById('stD').textContent=S.d;
+    document.getElementById('stT').textContent=touched;
+    const c=classify(scheme,e), v=document.getElementById('verdict');
+    v.className='verdict '+(c==='none'?'':c);
+    let extra='';
+    if(c==='silent') extra=` You only needed ${touched} tile${touched===1?'':'s'}.`;
+    if(c==='harmless' && scheme==='shared') extra=' (Scheme A’s real problem is capacity: it only stores one digit.)';
+    v.innerHTML=`<h3>${TEXT[c][0]}</h3><p>${TEXT[c][1]}${extra}</p>`;
+  }
+  document.querySelectorAll('#schemes button').forEach(b=>b.addEventListener('click',()=>{
+    scheme=b.dataset.s;
+    document.querySelectorAll('#schemes button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+    render();
+  }));
+  const PRESETS={
+    single:{14:1},
+    twins:{14:1,29:-1},
+    three:{0:1,7:1,14:-1}   // uᶜ₃ +1, d₃ +1, e −1: a weight-3 logical inside one family
+  };
+  document.querySelectorAll('#presets button').forEach(b=>b.addEventListener('click',()=>{
+    e.fill(0); const p=PRESETS[b.dataset.p]; if(p) for(const k in p) e[k]=p[k]; render();
+  }));
+  build(); render();
+})();
+</script>
+</body>
+</html>

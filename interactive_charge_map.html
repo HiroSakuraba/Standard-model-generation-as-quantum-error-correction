@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Two Generations · Quantum Code Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0e17;--pane:#141b2b;--pane2:#1b2538;--line:#303c50;--text:#e8edf5;--soft:#a8b8d0;--teal:#4ce2bf;--amber:#eec187;--coral:#ff8e8f}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse 100% 500px at 50% -80px,#203c4c55,transparent),var(--bg);font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text)}
+main{max-width:1120px;margin:auto;padding:28px 18px 70px}h1{font-size:clamp(30px,5vw,52px);line-height:1.06;letter-spacing:-.045em;margin:13px 0 18px}h2{font-size:23px;letter-spacing:-.025em;margin:0 0 10px}p{color:var(--soft);max-width:830px}.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);font-weight:750}
+.lead{font-size:18px;max-width:800px}.hero{padding:27px 0 24px}.tools,.card{border:1px solid var(--line);background:var(--pane);border-radius:16px;padding:18px;margin:18px 0;min-width:0}.tools{display:flex;flex-wrap:wrap;gap:16px;align-items:end}.tools>div{flex:1;min-width:260px}select{font:inherit;color:var(--text);background:#202b3e;border:1px solid #42536b;border-radius:9px;padding:10px 12px;width:100%;outline-color:var(--teal)}label{font-weight:650;display:block;margin-bottom:6px}.muted{font-size:13px;color:var(--soft)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}.stat{border:1px solid var(--line);border-radius:12px;padding:15px;background:#152032}.stat .num{font-size:32px;font-weight:750;letter-spacing:-.045em;line-height:1.2}.stat .text{color:var(--soft);font-size:12px;margin-top:5px}.good{color:var(--teal)}.bad{color:var(--coral)}
+.codebox{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;line-height:1.75;background:#0d1422;border:1px solid #35445b;border-radius:10px;padding:14px;overflow-x:auto;color:#d1e8ef;white-space:pre}
+.matrixscroll{width:100%;overflow-x:auto;padding:8px 1px 12px}.matrix{border-collapse:separate;border-spacing:3px;font:12px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace}.matrix th{font-size:11px;color:#c5d3e6;white-space:nowrap;font-weight:550;padding:5px}.matrix th.rowhead{text-align:right;position:sticky;left:0;z-index:1;background:#141b2b;min-width:100px;padding-right:13px}.matrix td{min-width:26px;height:28px;text-align:center;border-radius:4px;cursor:default;transition:transform .08s}.matrix td.pos{background:#205549;color:#b9ffdf}.matrix td.neg{background:#523c52;color:#ffd4e2}.matrix td.zero{background:#293447;color:#7d93b1}.matrix td.focus{outline:2px solid #f6d68b;outline-offset:1px;transform:scale(1.04)}.matrix .groupdiv{border-left:3px solid #a3c6d9}.matrix .grouphead{color:var(--teal);letter-spacing:.08em;font-size:10px;text-transform:uppercase}
+.twin{display:grid;grid-template-columns:1fr 1fr;gap:18px}.tinytag{display:inline-block;font-size:12px;background:#223b45;color:#93e5cf;padding:2px 9px;border-radius:40px}.note{padding:13px 17px;border-left:3px solid var(--teal);background:#11252a;border-radius:0 8px 8px 0;color:#c4eee4}.warn{border-left-color:var(--amber);background:#25231e;color:#efe0c5}
+a{color:#7eeed1}code{background:#253047;border-radius:4px;padding:2px 4px;color:#d1e9fc}.footer{font-size:13px;color:var(--soft);border-top:1px solid var(--line);margin-top:38px;padding-top:18px}
+@media(max-width:680px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.twin{grid-template-columns:1fr}.tools>div{min-width:100%}}
+</style></head><body><main>
+<section class="hero"><div class="eyebrow">Exploratory mathematical construction · 17 October 2026</div>
+<h1>Two generations.<br><span style="color:var(--teal)">One error-correction problem.</span></h1>
+<p class="lead">Can the charm–strange–muon generation be an error-correcting code? Yes, algebraically—but its isolated code is identical to the first generation. The interesting challenge is combining both families while retaining distance three.</p>
+<p><span class="tinytag">Based on arXiv:2610.21879</span> <span class="tinytag">Exact finite-field checks</span> <span class="tinytag">No quantum hardware implied</span></p></section>
+<section class="tools"><div><label for="preset">Construction</label><select id="preset">
+<option value="muon">Second generation alone · p = 3</option>
+<option value="shared">Two generations, shared SO(10) charges · p = 5</option>
+<option value="family">Two generations + uniform family U(1) · p = 5</option>
+<option value="p3" selected>Coupled qutrit code · p = 3</option>
+<option value="p5">Coupled 5-level code · p = 5</option>
+<option value="direct">Direct sum baseline · p = 3</option>
+</select></div><div><label for="species">Inspect a matched field across families</label><select id="species"></select></div></section>
+<section class="stats"><div class="stat"><div class="num" id="statN">30</div><div class="text">Physical code coordinates</div></div><div class="stat"><div class="num" id="statK">2</div><div class="text">Logical qudits</div></div><div class="stat"><div class="num good" id="statD">3</div><div class="text">Quantum code distance</div></div><div class="stat"><div class="num" id="statS">6</div><div class="text">Independent X stabilizers</div></div></section>
+<div class="card"><h2>Charge lattice</h2><p id="definition"></p><div id="matrixFormula" class="codebox"></div>
+<div class="muted" style="margin-top:14px">Columns = 15 fermion species per generation. Rows = integer-valued charge generators. Colors show sign of residue modulo p. The two right-handed-neutrino conjugates are omitted and become logical coordinates. Scroll horizontally on phones.</div>
+<div class="matrixscroll"><table class="matrix" id="mat"></table></div></div>
+<div class="twin"><div class="card"><h2>Matched-pair error</h2><div id="pairDetails"></div><p class="muted" id="pairTheory"></p></div>
+<div class="card"><h2>What the checks establish</h2><div id="factDetails"></div></div></div>
+<div class="card"><h2>The structural obstruction</h2><p>The two singlets have columns <code>(q₀, +Bq₀)</code> and <code>(q₀, −Bq₀)</code> with <code>q₀=(1,1,1,1,1)</code>. Subtracting identical fermions across generations gives <code>(0, 2Bq)</code>. If that difference lies in the nonzero span of the removed-neutrino difference <code>(0,2Bq₀)</code>, a two-coordinate error becomes an undetectable logical error. Choosing B carefully removes every such pair.</p><div class="note">All integer cubic anomalies vanish in the chosen full 32-column lattices, because each 16-fermion generation is anomaly free. For p ≥ 5, a transversal cubic gate implements U† on each logical qudit. For p = 3, the exact ninth-root qutrit gate follows from the integral lift.</div>
+<p style="margin-top:18px">For p=3, two differential charge rows are insufficient within this architecture: all <strong>1,080</strong> admissible two-dimensional row spaces over F₃ were checked. Three rows suffice. For all p≥5, two rows suffice and one cannot.</p></div>
+<div class="card"><h2>What this is not</h2><p>Fermion species are used as formal qudit labels; this construction does not demonstrate physical quantum information storage inside elementary particles. Family-dependent charges are not exact Standard Model gauge symmetries, and realistic quark and neutrino flavor mixing can break them. These candidate codes have not been shown to outperform two independent 15-qudit codes in distillation.</p>
+<p>Download the complete research note and run the included Python script for exact anomaly, rank, and distance checks. The source paper is by Shiroman Prakash and K. L. Ramya (<a href="https://arxiv.org/abs/2610.21879">arXiv:2610.21879</a>), with <a href="https://github.com/spdei/standard-model-code">their accompanying code</a>.</p></div>
+<div class="footer">Independent exploratory calculations; not peer-reviewed. This HTML runs locally without external scripts or network access.</div>
+</main>
+<script>
+const q0=[1,1,1,1,1];const weights=[];
+for(let i=0;i<5;i++)for(let j=i+1;j<5;j++){let q=q0.slice();q[i]=-1;q[j]=-1;weights.push(q)}
+for(let i=0;i<5;i++){let q=[-1,-1,-1,-1,-1];q[i]=1;weights.push(q)}
+const first=['uᶜ₃','uᶜ₂','d₁','u₁','uᶜ₁','d₂','u₂','d₃','u₃','eᶜ','dᶜ₁','dᶜ₂','dᶜ₃','νₑ','e'];
+const second=['cᶜ₃','cᶜ₂','s₁','c₁','cᶜ₁','s₂','c₂','s₃','c₃','μᶜ','sᶜ₁','sᶜ₂','sᶜ₃','νμ','μ'];
+const I5=Array.from({length:5},(_,i)=>Array.from({length:5},(_,j)=>i===j?1:0));
+const P={
+ muon:{p:3,fams:1,k:1,d:3,x:4,dx:'≥3',B:[],desc:'The second family has exactly the same SO(10) weights as the first. This is a 15-qutrit, single-logical-qudit code.',text:'One-generation weights only',fact:'25 weight-three Z-logical supports; no improvement over the published code.'},
+ shared:{p:5,fams:2,k:1,d:3,x:4,dx:'≥3',B:[],desc:'The physical gauge charges cannot distinguish two copies of an identical fermion. Removing both sterile-neutrino coordinates leaves only one independent logical charge.',text:'Q₁, Q₂, Q₃, Q₄, Q₅ shared across both families',fact:'One logical qudit, not two. 200 weight-three Z-logical supports.'},
+ family:{p:5,fams:2,k:2,d:2,x:4,dx:'≥2',B:[],F:true,desc:'An extra anomaly-free charge giving +1 to every first-generation species and −1 to every second-generation species distinguishes the removed neutrinos—but introduces dangerous matched-pair logical errors.',text:'Five common SO(10) rows, plus family number (+1 / −1)',fact:'Distance drops to 2. Every matched cross-family species produces a two-coordinate logical phase error.'},
+ p3:{p:3,fams:2,k:2,d:3,x:6,dx:7,B:[[1,0,0,0,0],[0,1,0,0,1],[0,0,1,1,0]],desc:'Eight integral charge rows: the five shared SO(10) rows and three differential Cartan rows. Both right-handed-neutrino conjugates can be punctured without admitting a weight-two logical error.',text:'B₃ = [ (1,0,0,0,0), (0,1,0,0,1), (0,0,1,1,0) ]',fact:'[[30,2,3]]₃. Z-logical supports of weight 3: 50 (25 per family, zero mixed). X distance: 7.'},
+ p5:{p:5,fams:2,k:2,d:3,x:5,dx:9,B:[[1,0,0,0,0],[0,1,1,1,1]],desc:'Seven integral charge rows: five shared and only two differential rows. The same choice retains distance three for every odd prime p≥5.',text:'Bₚ≥₅ = [ (1,0,0,0,0), (0,1,1,1,1) ]',fact:'[[30,2,3]]₅. 50 weight-three Z-logical supports. X distance: 9 at p=5.'},
+ direct:{p:3,fams:2,k:2,d:3,x:8,dx:7,B:I5,desc:'Baseline: both families have five independent sets of charge rows, equivalent to the ordinary direct sum of two one-generation codes.',text:'B = identity 5 × 5, yielding independent generation charge spaces',fact:'[[30,2,3]]₃. 50 weight-three Z-logical supports. Uses eight independent X stabilizers.'}
+};
+let cur='p3';let selected=0;
+const dot=(a,b)=>a.reduce((t,v,i)=>t+v*b[i],0);
+const mod=(x,p)=>(x%p+p)%p;
+function charge(q,fam,s){const a=q.slice();if(s.F)a.push(fam===0?1:-1);for(const b of s.B)a.push((fam===0?1:-1)*dot(b,q));return a}
+function isPairLogical(q,s){if(s.fams===1)return 'NA';if(s.F)return 'logical';const b0=s.B.map(b=>mod(dot(b,q0),s.p));const bq=s.B.map(b=>mod(dot(b,q),s.p));if(!b0.length)return 'stabilizer';if(bq.every(x=>x===0))return 'stabilizer';for(let a=1;a<s.p;a++)if(bq.every((v,i)=>v===mod(a*b0[i],s.p)))return 'logical';return 'detected'}
+function update(){cur=document.getElementById('preset').value;const s=P[cur];const fields=s.fams===1?second:first.concat(second);let el=document.getElementById('species');const val=selected;el.innerHTML=first.map((f,i)=>`<option value="${i}">${f} / ${second[i]}</option>`).join('');selected=Math.max(0,Math.min(val,14));el.value=String(selected);
+ document.getElementById('statN').textContent=15*s.fams;document.getElementById('statK').textContent=s.k;
+ let d=document.getElementById('statD');d.textContent=s.d;d.className='num '+(s.d===3?'good':'bad');document.getElementById('statS').textContent=s.x;
+ document.getElementById('definition').textContent=s.desc;
+ document.getElementById('matrixFormula').textContent=s.text+'\n\nColumn:  h(q, s) = (q, s·Bq),    s = +1 or −1\nPunctures: νₑᶜ and νμᶜ  (each has q = +++++).';
+ const rows=['Q₁','Q₂','Q₃','Q₄','Q₅'].concat(s.F?['Family F']:[]).concat(s.B.map((_,i)=>'ΔQ'+(i+1)));
+ const all=s.fams===1?weights.map(q=>charge(q,0,s)):[...weights.map(q=>charge(q,0,s)),...weights.map(q=>charge(q,1,s))];
+ let html='<thead><tr><th class="rowhead">Charge row</th>';
+ for(let i=0;i<fields.length;i++)html+=`<th title="Click to inspect species ${fields[i]}" onclick="selectField(${i%15})" class="${i===15?'groupdiv':''}">${fields[i]}</th>`;
+ html+='</tr><tr><th class="rowhead">Family</th><th colspan="'+(s.fams===1?'15':'15')+'" class="grouphead">'+(s.fams===1?'Muon family':'Electron family')+'</th>'+(s.fams===2?'<th colspan="15" class="grouphead groupdiv">Muon family</th>':'')+'</tr></thead><tbody>';
+ for(let r=0;r<rows.length;r++){html+=`<tr><th class="rowhead">${rows[r]}</th>`;for(let c=0;c<all.length;c++){const v=mod(all[c][r],s.p);const signed=v===0?0:v<=s.p/2?v:v-s.p;const typ=signed===0?'zero':signed>0?'pos':'neg';const focus=c%15===selected?' focus':'';html+=`<td class="${typ}${focus}${c===15?' groupdiv':''}" title="${fields[c]}: integer charge ${all[c][r]}, residue ${v} (mod ${s.p})">${signed>0?'+':''}${signed}</td>`}html+='</tr>'}html+='</tbody>';document.getElementById('mat').innerHTML=html;
+ const condition=isPairLogical(weights[selected],s);let detail='',theory='';
+ if(condition==='NA'){detail='<div class="note">Only one generation is present.</div>';theory='There is no matching first-generation species in this code.'}
+ else if(condition==='logical'){detail='<div class="note warn"><strong>Undetectable logical error (weight 2).</strong> '+first[selected]+' and '+second[selected]+' have a dangerous relative charge.</div>';theory='A phase error Z on one and Z⁻¹ on the other can survive stabilizer checks while changing encoded information.'}
+ else if(condition==='stabilizer'){detail='<div class="note">Undetectable but logically trivial matched pair.</div>';theory='This pair acts as a Z stabilizer, not as a logical error. The shared-charge code nevertheless encodes only one logical qudit.'}
+ else {detail='<div class="note"><strong>Detected error.</strong> The selected cross-generation two-coordinate phase error cannot pass the X-stabilizer checks.</div>';theory='The differential rows distinguish this pair without confusing it with the removed-neutrino logical charges.'}
+ document.getElementById('pairDetails').innerHTML=detail;document.getElementById('pairTheory').textContent=theory;
+ document.getElementById('factDetails').innerHTML=`<p><strong>${s.fact}</strong></p><p>Prime dimension: <strong>${s.p}</strong>. Physical coordinates: <strong>${15*s.fams}</strong>. Independent Z stabilizers: <strong>${15*s.fams-(5+s.B.length+(s.F?1:0))}</strong>. Minimum nontrivial X weight: <strong>${s.dx}</strong>.</p>`;
+}
+function selectField(i){selected=i;update()}
+document.getElementById('preset').addEventListener('change',()=>{selected=0;update()});document.getElementById('species').addEventListener('change',e=>{selected=Number(e.target.value);update()});update();
+</script></body></html>
