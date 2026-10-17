@@ -103,6 +103,7 @@ To reproduce the new deterministic and comparison checks:
 python3 exact_yukawa.py
 python3 code_fingerprints.py            # requires numpy
 python3 code_fingerprints.py --extended # adds three-generation codes
+python3 local_purity.py                 # exact four-site reduced-projector purities; requires numpy
 ```
 
 Existing checks:
@@ -122,6 +123,7 @@ Between them, the scripts check cubic anomaly cancellation in exact integer arit
 The original five steps are addressed in Part 4 and [`OPEN_STEPS_NOTE.md`](OPEN_STEPS_NOTE.md). What's left:
 
 - **New:** [exact Yukawa theorem and classification fingerprints](EXACT_SYMMETRY_AND_CLASSIFICATION.md), with [deterministic single-Higgs verification](exact_yukawa.py) and [code-fingerprint comparison](code_fingerprints.py). The latter distinguishes the joined codes from direct sums but does not establish novelty among all qudit codes.
+- **New:** [four-qudit reduced-state purity invariant](LOCAL_PURITY_NOTE.md), computed by [local_purity.py](local_purity.py). For the two-family coupled codes there are 184 (p=3) or 249 (p=5) four-site purity hotspots, versus 150 for independent copies. The three-family counts are 327/522, versus 225. These are local-unitary invariants, not logical error rates; matching existing indecomposable qudit codes remains open.
 - Compare the joined codes with explicit check matrices of known qudit codes, e.g. the qudit Reed–Muller family, not only with direct sums.
 - Explain why nonlinear charge rows appear only for p ≡ 1 (mod 3), and whether the floor of 8 weight-3 weak spots can be broken.
 - Extend the gate search to non-diagonal and permutation-assisted ("fold") transversal gates, and to the p = 3 ninth-root gates.
@@ -129,6 +131,6 @@ The original five steps are addressed in Part 4 and [`OPEN_STEPS_NOTE.md`](OPEN_
 
 ## The whole story in one chain
 
-Anomaly cancellation = triorthogonality → one generation is a 15-slot magic code → the second generation alone is the identical code (charges, not masses) → two together hit the twins problem → a family badge gives 2 digits but distance 2 → smart badges restore distance 3 → three families with independent labels give 45 slots, 3 digits, distance 3, coupled only at four tiles → but flavour mixing blends the families, so no family-distinguishing badge can be exact, and the digits collapse back to one → the follow-up shows the only force-compatible badges (family B−L and right-handed isospin) still need charges that neutrino mixing breaks at order one, that the joined codes are genuinely new objects whose coupling shows up as correlated ε⁴ errors rather than new gates, and that distance 4 is out of reach for this whole class.
+Anomaly cancellation = triorthogonality → one generation is a 15-slot magic code → the second generation alone is the identical code (charges, not masses) → two together hit the twins problem → a family badge gives 2 digits but distance 2 → smart badges restore distance 3 → three families with independent labels give 45 slots, 3 digits, distance 3, coupled only at four tiles → but flavour mixing blends the families, so no family-distinguishing badge can be exact, and the digits collapse back to one → the follow-up shows the only force-compatible badges (family B−L and right-handed isospin) still need charges that neutrino mixing breaks at order one, that the joined codes are inequivalent to independent copies whose coupling shows up as correlated ε⁴ errors rather than new gates, and that distance 4 is out of reach for this whole class.
 
 Two levels of description each refuse to supply a stable family label. At the level of symmetry (charges), the generations are perfect twins. At the level of mass, they are blended. A multi-family code needs exactly what neither level provides.
