@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/su2-exchange-algebra
+      - research/five-block-su2-recovery
 
 jobs:
   exact-math:
@@ -42,3 +42,5 @@ jobs:
         run: python four_link_su2_subspace.py
       - name: Four-link SU2 collective exchange and complete local noise-algebra no-go
         run: python su2_exchange_algebra.py
+      - name: Five SU2 singlet blocks and exact 5-qubit recovery (1024 KL overlaps)
+        run: python five_block_su2_recovery.py
