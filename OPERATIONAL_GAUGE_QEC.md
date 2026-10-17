@@ -14,6 +14,12 @@ Anomaly cancellation is a **consistency condition on quantum field-theory charge
 
 The last item is the principal missing step for the full Standard Model. Physical gauge charges impose local constraints and superselection restrictions; treating charge labels as freely manipulated qudit degrees of freedom without addressing those restrictions is not an operational model.
 
+## A general obstruction: charge-only syndromes
+
+**Lemma.** Let \(P\) project onto a proposed code space stabilized by a commuting collection of gauge/charge measurements \(\{G_a\}\). Suppose a physical unitary error \(E\) commutes with every \(G_a\) and preserves the code space, but its restriction \(PEP\) is **not** a scalar multiple of \(P\). Then the error set \(\{I,E\}\) **cannot** be corrected on that code space, since the Knill–Laflamme condition \(PI^\dagger EP=cP\) fails. Measuring the \(G_a\) also produces the same syndrome before and after \(E\).
+
+The assumptions matter. This does **not** rule out adding independent checks that distinguish an \(E\) which preserves the gauge-physical subspace but moves states outside the *smaller* quantum code, as the magnetic-check toric example below demonstrates. It also does not say that every gauge-invariant error has nontrivial logical action.
+
 ## Result A. Gauge invariance by itself does not protect a quantum memory
 
 Take an elementary closed ring of three p-level links, with electric-flux computational basis \`|e_0,e_1,e_2>\`. No matter or background charge is included. Impose local Gauss laws
