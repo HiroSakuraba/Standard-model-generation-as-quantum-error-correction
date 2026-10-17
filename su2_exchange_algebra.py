@@ -164,7 +164,12 @@ def hamiltonian_and_noise():
 
     # Full degeneracy is weaker than six individually equal couplings:
     # it requires and is equivalent to three pair-sums A=B=C.
-    assert sp.solve((hz, hx), (A, B)) == {A: C, B: C}
+    aa, bb, cc = sp.symbols("A B C", real=True)
+    generic_hz = (-2 * aa + bb + cc) / 4
+    generic_hx = ROOT3 * (cc - bb) / 4
+    assert sp.solve((generic_hz, generic_hx), (aa, bb)) == {
+        aa: cc, bb: cc
+    }
 
     nonuniform = {
         Js[(1, 3)]: 1, Js[(4, 5)]: 3,
