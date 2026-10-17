@@ -105,6 +105,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su2_exchange_algebra.py`](su2_exchange_algebra.py) | Verifies all eight spin-singlet sectors, on-site swap matrices, Hamiltonian gap, and full endpoint/exchange operator algebra (requires SymPy) |
 | [`FIVE_BLOCK_SU2_RECOVERY.md`](FIVE_BLOCK_SU2_RECOVERY.md) | Five independent SU(2) singlet modules plus the known [[5,1,3]] outer code; exact recovery proof, physical limitations and two-module fault |
 | [`five_block_su2_recovery.py`](five_block_su2_recovery.py) | 1,024 exact Knill–Laflamme overlaps, 16 error syndromes, local SU(2) exchange-to-Pauli map, correlated-noise counterexample |
+| [`FLAGGED_SU2_STABILIZER_NOTE.md`](FLAGGED_SU2_STABILIZER_NOTE.md) | Exhaustive single-fault Clifford extraction-gadget comparison, flag placement and recovery ambiguities; not a full fault-tolerant measurement protocol |
+| [`flagged_su2_measurement.py`](flagged_su2_measurement.py) | Pure-Python exact propagation of 64 bare / 98 flagged fault cases for each outer check and conditional recovery validation |
 
 ## Reproduce
 
@@ -124,6 +126,7 @@ python3 su2_matter_singlet.py           # SU(2) with matter: Gauss-invariant err
 python3 four_link_su2_subspace.py       # fixed-sector SU(2) DFS, failure under local exchange
 python3 su2_exchange_algebra.py        # engineered SU(2) ground gap, balance conditions, full local-noise algebra
 python3 five_block_su2_recovery.py     # exact one-module recovery via known five-qubit perfect code
+python3 flagged_su2_measurement.py    # flag-ancilla scheduling and single-gadget fault enumeration
 ```
 
 Existing checks:
@@ -152,6 +155,7 @@ The original five steps are addressed in Part 4 and [`OPEN_STEPS_NOTE.md`](OPEN_
 - **Restricted positive physical-code result:** [four-link SU(2) decoherence-free qubit](FOUR_LINK_SU2_DFS.md), verified by [four_link_su2_subspace.py](four_link_su2_subspace.py). In the four-link model a **proper 2D subspace** of the 16D color-singlet Hilbert space exactly protects a logical qubit from all diagonal link-end occupancy noise. Nevertheless a gauge-invariant matter–rishon color exchange acts as a logical Z phase error. This makes the protected error model explicit but leaves Hamiltonian-based protection and the full SM interpretation unproved.
 - **Engineered Hamiltonian and no-go result:** [exact SU(2) exchange Hamiltonian and full-noise algebra](SU2_EXCHANGE_HAMILTONIAN_AND_NO_GO.md), verified by [su2_exchange_algebra.py](su2_exchange_algebra.py). An engineered SU(2)-invariant penalty plus collective exchange Hamiltonian makes the encoded qubit an exactly degenerate, gapped ground sector. The six local pair couplings preserve degeneracy iff three opposite-pair sums match; generic allowed exchanges split it at first order despite the gap. Complete local occupancy + conditional exchange errors generate eight full 2×2 operator blocks, precluding any 2D code correcting *that entire error algebra*. This is not a universal gauge-code no-go.
 - **First exact active-recovery SU(2) example:** [five singlet modules with the established [[5,1,3]] outer quantum code](FIVE_BLOCK_SU2_RECOVERY.md), checked by [five_block_su2_recovery.py](five_block_su2_recovery.py). The verifier constructs actual local SU(2)-invariant exchange representations for module X/Z, two orthonormal five-module codewords, 16 distinct error syndromes and all 1,024 Knill–Laflamme overlaps. A one-module fault is correctable **assuming ideal cross-module syndrome measurement and recovery**. An explicit two-module fault is miscorrected. This is *concatenation of a published code*, not a new Standard Model code or a physical circuit.
+- **Measured-check gadget diagnosis:** [flagged outer stabilizer extraction fault enumeration](FLAGGED_SU2_STABILIZER_NOTE.md), checked by [flagged_su2_measurement.py](flagged_su2_measurement.py). Each of four bare controlled-Pauli gadgets has 12 single-gate/ancilla-fault cases that become logical errors under naive decoding. Adding two flag-ancilla CNOTs after data couplings 1 and 3 flags all dangerous cases and yields an unambiguous recovery lookup **assuming a later perfect four-bit data syndrome**; a different flag placement has ambiguous correction classes. This is a *conditional one-gadget* result, **not** a complete one-fault-tolerant extraction round or local SU(2) hardware compilation.
 - Compare the joined codes against **same-(n,k,p)** explicit check matrices of other published odd-prime codes, especially shortened/affine-variety constructions. That broader novelty question is open.
 - Explain why nonlinear charge rows appear only for p ≡ 1 (mod 3), and whether the floor of 8 weight-3 weak spots can be broken.
 - Extend the gate search to non-diagonal and permutation-assisted ("fold") transversal gates, and to the p = 3 ninth-root gates.
