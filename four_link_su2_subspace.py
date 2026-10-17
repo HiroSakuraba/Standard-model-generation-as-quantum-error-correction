@@ -204,11 +204,37 @@ def test():
     assert_same_state(swap_state(Q0, 1, 3), combine(Q0, {}, -1, 0))
     assert_same_state(swap_state(Q1, 1, 3), Q1)
 
+    # In the deliberately specified Hamiltonian
+    # H = Delta * sum_e (N_e - n_e^target)^2
+    #     + J * S_m1 . S_r1,
+    # the first term vanishes identically on BOTH codewords.
+    # The gauge-invariant exchange does not change endpoint occupancy,
+    # so increasing Delta cannot suppress this logical splitting.
+    J, Delta, t = sp.symbols("J Delta t", real=True)
+    target = (1, 0, 0, 0)
+    penalty = sp.zeros(2)
+    for e in range(4):
+        n_left = int(ORIENTATION[e] == 0)
+        penalty += Delta * (n_left - target[e]) ** 2 * identity
+    assert penalty == sp.zeros(2)
+    h_code = penalty + J * exchange
+    assert h_code == sp.diag(-3 * J / 4, J / 4)
+    assert sp.simplify(h_code[1, 1] - h_code[0, 0] - J) == 0
+    # For initial |+_L>, the survival probability is cos^2(J t/2):
+    # exchange causes logical phase evolution even with arbitrarily
+    # strong endpoint-occupation penalties.
+    amp = (sp.exp(-sp.I * h_code[0, 0] * t) +
+           sp.exp(-sp.I * h_code[1, 1] * t)) / 2
+    survival = sp.trigsimp(sp.expand_complex(
+        amp * sp.conjugate(amp)) - (1 + sp.cos(J * t)) / 2)
+    assert survival == 0
+
     print("Two orthonormal fixed-orientation SU(2) singlets: PASS")
     print("All four link-end number / phase checks PEP=cP: PASS")
     print("Gauge-invariant on-site SWAP projected:", swap)
     print("Local SU(2) exchange projected:", exchange)
     print("Knill-Laflamme for {I,SWAP}: FAIL (logical Z)")
+    print("Endpoint penalty gives zero splitting; exchange gives Delta E=J and fidelity cos^2(Jt/2)")
     print("ALL FOUR-LINK SU2 SUBSPACE CHECKS PASSED")
 
 
