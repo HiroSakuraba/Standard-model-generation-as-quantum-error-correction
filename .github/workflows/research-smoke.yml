@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/operational-gauge-qec
+      - research/su2-matter-gauss-kl
 
 jobs:
   exact-math:
@@ -34,3 +34,7 @@ jobs:
         run: python operational_gauge_qec.py
       - name: Abstract charge-lattice full Pauli KL certificate
         run: python abstract_stabilizer_recovery.py
+      - name: Install exact SU2 representation dependency
+        run: python -m pip install sympy==1.14.0
+      - name: SU2 matter doublets and non-Abelian Gauss-only KL counterexample
+        run: python su2_matter_singlet.py
