@@ -37,7 +37,12 @@ def small_rank(columns, p):
         if pivot is None:
             continue
         inv = pow(v[pivot], -1, p)
-        pivots[pivot] = [(x * inv) % p for x in v]
+        reduced = [(x * inv) % p for x in v]
+        for j, row in pivots.items():
+            if row[pivot]:
+                factor = row[pivot]
+                pivots[j] = [(x - factor * y) % p for x, y in zip(row, reduced)]
+        pivots[pivot] = reduced
     return len(pivots)
 
 
