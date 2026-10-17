@@ -124,6 +124,12 @@ section{padding:40px 0;border-top:1px solid var(--line)}
 .chain li:last-child{border-bottom:0}
 .chain li::before{counter-increment:c;content:counter(c);position:absolute;left:0;top:10px;width:28px;height:28px;border-radius:50%;background:var(--pane2);border:1px solid var(--line);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;color:var(--teal)}
 .run{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;background:var(--pane2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;white-space:pre;color:var(--text)}
+.mixgrid{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-top:8px}
+.m2{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;max-width:220px}
+.m2 div{border:1px solid var(--line);background:var(--pane2);border-radius:8px;padding:12px 6px;text-align:center;font:600 17px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.m2 div.off{background:var(--amber-bg);color:var(--amber);border-color:var(--amber)}
+.arrow{font-size:24px;color:var(--faint)}
+@media (max-width:560px){.mixgrid{grid-template-columns:1fr}.arrow{display:none}}
 footer{border-top:1px solid var(--line);padding:30px 0 60px;font-size:14px;color:var(--soft)}
 footer p{margin-bottom:8px}
 </style>
@@ -133,11 +139,14 @@ footer p{margin-bottom:8px}
 <header class="wrap">
   <div class="eyebrow">Independent exploratory study · October 2026</div>
   <h1>Matter as a quantum code</h1>
-  <p class="lead"><strong>The rule that keeps the Standard Model of particle physics mathematically consistent turns out to be the same rule a special quantum error-correcting code needs.</strong> A recent paper showed this for one family of particles. This project asks what happens with two.</p>
+  <p class="lead"><strong>The rule that keeps the Standard Model of particle physics mathematically consistent turns out to be the same rule a special quantum error-correcting code needs.</strong> A recent paper showed this for one family of particles. This project asks what happens with two families, then all three, and runs into a wall that nature itself puts up.</p>
   <div class="btns">
     <a class="btn primary" href="#lab">Try the error game</a>
-    <a class="btn" href="interactive_charge_map.html">Technical charge map</a>
+    <a class="btn" href="#mixing">The flavour-mixing catch</a>
+    <a class="btn" href="interactive_charge_map.html">Two-family charge map</a>
+    <a class="btn" href="interactive_flavor_map.html">Three-family &amp; mixing explorer</a>
     <a class="btn" href="https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction/blob/main/RESEARCH_NOTE.md">Research note</a>
+    <a class="btn" href="https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction/blob/main/THREE_GENERATION_FLAVOR_NOTE.md">Three-generation note</a>
     <a class="btn" href="https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction">Code on GitHub</a>
   </div>
 </header>
@@ -202,13 +211,38 @@ footer p{margin-bottom:8px}
       <div class="result">30 slots, 2 protected digits, distance 3 restored. Needs 3 extra badge rows for qutrits (p = 3), and just 2 for every prime p ≥ 5.</div>
     </div>
   </div>
-  <div class="why"><b>Why it matters:</b> it locates exactly where the difficulty lives, in matched twins across families, and finds the smallest fix that works within this recipe.</div>
+  <div class="why"><b>Why it matters:</b> it locates exactly where the difficulty lives, in matched twins across families, and finds the smallest fix that works within this recipe. You can try all three schemes in the game further down.</div>
+</section>
+
+<section class="wrap">
+  <h2>How few extra badges do you need?</h2>
+  <p>One extra badge row never works. With a single row, some twin pair always lines up with the hidden digits.</p>
+  <p>For qutrits (p&nbsp;=&nbsp;3), the computer checked <strong>all 1,080</strong> possible ways to add two badge rows that keep the hidden spots distinguishable. Every one still leaves a weak twin pair, and three rows work. For every prime p&nbsp;≥&nbsp;5, a short pencil-and-paper argument shows that one particular two-row choice always works.</p>
+  <p class="soft">One honest qualifier: "minimal" here means minimal <em>within this recipe</em> (keep the five shared charges and add family-flipped rows). It is not a claim about every possible quantum code.</p>
+</section>
+
+<section class="wrap">
+  <h2>Adding the third family</h2>
+  <p>Next comes the third generation: top, bottom, tau and tau neutrino. That makes 48 particles. Pull out all three right-handed neutrinos and you have 45 slots, with the hope of <strong>three</strong> protected digits.</p>
+  <p>The trick is to give each family a pair of "badge numbers" instead of a single ±1: (+1,&nbsp;0) for the first family, (−1,&nbsp;0) for the second and (0,&nbsp;+1) for the third. Those three labels point in genuinely different directions for every odd prime p, so the three hidden spots can always be told apart. The same smart-badge rows from before are then applied along each direction.</p>
+  <div class="steps">
+    <div class="card">
+      <span class="tag good">Result</span>
+      <h3>45 slots, 3 protected digits, distance 3</h3>
+      <p>For qutrits (p&nbsp;=&nbsp;3) it uses 11 charge rows and 8 checks. For p&nbsp;=&nbsp;5 it uses 9 rows and only 6 checks. The construction keeps distance 3 for every odd prime. The balancing rule (anomaly cancellation) still holds exactly, because each family's 16 particles cancel on their own.</p>
+      <div class="result">[[45,3,3]] at p = 3 and p = 5 · bit-flip-type distance 7 and 9</div>
+    </div>
+  </div>
+  <h3>A twist: the families really are coupled, but only at four tiles</h3>
+  <p>Is this just three separate codes stacked side by side? Not quite. In three separate codes, any silent error has to put at least three tiles inside a single family. In the joined code there are silent errors that use only <strong>two tiles in each of two families</strong>: 88 such patterns per pair of families for qutrits, and 396 for p&nbsp;=&nbsp;5.</p>
+  <p>So joining the families creates real cross-family structure. But it shows up at four tiles, one beyond what a distance-3 code promises to handle. Every three-tile weak spot still lives entirely inside one family: 25 per family, 75 in all.</p>
+  <div class="why"><b>Why it matters:</b> it's evidence the joined code is a genuinely different object from three separate copies, at least in where its errors sit. Whether that difference helps or hurts in practice hasn't been worked out.</div>
 </section>
 
 <section class="wide" id="lab">
   <div class="wrap" style="padding:0">
     <h2>Try to sneak an error past the checks</h2>
-    <p class="soft">Below are the 30 particle slots for both families, using 5-setting digits (p&nbsp;=&nbsp;5). Click a tile to nudge it: once for +1, twice for −1, three times to clear it. The verdict is computed live with exact arithmetic, the same way the research script does it. Hovering a tile highlights its twin in the other family.</p>
+    <p class="soft">Below are the particle slots, using 5-setting digits (p&nbsp;=&nbsp;5). Pick a badge scheme; scheme D adds the third family. Click a tile to nudge it: once for +1, twice for −1, three times to clear it. The verdict is computed live with exact arithmetic, the same way the research script does it. Hovering a tile highlights its twins in the other families.</p>
   </div>
   <div class="lab">
     <div class="lab-label">Badge scheme</div>
@@ -216,6 +250,7 @@ footer p{margin-bottom:8px}
       <button data-s="shared" aria-pressed="false">A · Shared charges</button>
       <button data-s="badge" aria-pressed="false">B · Family badge</button>
       <button data-s="smart" aria-pressed="true">C · Smart badges</button>
+      <button data-s="three" aria-pressed="false">D · Three families</button>
     </div>
     <div class="labstats">
       <div><div class="n" id="stK">2</div><div class="t">Protected digits</div></div>
@@ -227,29 +262,46 @@ footer p{margin-bottom:8px}
       <button data-p="single">One tile</button>
       <button data-p="twins">Twin pair: e +1, μ −1</button>
       <button data-p="three">Three-tile sneak (one family)</button>
+      <button data-p="four">Four-tile cross-family sneak</button>
       <button data-p="clear">Clear</button>
     </div>
     <div class="fam"><div class="lab-label">Electron family (1st generation)</div><div class="tiles" id="fam0"></div></div>
     <div class="fam"><div class="lab-label">Muon family (2nd generation)</div><div class="tiles" id="fam1"></div></div>
+    <div class="fam" id="fam2wrap" hidden><div class="lab-label">Tau family (3rd generation)</div><div class="tiles" id="fam2"></div></div>
     <div class="verdict" id="verdict" aria-live="polite"><h3>No tampering yet</h3><p>Click some tiles, or pick a quick try above.</p></div>
-    <p class="labnote">Key: u/d = up/down-type quark (c/s in the 2nd family), e/μ = electron/muon, ν = neutrino, superscript ᶜ = the partner ("conjugate") field, subscript = quark colour. The demo covers phase-type errors. The code guards against the other type (bit-flip-like errors) by an even wider margin: distance 7 at p&nbsp;=&nbsp;3 and 9 at p&nbsp;=&nbsp;5.</p>
+    <p class="labnote">Key: u/d = up/down-type quark (c/s in the 2nd family), e/μ/τ = electron/muon/tau; the 3rd family uses t/b, ν = neutrino, superscript ᶜ = the partner ("conjugate") field, subscript = quark colour. The demo covers phase-type errors. The code guards against the other type (bit-flip-like errors) by an even wider margin: distance 7 at p&nbsp;=&nbsp;3 and 9 at p&nbsp;=&nbsp;5.</p>
   </div>
 </section>
-
-<section class="wrap">
-  <h2>How few extra badges do you need?</h2>
-  <p>One extra badge row never works. With a single row, some twin pair always lines up with the hidden digits.</p>
-  <p>For qutrits (p&nbsp;=&nbsp;3), the computer checked <strong>all 1,080</strong> possible ways to add two badge rows that keep the hidden spots distinguishable. Every one still leaves a weak twin pair, and three rows work. For every prime p&nbsp;≥&nbsp;5, a short pencil-and-paper argument shows that one particular two-row choice always works.</p>
-  <p class="soft">One honest qualifier: "minimal" here means minimal <em>within this recipe</em> (keep the five shared charges and add family-flipped rows). It is not a claim about every possible quantum code.</p>
+<section class="wrap" id="mixing">
+  <h2>The catch: nature mixes the families</h2>
+  <p>So far the badges have been a free choice on paper. Now comes the hard question: could nature actually respect them? The answer runs into a well-measured fact called <strong>flavour mixing</strong>.</p>
+  <p>The particles that have a definite mass, the ones that actually travel through space, are <em>not</em> the same as the ones with a definite family label. Each is a blend. A down-type quark with a definite mass is mostly "first family" with a bit of "second family" mixed in, and the same is true for neutrinos, even more so.</p>
+  <div class="aside">
+    <h3>The paint-tin analogy</h3>
+    <p>Suppose you label the red tin +1 and the blue tin −1. That works as long as nature hands you pure red or pure blue. But if nature only ever hands you purple-ish blends, the label stops being a fixed property: a blend doesn't <em>have</em> a definite badge.</p>
+    <p>The only way a label survives the blending is if red and blue carry the <em>same</em> label. But then the label can't tell the families apart, which was the whole point of having it.</p>
+  </div>
+  <div class="fig" id="mixfig">
+    <label for="theta" class="lab-label" style="display:block;margin-bottom:6px">Mixing angle θ: <span id="thetaVal">13°</span> <span class="soft" style="text-transform:none;letter-spacing:0;font-weight:400" id="thetaNote"></span></label>
+    <input type="range" id="theta" min="0" max="45" step="1" value="13" style="width:100%;accent-color:var(--teal)">
+    <div class="mixgrid">
+      <div><div class="cap" style="margin:8px 0">Badges in the family basis</div><div class="m2"><div>+1</div><div>0</div><div>0</div><div>−1</div></div></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div><div class="cap" style="margin:8px 0">Seen from the blended (mass) particles</div><div class="m2"><div id="m11"></div><div class="off" id="m12"></div><div class="off" id="m21"></div><div id="m22"></div></div></div>
+    </div>
+    <p class="cap">The highlighted corner numbers are (d₁ − d₂)·sin&nbsp;θ·cos&nbsp;θ. They measure how badly the badge is smeared by mixing. They vanish only when θ&nbsp;=&nbsp;0 (no mixing) or when both families carry the same badge (d₁&nbsp;=&nbsp;d₂).</p>
+  </div>
+  <p>This is exactly the trap. To store more than one digit, the badges <em>must</em> tell the families apart. But real mixing means any badge that tells them apart can't be an exact law of nature, at least not without new physics to protect it. Keep only the family-blind charges that nature does respect, and the three hidden spots merge into one: <strong>back to a single protected digit</strong>.</p>
+  <div class="why"><b>Why it matters:</b> the multi-family code isn't just unproven as physics. There's a specific, measured reason it can't be exact in the Standard Model as we know it. The structure the code needs is precisely the structure flavour mixing erases.</div>
 </section>
 
 <section class="wrap">
   <h2>What this does <em>not</em> show</h2>
   <ul class="list">
     <li><strong>Particles aren't secretly computing.</strong> Each particle is just a label for a column in a table. Building real hardware would need an actual physical system, measurements and noise modelling, and none of that follows from the mathematics.</li>
-    <li><strong>The smart badges aren't real forces.</strong> They are extra charges added by hand, not part of the observed Standard Model. Real quarks and neutrinos mix between families, and that mixing would break such badges unless some new physics protects them.</li>
-    <li><strong>It isn't better than two separate copies (yet).</strong> The weakest error patterns all stay inside one family; none cross between families. So for magic-state distillation, the leading error rate is the same as running two independent 15-slot codes. The combined code does use fewer checks (5 or 6 instead of 8). Whether that helps in practice is an open question.</li>
-    <li><strong>The magic operation acts on each digit separately.</strong> It doesn't link (entangle) the two protected digits.</li>
+    <li><strong>The smart badges aren't real forces.</strong> They are extra charges added by hand, not part of the observed Standard Model. As the <a href="#mixing">flavour-mixing section</a> shows, real mixing between families rules them out as exact symmetries unless some new physics protects them.</li>
+    <li><strong>It isn't better than separate copies (yet).</strong> The weakest (three-tile) error patterns all stay inside one family, so for magic-state distillation the leading error rate is the same as running independent 15-slot codes. The joined codes use fewer checks, and they have extra cross-family weak spots at four tiles. Whether the trade helps or hurts in practice is open. No decoder, threshold or circuit study has been done.</li>
+    <li><strong>The magic operation acts on each digit separately.</strong> It doesn't link (entangle) the protected digits.</li>
     <li><strong>Novelty and review.</strong> No literature search has been done for equivalent known codes, and the work hasn't been peer-reviewed.</li>
   </ul>
 </section>
@@ -266,18 +318,22 @@ footer p{margin-bottom:8px}
         <tr class="hl"><td>Both families + smart badges (3 rows)</td><td class="num">3</td><td class="num">30</td><td class="num">2</td><td class="num">3</td><td>Works; 6 checks</td></tr>
         <tr class="hl"><td>Both families + smart badges (2 rows)</td><td class="num">≥ 5</td><td class="num">30</td><td class="num">2</td><td class="num">3</td><td>Works; 5 checks</td></tr>
         <tr><td>Two separate copies (baseline)</td><td class="num">3</td><td class="num">30</td><td class="num">2</td><td class="num">3</td><td>Works; 8 checks</td></tr>
+        <tr class="hl"><td>Three families + smart badges</td><td class="num">3</td><td class="num">45</td><td class="num">3</td><td class="num">3</td><td>Works; 8 checks</td></tr>
+        <tr class="hl"><td>Three families + smart badges</td><td class="num">5</td><td class="num">45</td><td class="num">3</td><td class="num">3</td><td>Works; 6 checks</td></tr>
+        <tr><td>Three families, family-blind charges only</td><td class="num">any odd</td><td class="num">45</td><td class="num">1</td><td class="num">–</td><td>What survives exact mixing</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="soft" style="margin-top:14px">In code notation, the smart-badge codes are written <code>[[30,2,3]]</code>: 30 slots, 2 protected digits, distance 3.</p>
+  <p class="soft" style="margin-top:14px">In code notation, the smart-badge codes are written <code>[[30,2,3]]</code> and <code>[[45,3,3]]</code>: slots, protected digits, distance.</p>
 </section>
 
 <section class="wrap">
   <h2>Check it yourself</h2>
-  <p>Everything above is reproduced by one Python script. It needs no installs or internet, and it runs in a few seconds. It checks the balancing rule in exact whole-number arithmetic, counts protected digits, measures distances, and runs the exhaustive 1,080-case search.</p>
+  <p>Everything above is reproduced by two Python scripts. They need no installs or internet. They check the balancing rule in exact whole-number arithmetic, count protected digits, measure distances, run the exhaustive 1,080-case search, enumerate every error pattern of up to four tiles in the three-family codes, and check the mixing identity with exact fractions.</p>
   <div class="run">git clone https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction
 cd Standard-model-generation-as-quantum-error-correction
-python3 matter_qec_study.py      # ends with: ALL CHECKS PASSED</div>
+python3 matter_qec_study.py        # two families · a few seconds · ALL CHECKS PASSED
+python3 three_generation_flavor.py # three families + mixing · ~20 s · ALL THREE-GENERATION CHECKS PASSED</div>
 </section>
 
 <section class="wrap">
@@ -289,9 +345,12 @@ python3 matter_qec_study.py      # ends with: ALL CHECKS PASSED</div>
     <li>Combine the two and you hit the twins problem: identical-looking partners across families.</li>
     <li>A simple family badge gets two digits but opens 15 two-tile blind spots (distance 2).</li>
     <li>Carefully chosen "smart badges," 3 rows for qutrits and 2 for p ≥ 5, close every blind spot and restore distance 3.</li>
-    <li>But the result is no better than two separate codes for distillation, and the badges aren't real physics.</li>
+    <li>The same idea, with three independent family labels, gives a 45-slot code holding 3 digits at distance 3.</li>
+    <li>The joined families are genuinely coupled, but only through four-tile errors (2 + 2 across two families), one beyond the code's protection limit.</li>
+    <li>Real flavour mixing blends the families, so no family-distinguishing badge can be an exact symmetry. Keep only what nature respects, and the three digits collapse back to one.</li>
+    <li>So the multi-family codes are real mathematics but not real physics, and there is no distillation gain over separate copies yet.</li>
   </ol>
-  <p><strong>The deeper takeaway:</strong> this code lives entirely at the level of <em>symmetry</em>, where only charges exist. The generations differ only in mass, so at that level they are perfect twins, and you can't get a genuinely two-family code without adding structure that nature (as far as we know) doesn't supply. Seen this way, the mystery of why matter comes in three copies is a fact the charges alone can't express.</p>
+  <p><strong>The deeper takeaway:</strong> two different levels of description each refuse to supply a stable family label. At the level of <em>symmetry</em>, where only charges live, the generations are perfect twins. At the level of <em>mass</em>, where particles actually propagate, they are blended together. The code needs exactly what neither level provides: a fixed, sharp answer to "which family is this?" Seen this way, the mystery of why matter comes in three copies is written in a place the charges can't reach.</p>
 </section>
 
 </main>
@@ -326,13 +385,18 @@ python3 matter_qec_study.py      # ends with: ALL CHECKS PASSED</div>
   })();
 
   // ---- lab ----
+  const L3 = ['tᶜ₃','tᶜ₂','b₁','t₁','tᶜ₁','b₂','t₂','b₃','t₃','τᶜ','bᶜ₁','bᶜ₂','bᶜ₃','ντ','τ'];
+  const LABELS=[L1,L2,L3];
+  const FAM=[[1,0],[-1,0],[0,1]];             // family label vectors (three_generation_flavor.py)
+  const sgn=g=>g===0?1:-1;
   const SCHEMES = {
-    shared:{k:1,d:3, col:(q,s)=>q.slice()},
-    badge: {k:2,d:2, col:(q,s)=>q.concat([s])},
-    smart: {k:2,d:3, col:(q,s)=>q.concat(B5.map(b=>s*dot(b,q)))}
+    shared:{nf:2,k:1,d:3, col:(q,g)=>q.slice()},
+    badge: {nf:2,k:2,d:2, col:(q,g)=>q.concat([sgn(g)])},
+    smart: {nf:2,k:2,d:3, col:(q,g)=>q.concat(B5.map(b=>sgn(g)*dot(b,q)))},
+    three: {nf:3,k:3,d:3, col:(q,g)=>q.concat(B5.map(b=>FAM[g][0]*dot(b,q)), B5.map(b=>FAM[g][1]*dot(b,q)))}
   };
   let scheme='smart';
-  const e=new Array(30).fill(0);
+  const e=new Array(45).fill(0);
 
   function rank(vectors){
     if(!vectors.length) return 0;
@@ -348,10 +412,11 @@ python3 matter_qec_study.py      # ends with: ALL CHECKS PASSED</div>
     }
     return r;
   }
+  // err has 15*nf entries (family-major, same species order as the Python scripts)
   function classify(sch, err){
-    const S=SCHEMES[sch];
-    const removed=[S.col(q0,1),S.col(q0,-1)];
-    const phys=W.map(q=>S.col(q,1)).concat(W.map(q=>S.col(q,-1)));
+    const S=SCHEMES[sch], fams=[...Array(S.nf).keys()];
+    const removed=fams.map(g=>S.col(q0,g));
+    const phys=[].concat(...fams.map(g=>W.map(q=>S.col(q,g))));
     if(err.every(x=>x===0)) return 'none';
     const syn=phys[0].map((_,r)=>mod(err.reduce((t,v,j)=>t+v*phys[j][r],0)));
     if(syn.every(x=>x===0)) return 'harmless';
@@ -360,19 +425,19 @@ python3 matter_qec_study.py      # ends with: ALL CHECKS PASSED</div>
   window.__classify=classify; // exposed for testing
 
   const tiles=[];
+  function twins(idx,on){ const i=idx%15; [0,1,2].forEach(g=>{ const t=tiles[15*g+i]; if(15*g+i!==idx) t.classList.toggle('twin',on); }); }
   function build(){
-    [0,1].forEach(f=>{
+    [0,1,2].forEach(f=>{
       const box=document.getElementById('fam'+f);
-      (f?L2:L1).forEach((lab,i)=>{
+      LABELS[f].forEach((lab,i)=>{
         const idx=15*f+i, b=document.createElement('button');
         b.className='tile'; b.type='button';
         b.innerHTML=`<span>${lab}</span><span class="v">0</span>`;
         b.addEventListener('click',()=>{ e[idx]= e[idx]===0?1:(e[idx]===1?-1:0); render(); });
-        const twin=()=>tiles[idx<15?idx+15:idx-15];
-        b.addEventListener('mouseenter',()=>twin().classList.add('twin'));
-        b.addEventListener('mouseleave',()=>twin().classList.remove('twin'));
-        b.addEventListener('focus',()=>twin().classList.add('twin'));
-        b.addEventListener('blur',()=>twin().classList.remove('twin'));
+        b.addEventListener('mouseenter',()=>twins(idx,true));
+        b.addEventListener('mouseleave',()=>twins(idx,false));
+        b.addEventListener('focus',()=>twins(idx,true));
+        b.addEventListener('blur',()=>twins(idx,false));
         tiles[idx]=b; box.appendChild(b);
       });
     });
@@ -385,17 +450,21 @@ python3 matter_qec_study.py      # ends with: ALL CHECKS PASSED</div>
   };
   function render(){
     const S=SCHEMES[scheme];
+    if(S.nf===2) e.fill(0,30);
+    document.getElementById('fam2wrap').hidden = S.nf!==3;
     tiles.forEach((t,i)=>{ t.classList.toggle('plus',e[i]===1); t.classList.toggle('minus',e[i]===-1);
       t.querySelector('.v').textContent=e[i]===1?'+1':(e[i]===-1?'−1':'0');
-      t.setAttribute('aria-label',(i<15?L1[i]:L2[i-15])+' nudge '+e[i]); });
-    const touched=e.filter(x=>x!==0).length;
+      t.setAttribute('aria-label',LABELS[Math.floor(i/15)][i%15]+' nudge '+e[i]); });
+    const err=e.slice(0,15*S.nf), touched=err.filter(x=>x!==0).length;
+    const famsTouched=[0,1,2].filter(g=>err.slice(15*g,15*g+15).some(x=>x!==0)).length;
     document.getElementById('stK').textContent=S.k;
     document.getElementById('stD').textContent=S.d;
     document.getElementById('stT').textContent=touched;
-    const c=classify(scheme,e), v=document.getElementById('verdict');
+    const c=classify(scheme,err), v=document.getElementById('verdict');
     v.className='verdict '+(c==='none'?'':c);
     let extra='';
     if(c==='silent') extra=` You only needed ${touched} tile${touched===1?'':'s'}.`;
+    if(c==='silent' && touched===4 && famsTouched===2) extra+=' This is a cross-family weak spot: with separate, independent codes, no silent error could use just two tiles in each of two families. It sits one tile beyond the distance-3 promise.';
     if(c==='harmless' && scheme==='shared') extra=' (Scheme A’s real problem is capacity: it only stores one digit.)';
     v.innerHTML=`<h3>${TEXT[c][0]}</h3><p>${TEXT[c][1]}${extra}</p>`;
   }
@@ -407,12 +476,32 @@ python3 matter_qec_study.py      # ends with: ALL CHECKS PASSED</div>
   const PRESETS={
     single:{14:1},
     twins:{14:1,29:-1},
-    three:{0:1,7:1,14:-1}   // uᶜ₃ +1, d₃ +1, e −1: a weight-3 logical inside one family
+    three:{0:1,7:1,14:-1},          // uᶜ₃ +1, d₃ +1, e −1: a weight-3 logical inside one family
+    four:{0:1,4:-1,15:-1,19:1}      // uᶜ₃ +1, uᶜ₁ −1, cᶜ₃ −1, cᶜ₁ +1: a 2+2 cross-family logical
   };
   document.querySelectorAll('#presets button').forEach(b=>b.addEventListener('click',()=>{
     e.fill(0); const p=PRESETS[b.dataset.p]; if(p) for(const k in p) e[k]=p[k]; render();
   }));
   build(); render();
+
+  // ---- flavour-mixing slider: D = diag(+1,-1), V = rotation by theta, show V^T D V ----
+  const th=document.getElementById('theta');
+  const fmt=x=>{const r=Math.round(x*100)/100; return (r<0?'−':'')+Math.abs(r).toFixed(2);};
+  function mix(){
+    const deg=+th.value, t=deg*Math.PI/180, c=Math.cos(t), s2=Math.sin(t);
+    const d1=1,d2=-1, m11=d1*c*c+d2*s2*s2, m22=d1*s2*s2+d2*c*c, off=(d1-d2)*c*s2;
+    document.getElementById('thetaVal').textContent=deg+'°';
+    document.getElementById('m11').textContent=fmt(m11);
+    document.getElementById('m22').textContent=fmt(m22);
+    document.getElementById('m12').textContent=fmt(off);
+    document.getElementById('m21').textContent=fmt(off);
+    document.getElementById('thetaNote').textContent=
+      deg===0?'· no mixing: the badge survives':
+      deg===13?'· about the Cabibbo angle, the largest quark mixing':
+      (deg>=33&&deg<=34)?'· about the “solar” neutrino mixing angle':
+      deg===45?'· maximal mixing':'';
+  }
+  th.addEventListener('input',mix); mix();
 })();
 </script>
 </body>
