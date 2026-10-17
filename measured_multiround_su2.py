@@ -280,7 +280,7 @@ def stress_preexisting_plus_fault():
                 elif previous[0] != logical:
                     intrinsically_ambiguous.add(key)
                     if len(witness) < 4:
-                        witness.append((previous, (logical, description),
+                        witness.append((key, previous, (logical, description),
                                         "same full observed transcript and true syndrome"))
                 try:
                     after, trace = run_protocol(
@@ -300,6 +300,9 @@ def stress_preexisting_plus_fault():
     print("STRESS: one preexisting module error PLUS one circuit fault:")
     print(dict(counts))
     print("First uncorrectable/undefined examples:", examples)
+    assert intrinsically_ambiguous and witness, (
+        "The current stress fixture no longer establishes an "
+        "intrinsic classical-transcript ambiguity; re-analyze it.")
     print("Distinct transcript+true-syndrome groups with conflicting "
           "logical error classes:", len(intrinsically_ambiguous))
     print("First ambiguity witnesses:", witness[:2])
