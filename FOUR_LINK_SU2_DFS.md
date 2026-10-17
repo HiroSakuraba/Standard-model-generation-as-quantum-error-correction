@@ -110,7 +110,38 @@ These **distinct eigenvalues** produce logical dephasing while leaving every SU(
 
 This is an exact *counterexample to broader protection claims*, not an argument that physical SU(2) implementations necessarily experience this noise at any particular rate.
 
-## 5. Key distinction from earlier results
+## 5. Why an occupation-energy penalty alone does not help
+
+The model does not provide a natural Hamiltonian, but we can test a clearly specified **engineered** one:
+
+\[
+H=\Delta\sum_{e=0}^{3}(N_{e,L}-n^*_e)^2
+  +J\,\mathbf S_{m_1}\!\cdot\!\mathbf S_{r_1},
+\qquad (n^*_0,n^*_1,n^*_2,n^*_3)=(1,0,0,0).
+\]
+
+Here \(\Delta>0\) penalizes changes from the chosen endpoint pattern; \(J\) is the coefficient of the local, gauge-invariant on-site spin exchange. This Hamiltonian is an **illustrative perturbation**, not claimed to be the actual microscopic Standard Model or an experimentally implemented rishon Hamiltonian.
+
+Both logical basis states have the desired endpoint occupancies, so the **entire penalty is zero within the logical subspace**. The spin exchange conserves that endpoint configuration. Projecting the full operator gives
+
+\[
+H_L=
+\begin{pmatrix}
+-3J/4&0\\0&J/4
+\end{pmatrix},\qquad
+E_1-E_0=J.
+\]
+
+Consequently the equal-superposition state \(|+_L\rangle=(|0_L\rangle+|1_L\rangle)/\sqrt2\) has an exact return probability
+
+\[
+|\langle +_L|e^{-iH_Lt}|+_L\rangle|^2
+ =\cos^2(Jt/2).
+\]
+
+The script verifies this expression symbolically, including the exact eigenvalue gap. In this toy Hamiltonian, **raising \(\Delta\) cannot reduce the exchange-induced phase error** because that error remains inside the penalized sector. Protecting the logical information would require constraining or controlling the exchange itself, or using a further encoding that corrects it. An exactly known coherent \(J\) could instead be tracked or compensated; the expression is not a decoherence rate prediction.
+
+## 6. Key distinction from earlier results
 
 - The two-link gauge-singlet space had dimension two and was **not protected even against the local link-occupation phase error**: both endpoint occupations occurred in the physical basis.
 - In the four-link model, one can choose a **proper two-dimensional subspace of the 16-dimensional gauge-invariant space** in a fixed endpoint sector. That subspace *is* protected against all occupation-diagonal dephasing.
@@ -119,7 +150,7 @@ This is an exact *counterexample to broader protection claims*, not an argument 
 
 This illustrates why the error algebra must be specified **before** describing a gauge-invariant structure as useful quantum error correction. The non-Abelian symmetry identifies singlet channels, but it does not automatically suppress physical interactions *among* those channels.
 
-## 6. Reproduce and subsequent experiment
+## 7. Reproduce and subsequent experiment
 
 \`\`\`bash
 python -m pip install sympy==1.14.0
