@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/four-link-su2-protected-subspace
+      - research/su2-exchange-algebra
 
 jobs:
   exact-math:
@@ -40,3 +40,5 @@ jobs:
         run: python su2_matter_singlet.py
       - name: Four-link matter singlet subspace and exchange-error KL test
         run: python four_link_su2_subspace.py
+      - name: Four-link SU2 collective exchange and complete local noise-algebra no-go
+        run: python su2_exchange_algebra.py
