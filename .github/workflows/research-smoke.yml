@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/reed-muller-family-exclusion
+      - research/walsh-character-lattice
 
 jobs:
   exact-math:
@@ -28,3 +28,5 @@ jobs:
         run: python published_qutrit_family.py
       - name: Reed-Muller published-family obstruction
         run: python reed_muller_family_exclusion.py
+      - name: Walsh-character rigidity and explicit disguised direct sums
+        run: python walsh_character_lattice.py
