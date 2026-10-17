@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/five-block-su2-recovery
+      - research/flagged-su2-stabilizer-extraction
 
 jobs:
   exact-math:
@@ -44,3 +44,5 @@ jobs:
         run: python su2_exchange_algebra.py
       - name: Five SU2 singlet blocks and exact 5-qubit recovery (1024 KL overlaps)
         run: python five_block_su2_recovery.py
+      - name: Exact single-fault propagation for bare and flagged SU2 stabilizer gadgets
+        run: python flagged_su2_measurement.py
