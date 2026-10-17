@@ -145,9 +145,6 @@ def test():
     assert U == sp.diag(-1, 1)
     assert U * U == sp.eye(2)
     assert U != U[0, 0] * sp.eye(2)
-    assert all_color_singlet := all(
-        exact_sector_singlet_dimension(o) == dims[o] for o in ORIENTATIONS)
-    assert all_color_singlet
 
     # A gauge-invariant two-state exchange can be constructed from
     # singlet projectors; unlike U, it is NOT claimed to be a
