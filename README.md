@@ -67,9 +67,9 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 
 1. **Real flavour physics.** The original smart badges have a deeper problem than mixing: they treat the three quark colours differently, so the strong force itself breaks them. The only badges the forces allow are family-by-family versions of **B−L** and **right-handed isospin**. Those *do* give working codes (`[[30,2,3]]` and `[[45,3,3]]` for every prime p ≥ 5). But an exhaustive scan of possible Yukawa couplings finds that none of these badges survives exactly in a realistic Standard Model. The part needed for distance 3 is broken at order one by neutrino mixing. The best approximately preserved structure gives only distance 2.
 2. **Error channels, exactly.** Exact formulas for every logical error class. To leading order the joined codes behave like separate copies. But they produce **correlated errors that hit both outputs at once** at order ε⁴, which separate copies don't do until ε⁶. These come from the 2+2 cross-family weak spots.
-3. **Genuinely different codes.** The joined codes can't be turned into separate copies by *any* local operation plus relabelling of qudits. Their stabilizer groups don't split.
+3. **Genuinely different codes.** The joined codes cannot be turned into direct sums by local Clifford conjugations and qudit relabelling, as shown by their stabilizer support components. Arbitrary-local-unitary inequivalence still needs a stronger argument. Their stabilizer groups don't split.
 4. **Where it could be measured.** In a Fourier-rotated basis, the checks are measurements of conserved charges mod p, and the protected digit is "the charge of the missing right-handed neutrinos." That fits engineered qudit hardware and gauge-theory simulators. It can't work with real gauge charges, because nature forbids superposing different charge sectors. The joined codes cost about 18 % more to measure. The ε⁴ correlated errors are a concrete experimental signature.
-5. **Distance 4 and entangling gates.** Distance 4 is impossible for every lattice built this way (there's a short proof) and wasn't found in wider searches. Exotic mod-7 and mod-13 charges cut the weakest error patterns from 50 to 8, which lowers the leading distillation error 6.25× at p = 7, but they aren't consistent physical charges. No code has a transversal entangling gate.
+5. **Distance 4 and entangling gates.** Distance 4 is impossible for every lattice built this way (there's a short proof) and wasn't found in wider searches. Exotic mod-7 and mod-13 charges cut the weakest error patterns from 50 to 8, which lowers the leading distillation error 6.25× at p = 7, but they aren't consistent physical charges. No tested code has a diagonal transversal entangling logical gate within the degree-2 and degree-3 families searched.
 
 ## What this does *not* show
 
@@ -97,6 +97,16 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 
 ## Reproduce
 
+To reproduce the new deterministic and comparison checks:
+
+```bash
+python3 exact_yukawa.py
+python3 code_fingerprints.py            # requires numpy
+python3 code_fingerprints.py --extended # adds three-generation codes
+```
+
+Existing checks:
+
 Requires Python 3.9+. The first two scripts need nothing else; the third needs numpy. Run from the repository folder:
 
 ```bash
@@ -111,7 +121,8 @@ Between them, the scripts check cubic anomaly cancellation in exact integer arit
 
 The original five steps are addressed in Part 4 and [`OPEN_STEPS_NOTE.md`](OPEN_STEPS_NOTE.md). What's left:
 
-- Compare the joined codes with other known qudit codes, e.g. the qudit Reed–Muller family, not only with direct sums.
+- **New:** [exact Yukawa theorem and classification fingerprints](EXACT_SYMMETRY_AND_CLASSIFICATION.md), with [deterministic single-Higgs verification](exact_yukawa.py) and [code-fingerprint comparison](code_fingerprints.py). The latter distinguishes the joined codes from direct sums but does not establish novelty among all qudit codes.
+- Compare the joined codes with explicit check matrices of known qudit codes, e.g. the qudit Reed–Muller family, not only with direct sums.
 - Explain why nonlinear charge rows appear only for p ≡ 1 (mod 3), and whether the floor of 8 weight-3 weak spots can be broken.
 - Extend the gate search to non-diagonal and permutation-assisted ("fold") transversal gates, and to the p = 3 ninth-root gates.
 - Run a circuit-level simulation, with noisy checks of weight 15–16, to see whether the ε⁴ correlated errors matter in a full distillation factory.
