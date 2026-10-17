@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/walsh-character-lattice
+      - research/operational-gauge-qec
 
 jobs:
   exact-math:
@@ -30,3 +30,7 @@ jobs:
         run: python reed_muller_family_exclusion.py
       - name: Walsh-character rigidity and explicit disguised direct sums
         run: python walsh_character_lattice.py
+      - name: Operational gauge simulator, Gauss limitation and toric KL recovery
+        run: python operational_gauge_qec.py
+      - name: Abstract charge-lattice full Pauli KL certificate
+        run: python abstract_stabilizer_recovery.py
