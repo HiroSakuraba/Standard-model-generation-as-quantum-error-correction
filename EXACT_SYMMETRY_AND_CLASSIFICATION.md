@@ -40,7 +40,7 @@ Run `python3 code_fingerprints.py` (requires NumPy and `charge_lattice_tools.py`
 
 The X-stabilizer enumerator is invariant under coordinate permutations and local nonzero rescalings **preserving the CSS X structure**. It is not invariant under unrestricted local Clifford transformations that exchange X and Z.
 
-The Pauli-stabilizer support-component sizes are preserved under permutations and local Clifford conjugations. They distinguish the tested coupled models (one 30-coordinate component, or one 45-coordinate component) from the tested direct sums (two 15-coordinate components). These calculations **do not alone prove inequivalence under arbitrary local unitaries**, which requires a stronger argument.
+The Pauli-stabilizer support-component sizes distinguish the tested coupled models (one 30-coordinate component, or one 45-coordinate component) from the tested direct sums (two 15-coordinate components). The existing `OPEN_STEPS_NOTE.md` supplies the stronger **arbitrary-local-unitary** argument: the stabilizer-code projector factorizes across a bipartition precisely when its Pauli support (the stabilizer group) factorizes there. A local tensor-product unitary preserves projector factorization, so an indecomposable joined code cannot become a direct sum under local unitaries and a coordinate permutation. This does **not** prove inequivalence to every other indecomposable qudit code.
 
 The weight-four mixed 2+2 Z-logical support counts are 88 per family pair at p=3 and 396 at p=5 for the reported coupled examples, against zero for direct sums. This is an explicit useful comparison, not a claim of complete classification.
 
