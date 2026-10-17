@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/su2-matter-gauss-kl
+      - research/four-link-su2-protected-subspace
 
 jobs:
   exact-math:
@@ -38,3 +38,5 @@ jobs:
         run: python -m pip install sympy==1.14.0
       - name: SU2 matter doublets and non-Abelian Gauss-only KL counterexample
         run: python su2_matter_singlet.py
+      - name: Four-link matter singlet subspace and exchange-error KL test
+        run: python four_link_su2_subspace.py

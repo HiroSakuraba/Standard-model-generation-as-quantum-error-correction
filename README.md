@@ -99,6 +99,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`abstract_stabilizer_recovery.py`](abstract_stabilizer_recovery.py) | Full single-site Weyl syndrome and recovery verification for the original charge CSS codes (requires NumPy) |
 | [`SU2_MATTER_GAUSS_KL.md`](SU2_MATTER_GAUSS_KL.md) | Explicit SU(2) matter+rishon color-singlet basis and failed Knill–Laflamme test for local gauge-invariant noise |
 | [`su2_matter_singlet.py`](su2_matter_singlet.py) | Exact 64-state, two-vertex SU(2) Gauss law kernels, singlet wavefunctions, and logical-Z counterexample (requires SymPy) |
+| [`FOUR_LINK_SU2_DFS.md`](FOUR_LINK_SU2_DFS.md) | Constructive two-dimensional SU(2) matter/rishon decoherence-free subspace against occupation noise, and exact failure for local color exchange |
+| [`four_link_su2_subspace.py`](four_link_su2_subspace.py) | Exact four-link singlet states, Gauss checks, noise algebra and projected local SU(2) spin-exchange matrices (requires SymPy) |
 
 ## Reproduce
 
@@ -115,6 +117,7 @@ python3 walsh_character_lattice.py       # all-prime rigidity and masked direct-
 python3 operational_gauge_qec.py         # Gauss-only failure vs genuine lattice-gauge recovery
 python3 abstract_stabilizer_recovery.py  # all single-site Pauli errors on charge-code qudits
 python3 su2_matter_singlet.py           # SU(2) with matter: Gauss-invariant error fails KL (requires sympy)
+python3 four_link_su2_subspace.py       # fixed-sector SU(2) DFS, failure under local exchange
 ```
 
 Existing checks:
@@ -140,6 +143,7 @@ The original five steps are addressed in Part 4 and [`OPEN_STEPS_NOTE.md`](OPEN_
 - **Walsh-character theorems:** [exact single-family rigidity and the disguised direct-sum construction](WALSH_CHARACTER_THEOREMS.md), independently checked by [walsh_character_lattice.py](walsh_character_lattice.py). No additional single-family row can preserve all cubic Cartan constraints over any odd prime. All compatible five-row, pure-Walsh two-family extensions are exactly two original 15-qudit codes after a coordinate permutation—even when 44 of their 50 minimum-weight logical supports span the *original* family labels. Cross-family support counts alone are not proofs of genuine coupling; the earlier B3/B5 indecomposability proof remains essential.
 - **Operational interpretation:** [physical gauge-state and Knill–Laflamme benchmark](OPERATIONAL_GAUGE_QEC.md) shows that the *formal* generation-based codes correct arbitrary single-qudit register errors, but this is not physical Standard Model protection. A three-link gauge ring fails for local gauge-invariant phase noise; an engineered 3×3 toric code succeeds only with additional magnetic checks. A physically justified SM-Hilbert-space encoding and measurable SM-compatible syndromes remain unconstructed.
 - **Next non-Abelian matter result:** [two-vertex SU(2) matter singlets and exact Gauss-only KL obstruction](SU2_MATTER_GAUSS_KL.md), verified in [su2_matter_singlet.py](su2_matter_singlet.py). The full color-singlet sector of a deliberately truncated 64-state rishon/matter model has dimension two, but a link-local SU(2)-invariant electric Casimir distinguishes its logical states and produces an undetectable phase error. This is *not* a Standard Model encoding or a general SU(2) no-go theorem.
+- **Restricted positive physical-code result:** [four-link SU(2) decoherence-free qubit](FOUR_LINK_SU2_DFS.md), verified by [four_link_su2_subspace.py](four_link_su2_subspace.py). In the four-link model a **proper 2D subspace** of the 16D color-singlet Hilbert space exactly protects a logical qubit from all diagonal link-end occupancy noise. Nevertheless a gauge-invariant matter–rishon color exchange acts as a logical Z phase error. This makes the protected error model explicit but leaves Hamiltonian-based protection and the full SM interpretation unproved.
 - Compare the joined codes against **same-(n,k,p)** explicit check matrices of other published odd-prime codes, especially shortened/affine-variety constructions. That broader novelty question is open.
 - Explain why nonlinear charge rows appear only for p ≡ 1 (mod 3), and whether the floor of 8 weight-3 weak spots can be broken.
 - Extend the gate search to non-diagonal and permutation-assisted ("fold") transversal gates, and to the p = 3 ninth-root gates.
