@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/flagged-su2-stabilizer-extraction
+      - research/measured-multiround-su2-recovery
 
 jobs:
   exact-math:
@@ -46,3 +46,5 @@ jobs:
         run: python five_block_su2_recovery.py
       - name: Exact single-fault propagation for bare and flagged SU2 stabilizer gadgets
         run: python flagged_su2_measurement.py
+      - name: Two measured flagged rounds and adaptive third under all single faults
+        run: python measured_multiround_su2.py
