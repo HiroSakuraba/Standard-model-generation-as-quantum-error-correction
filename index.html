@@ -139,7 +139,7 @@ footer p{margin-bottom:8px}
 <header class="wrap">
   <div class="eyebrow">Independent exploratory study · October 2026</div>
   <h1>Matter as a quantum code</h1>
-  <p class="lead"><strong>The rule that keeps the Standard Model of particle physics mathematically consistent turns out to be the same rule a special quantum error-correcting code needs.</strong> A recent paper showed this for one family of particles. This project asks what happens with two families, then all three, and runs into a wall that nature itself puts up.</p>
+  <p class="lead"><strong>The rule that keeps the Standard Model of particle physics mathematically consistent turns out to be the same rule a special quantum error-correcting code needs.</strong> A recent paper showed this for one family of particles. This project asks what happens with two families, then all three, and runs into a wall that nature itself puts up. A follow-up then works through every open question that raised.</p>
   <div class="btns">
     <a class="btn primary" href="#lab">Try the error game</a>
     <a class="btn" href="#mixing">The flavour-mixing catch</a>
@@ -147,6 +147,7 @@ footer p{margin-bottom:8px}
     <a class="btn" href="interactive_flavor_map.html">Three-family &amp; mixing explorer</a>
     <a class="btn" href="https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction/blob/main/RESEARCH_NOTE.md">Research note</a>
     <a class="btn" href="https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction/blob/main/THREE_GENERATION_FLAVOR_NOTE.md">Three-generation note</a>
+    <a class="btn" href="#followup">Follow-up findings</a>
     <a class="btn" href="https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction">Code on GitHub</a>
   </div>
 </header>
@@ -295,11 +296,49 @@ footer p{margin-bottom:8px}
   <div class="why"><b>Why it matters:</b> the multi-family code isn't just unproven as physics. There's a specific, measured reason it can't be exact in the Standard Model as we know it. The structure the code needs is precisely the structure flavour mixing erases.</div>
 </section>
 
+<section class="wrap" id="followup">
+  <h2>The follow-up: five open questions, answered</h2>
+  <p>The earlier version ended with a list of open questions. A follow-up study worked through all of them with exact computer checks (<a href="https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction/blob/main/OPEN_STEPS_NOTE.md">technical note</a>). The short version:</p>
+  <div class="steps">
+    <div class="card">
+      <span class="tag bad">1 · Real flavour physics</span>
+      <h3>The badges clash with the forces themselves</h3>
+      <p>The smart badges treat the three quark colours differently, so the strong force breaks them even before any mixing. The only badges the forces allow are family-by-family versions of two known charges: <strong>B−L</strong> and <strong>right-handed isospin</strong>. These still build working codes (2 digits from 30 slots, 3 from 45, distance 3). But a complete scan of possible particle-mass patterns finds none that respects them exactly. The part needed for distance 3 is smeared at order one by neutrino mixing.</p>
+      <div class="result">Best surviving approximate structure: distance 2, broken at only 0.4–6 %</div>
+    </div>
+    <div class="card">
+      <span class="tag meh">2 · How errors behave</span>
+      <h3>Joined families make errors travel in pairs</h3>
+      <p>Exact formulas for every way the hidden digits can go wrong show that, at leading order, the joined code behaves just like separate copies. But the four-tile cross-family weak spots mostly corrupt <em>both</em> digits at once. Separate copies only do that at a much higher order of noise (ε⁶ instead of ε⁴).</p>
+      <div class="result">At 0.1 % noise: correlated errors ~10⁵–10⁶× more likely, still under 10⁻¹¹</div>
+    </div>
+    <div class="card">
+      <span class="tag good">3 · Genuinely new?</span>
+      <h3>Not just copies in disguise</h3>
+      <p>No combination of local operations plus relabelling of the slots can turn a joined code into separate copies. Its checks can't be split into independent groups. Separate copies always can.</p>
+      <div class="result">Proven for every joined code (2 and 3 families)</div>
+    </div>
+    <div class="card">
+      <span class="tag meh">4 · Where it could be measured</span>
+      <h3>Charge measurements on engineered hardware</h3>
+      <p>Viewed in a rotated basis, every check is a measurement of a conserved charge, and the hidden digit is "how much charge the missing neutrinos would carry." That suits multi-level quantum hardware and simulators of gauge theories. It can't work with real particle charges, because nature forbids superposing different charge sectors. The pairwise errors from item 2 are a concrete signature an experiment could look for.</p>
+      <div class="result">Joined codes cost about 18 % more to measure than separate copies</div>
+    </div>
+    <div class="card">
+      <span class="tag bad">5 · Distance 4 or new gates?</span>
+      <h3>Neither, though the weak spots can be thinned</h3>
+      <p>A short proof rules out distance 4 for every code built this way, and wider searches found none either. Exotic charges that only balance modulo 7 or 13 cut the three-tile weak spots from 50 to 8, lowering the leading error 6.25×, but they aren't consistent physical charges. In no code does the simple “nudge every tile” magic operation link its digits, even with different nudge strengths on different tiles.</p>
+      <div class="result">The family coupling shows up in errors, never in gates</div>
+    </div>
+  </div>
+  <div class="why"><b>Why it matters:</b> the joined codes are real, new mathematical objects, but the route to physical meaning closes. The structure that would make them physical is exactly what flavour mixing destroys. Their one distinctive feature, correlated errors, is a cost, not a benefit, and the only improvement found requires giving up physical charges altogether.</div>
+</section>
+
 <section class="wrap">
   <h2>What this does <em>not</em> show</h2>
   <ul class="list">
     <li><strong>Particles aren't secretly computing.</strong> Each particle is just a label for a column in a table. Building real hardware would need an actual physical system, measurements and noise modelling, and none of that follows from the mathematics.</li>
-    <li><strong>The smart badges aren't real forces.</strong> They are extra charges added by hand, not part of the observed Standard Model. As the <a href="#mixing">flavour-mixing section</a> shows, real mixing between families rules them out as exact symmetries unless some new physics protects them.</li>
+    <li><strong>The smart badges aren't real forces.</strong> They are extra charges added by hand, not part of the observed Standard Model. As the <a href="#mixing">flavour-mixing section</a> shows, real mixing between families rules them out as exact symmetries unless some new physics protects them. The <a href="#followup">follow-up</a> shows the original badges even clash with the strong force.</li>
     <li><strong>It isn't better than separate copies (yet).</strong> The weakest (three-tile) error patterns all stay inside one family, so for magic-state distillation the leading error rate is the same as running independent 15-slot codes. The joined codes use fewer checks, and they have extra cross-family weak spots at four tiles. Whether the trade helps or hurts in practice is open. No decoder, threshold or circuit study has been done.</li>
     <li><strong>The magic operation acts on each digit separately.</strong> It doesn't link (entangle) the protected digits.</li>
     <li><strong>Novelty and review.</strong> No literature search has been done for equivalent known codes, and the work hasn't been peer-reviewed.</li>
@@ -329,11 +368,12 @@ footer p{margin-bottom:8px}
 
 <section class="wrap">
   <h2>Check it yourself</h2>
-  <p>Everything above is reproduced by two Python scripts. They need no installs or internet. They check the balancing rule in exact whole-number arithmetic, count protected digits, measure distances, run the exhaustive 1,080-case search, enumerate every error pattern of up to four tiles in the three-family codes, and check the mixing identity with exact fractions.</p>
+  <p>Everything above is reproduced by three Python scripts. The first two need no installs or internet; the follow-up script needs numpy. They check the balancing rule in exact whole-number arithmetic, count protected digits, measure distances, run the exhaustive 1,080-case search, enumerate every error pattern of up to four tiles in the three-family codes, and check the mixing identity with exact fractions.</p>
   <div class="run">git clone https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction
 cd Standard-model-generation-as-quantum-error-correction
 python3 matter_qec_study.py        # two families · a few seconds · ALL CHECKS PASSED
-python3 three_generation_flavor.py # three families + mixing · ~20 s · ALL THREE-GENERATION CHECKS PASSED</div>
+python3 three_generation_flavor.py # three families + mixing · ~20 s · ALL THREE-GENERATION CHECKS PASSED
+python3 open_steps.py              # follow-up (needs numpy) · ~4 min · ALL OPEN-STEP CHECKS PASSED</div>
 </section>
 
 <section class="wrap">
@@ -348,7 +388,9 @@ python3 three_generation_flavor.py # three families + mixing · ~20 s · ALL THR
     <li>The same idea, with three independent family labels, gives a 45-slot code holding 3 digits at distance 3.</li>
     <li>The joined families are genuinely coupled, but only through four-tile errors (2 + 2 across two families), one beyond the code's protection limit.</li>
     <li>Real flavour mixing blends the families, so no family-distinguishing badge can be an exact symmetry. Keep only what nature respects, and the three digits collapse back to one.</li>
-    <li>So the multi-family codes are real mathematics but not real physics, and there is no distillation gain over separate copies yet.</li>
+    <li>The only force-compatible badges (family B−L and right-handed isospin) still need charges that neutrino mixing breaks at order one.</li>
+    <li>The joined codes are genuinely new, but their coupling shows up as correlated errors, not new gates, and distance 4 is out of reach.</li>
+    <li>So the multi-family codes are real mathematics but not real physics, and there is no distillation gain over separate copies.</li>
   </ol>
   <p><strong>The deeper takeaway:</strong> two different levels of description each refuse to supply a stable family label. At the level of <em>symmetry</em>, where only charges live, the generations are perfect twins. At the level of <em>mass</em>, where particles actually propagate, they are blended together. The code needs exactly what neither level provides: a fixed, sharp answer to "which family is this?" Seen this way, the mystery of why matter comes in three copies is written in a place the charges can't reach.</p>
 </section>

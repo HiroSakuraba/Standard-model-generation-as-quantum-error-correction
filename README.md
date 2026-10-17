@@ -1,6 +1,6 @@
 # Standard Model generations as quantum error correction
 
-**The rule that keeps the Standard Model of particle physics mathematically consistent is the same rule a special quantum error-correcting code needs. A recent paper showed this for one family of particles. This project asks what happens with two families, then all three, and runs into a wall that nature itself puts up: flavour mixing.**
+**The rule that keeps the Standard Model of particle physics mathematically consistent is the same rule a special quantum error-correcting code needs. A recent paper showed this for one family of particles. This project asks what happens with two families, then all three, and runs into a wall that nature itself puts up: flavour mixing. A follow-up works through the open questions that raised.**
 
 📖 **Plain-language guide with an interactive "sneak an error past the checks" game:** [hirosakuraba.github.io/Standard-model-generation-as-quantum-error-correction](https://hirosakuraba.github.io/Standard-model-generation-as-quantum-error-correction/)
 
@@ -61,13 +61,23 @@ The structure the multi-family code needs is precisely the structure flavour mix
 | **Three families + smart badges** | 5 | 45 | 3 | **3** | 6 |
 | Three families, family-blind charges only | odd | 45 | 1 | – | – |
 
+## Part 4: the follow-up on the open steps
+
+The five open steps from earlier versions are now worked through in [`OPEN_STEPS_NOTE.md`](OPEN_STEPS_NOTE.md), with every number checked by [`open_steps.py`](open_steps.py). In plain terms:
+
+1. **Real flavour physics.** The original smart badges have a deeper problem than mixing: they treat the three quark colours differently, so the strong force itself breaks them. The only badges the forces allow are family-by-family versions of **B−L** and **right-handed isospin**. Those *do* give working codes (`[[30,2,3]]` and `[[45,3,3]]` for every prime p ≥ 5). But an exhaustive scan of possible Yukawa couplings finds that none of these badges survives exactly in a realistic Standard Model. The part needed for distance 3 is broken at order one by neutrino mixing. The best approximately preserved structure gives only distance 2.
+2. **Error channels, exactly.** Exact formulas for every logical error class. To leading order the joined codes behave like separate copies. But they produce **correlated errors that hit both outputs at once** at order ε⁴, which separate copies don't do until ε⁶. These come from the 2+2 cross-family weak spots.
+3. **Genuinely different codes.** The joined codes can't be turned into separate copies by *any* local operation plus relabelling of qudits. Their stabilizer groups don't split.
+4. **Where it could be measured.** In a Fourier-rotated basis, the checks are measurements of conserved charges mod p, and the protected digit is "the charge of the missing right-handed neutrinos." That fits engineered qudit hardware and gauge-theory simulators. It can't work with real gauge charges, because nature forbids superposing different charge sectors. The joined codes cost about 18 % more to measure. The ε⁴ correlated errors are a concrete experimental signature.
+5. **Distance 4 and entangling gates.** Distance 4 is impossible for every lattice built this way (there's a short proof) and wasn't found in wider searches. Exotic mod-7 and mod-13 charges cut the weakest error patterns from 50 to 8, which lowers the leading distillation error 6.25× at p = 7, but they aren't consistent physical charges. No code has a transversal entangling gate.
+
 ## What this does *not* show
 
 - **Particles aren't computing anything.** Each particle is a label for a column in a table. Real hardware would need a physical system, measurements and noise modelling, and none of that follows from the mathematics.
-- **The smart badges aren't real forces.** They are extra charges added by hand, and Part 3 shows real flavour mixing rules them out as exact symmetries. Many family-dependent charge rows also wouldn't fit consistently inside the Standard Model's gauge structure.
-- **No proven advantage over separate codes.** The weakest (three-tile) errors stay inside single families, so the leading magic-state-distillation error rate equals that of independent 15-slot codes. The joined codes use fewer checks and have extra four-tile cross-family weak spots. Whether that trade helps is open. No decoder, threshold or circuit study has been done.
+- **The smart badges aren't real forces.** They are extra charges added by hand. Part 3 shows flavour mixing rules them out as exact symmetries, and Part 4 shows the original B3/B5 rows even conflict with the strong and weak forces. The force-compatible replacement (family B−L and right-handed isospin) is also broken by realistic Yukawa couplings.
+- **No advantage over separate codes.** The leading magic-state-distillation error rate equals that of independent 15-slot codes. The joined codes add correlated two-output errors at order ε⁴ and cost about 18 % more to measure. No decoder, threshold or circuit-level study has been done.
 - **The magic operation acts on each digit separately.** It doesn't entangle them.
-- **Novelty and review.** No literature search has been done for equivalent known codes, and the work hasn't been peer-reviewed.
+- **Novelty and review.** The joined codes are proven inequivalent to direct sums, but haven't been compared against other known qudit codes. None of this work has been peer-reviewed.
 
 ## Files
 
@@ -81,28 +91,33 @@ The structure the multi-family code needs is precisely the structure flavour mix
 | [`test_results.txt`](test_results.txt), [`three_generation_results.txt`](three_generation_results.txt) | Recorded outputs of completed runs |
 | [`interactive_charge_map.html`](interactive_charge_map.html) | Technical explorer: two-generation charge matrices with per-species pair diagnostics |
 | [`interactive_flavor_map.html`](interactive_flavor_map.html) | Technical explorer: three-generation charges, flavour-rotation demo, support counts |
+| [`OPEN_STEPS_NOTE.md`](OPEN_STEPS_NOTE.md) | Technical note, part 3: flavour Lagrangian, exact logical channels, equivalence, operational setting, distance-4 / entangling-gate searches |
+| [`open_steps.py`](open_steps.py), [`charge_lattice_tools.py`](charge_lattice_tools.py) | Verification script for part 3 (asserts every reported number) and its exact mod-p toolkit (needs numpy) |
+| [`open_steps_results.txt`](open_steps_results.txt) | Recorded output of a completed run |
 
 ## Reproduce
 
-Requires Python 3.9+ and nothing else. Run both from the repository folder:
+Requires Python 3.9+. The first two scripts need nothing else; the third needs numpy. Run from the repository folder:
 
 ```bash
 python3 matter_qec_study.py          # a few seconds  → ALL CHECKS PASSED
 python3 three_generation_flavor.py   # about 20 seconds → ALL THREE-GENERATION CHECKS PASSED
+python3 open_steps.py                # about 4 minutes → ALL OPEN-STEP CHECKS PASSED  (--quick skips the p = 13 search)
 ```
 
 Between them, the scripts check cubic anomaly cancellation in exact integer arithmetic, compute finite-field ranks, logical-qudit counts and distances, run the exhaustive 1,080-case p = 3 minimality search, and enumerate every logical support of size 1–4 in the three-generation codes over F₃ and F₅. They also find X distances exactly and check the two-flavour mixing identity with exact fractions (cos θ = 4/5, sin θ = 3/5 gives an off-diagonal of 24/25; this is a toy angle, not a physical rate).
 
 ## Open next steps
 
-- Work in a concrete flavour Lagrangian (actual Yukawa matrices and spurions) to see which approximate symmetries survive, and whether an approximate code makes sense.
-- Classify the correlated logical channels, not just supports: exact Pauli-coefficient enumerators and distillation acceptance/output polynomials, including the four-tile cross-family events.
-- Classify the `[[30,2,3]]_p` and `[[45,3,3]]_p` codes against direct sums under monomial and local-Clifford equivalence.
-- Look for an operational setting (e.g. quantum simulation) where these charge constraints could actually be measured.
-- Search other anomaly-free charge lattices for distance 4 or a transversal *entangling* logical gate.
+The original five steps are addressed in Part 4 and [`OPEN_STEPS_NOTE.md`](OPEN_STEPS_NOTE.md). What's left:
+
+- Compare the joined codes with other known qudit codes, e.g. the qudit Reed–Muller family, not only with direct sums.
+- Explain why nonlinear charge rows appear only for p ≡ 1 (mod 3), and whether the floor of 8 weight-3 weak spots can be broken.
+- Extend the gate search to non-diagonal and permutation-assisted ("fold") transversal gates, and to the p = 3 ninth-root gates.
+- Run a circuit-level simulation, with noisy checks of weight 15–16, to see whether the ε⁴ correlated errors matter in a full distillation factory.
 
 ## The whole story in one chain
 
-Anomaly cancellation = triorthogonality → one generation is a 15-slot magic code → the second generation alone is the identical code (charges, not masses) → two together hit the twins problem → a family badge gives 2 digits but distance 2 → smart badges restore distance 3 → three families with independent labels give 45 slots, 3 digits, distance 3, coupled only at four tiles → but flavour mixing blends the families, so no family-distinguishing badge can be exact, and the digits collapse back to one.
+Anomaly cancellation = triorthogonality → one generation is a 15-slot magic code → the second generation alone is the identical code (charges, not masses) → two together hit the twins problem → a family badge gives 2 digits but distance 2 → smart badges restore distance 3 → three families with independent labels give 45 slots, 3 digits, distance 3, coupled only at four tiles → but flavour mixing blends the families, so no family-distinguishing badge can be exact, and the digits collapse back to one → the follow-up shows the only force-compatible badges (family B−L and right-handed isospin) still need charges that neutrino mixing breaks at order one, that the joined codes are genuinely new objects whose coupling shows up as correlated ε⁴ errors rather than new gates, and that distance 4 is out of reach for this whole class.
 
 Two levels of description each refuse to supply a stable family label. At the level of symmetry (charges), the generations are perfect twins. At the level of mass, they are blended. A multi-family code needs exactly what neither level provides.

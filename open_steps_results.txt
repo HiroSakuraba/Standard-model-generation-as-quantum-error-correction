@@ -1,0 +1,104 @@
+== STEP 2: exact logical channels under i.i.d. Z noise (distillation post-selection) [0s]
+  p=3 coupled B3 2fam  single-logical A_w [0, 0, 0, 100, 316, 4260, 22052]  correlated A_w [0, 0, 0, 0, 80, 1504, 20932] 
+           P(single) = 25/2 e^3 + -1271/4 e^4 ...   P(correlated) = 5 e^4 + -83 e^5 + 12433/16 e^6 ... 
+           at eps=1e-3: per-output infidelity 6.283837e-09, P(correlated | accept) 5.068e-12 
+  p=3 direct 2fam      single-logical A_w [0, 0, 0, 100, 220, 1908, 4900]  correlated A_w [0, 0, 0, 0, 0, 0, 2500] 
+           P(single) = 25/2 e^3 + -1295/4 e^4 ...   P(correlated) = 0 e^4 + 0 e^5 + 625/16 e^6 ... 
+           at eps=1e-3: per-output infidelity 6.275720e-09, P(correlated | accept) 3.938e-17 
+  p=3 coupled B3 3fam  single-logical A_w [0, 0, 0, 150, 618, 9918, 61974]  correlated A_w [0, 0, 0, 0, 240, 4512, 68172] 
+           P(single) = 75/4 e^3 + -5991/8 e^4 ...   P(correlated) = 15 e^4 + -474 e^5 + 123603/16 e^6 ... 
+           at eps=1e-3: per-output infidelity 6.291954e-09, P(correlated | accept) 1.520e-11 
+  p=3 direct 3fam      single-logical A_w [0, 0, 0, 150, 330, 2862, 7350]  correlated A_w [0, 0, 0, 0, 0, 0, 7500] 
+           P(single) = 75/4 e^3 + -6135/8 e^4 ...   P(correlated) = 0 e^4 + 0 e^5 + 1875/16 e^6 ... 
+           at eps=1e-3: per-output infidelity 6.275720e-09, P(correlated | accept) 1.182e-16 
+  p=5 coupled B5 2fam  single-logical A_w [0, 0, 0, 200, 832, 20520, 283568]  correlated A_w [0, 0, 0, 0, 1152, 22944, 447392] 
+           P(single) = 25/8 e^3 + -649/8 e^4 ...   P(correlated) = 9/2 e^4 + -3027/32 e^5 + 129481/128 e^6 ... 
+           at eps=1e-3: per-output infidelity 1.573379e-09, P(correlated | accept) 4.541e-12 
+  p=5 direct 2fam      single-logical A_w [0, 0, 0, 200, 400, 7944, 53760]  correlated A_w [0, 0, 0, 0, 0, 0, 10000] 
+           P(single) = 25/8 e^3 + -1325/16 e^4 ...   P(correlated) = 0 e^4 + 0 e^5 + 625/256 e^6 ... 
+           at eps=1e-3: per-output infidelity 1.567985e-09, P(correlated | accept) 2.459e-18 
+  p=5 coupled B5 3fam  single-logical A_w [0, 0, 0, 300, 1896, 49644, 847752]  correlated A_w [0, 0, 0, 0, 3456, 68832, 1845360] 
+           P(single) = 75/16 e^3 + -6063/32 e^4 ...   P(correlated) = 27/2 e^4 + -15561/32 e^5 + 2260935/256 e^6 ... 
+           at eps=1e-3: per-output infidelity 1.578773e-09, P(correlated | accept) 1.362e-11 
+  p=5 direct 3fam      single-logical A_w [0, 0, 0, 300, 600, 11916, 80640]  correlated A_w [0, 0, 0, 0, 0, 0, 30000] 
+           P(single) = 75/16 e^3 + -6225/32 e^4 ...   P(correlated) = 0 e^4 + 0 e^5 + 1875/256 e^6 ... 
+           at eps=1e-3: per-output infidelity 1.567985e-09, P(correlated | accept) 7.376e-18 
+  brute force (all errors of weight <= 4) agrees for coupled B3 2fam p3; weight-4 logical patterns: [(('correlated', (2, 2)), 80), (('single', (2, 2)), 96), (('single', (4, 0)), 220)] 
+  brute force (all errors of weight <= 4) agrees for coupled B5 2fam p5; weight-4 logical patterns: [(('correlated', (2, 2)), 1152), (('single', (2, 2)), 432), (('single', (4, 0)), 400)] 
+== STEP 3: equivalence to direct sums (stabilizer-group decomposability) [4s]
+  single p3              components [15]   family cut: dim S = 14, dim S_A + dim S_B = 14 
+  direct 2fam p3         components [15, 15]   family cut: dim S = 28, dim S_A + dim S_B = 28 
+  direct 2fam p5         components [15, 15]   family cut: dim S = 28, dim S_A + dim S_B = 28 
+  coupled B3 2fam p3     components [30]   family cut: dim S = 28, dim S_A + dim S_B = 24 
+  coupled B5 2fam p5     components [30]   family cut: dim S = 28, dim S_A + dim S_B = 22 
+  coupled B5 2fam p7     components [30]   family cut: dim S = 28, dim S_A + dim S_B = 22 
+  coupled B3 3fam p3     components [45]   family cut: dim S = 42, dim S_A + dim S_B = 38 
+  coupled B5 3fam p5     components [45]   family cut: dim S = 42, dim S_A + dim S_B = 36 
+  SM (B-L,T3R) 2fam p5   components [30]   family cut: dim S = 28, dim S_A + dim S_B = 22 
+  SM (B-L,T3R) 3fam p5   components [45]   family cut: dim S = 42, dim S_A + dim S_B = 36 
+== STEP 1: concrete flavour Lagrangian [4s]
+  none of the B3/B5 badge rows commutes with SU(3)c x SU(2)L; the commuting family Cartan charges are 
+  exactly span{S3=(1,1,1,0,0), S2=(0,0,0,1,1)} = span{3(B-L), -4 T3R} per family (checked mod 3,5,7,101) 
+  (B-L)_g+T3R_g              fam=2 p= 3  [[30,2,2]]  X-distance 7 
+  (B-L)_g+T3R_g              fam=2 p= 5  [[30,2,3]]  X-distance 7 
+  (B-L)_g+T3R_g              fam=2 p= 7  [[30,2,3]]  X-distance 7 
+  (B-L)_g+T3R_g              fam=2 p=11  [[30,2,3]]  X-distance None 
+  (B-L)_g+T3R_g              fam=3 p= 3  [[45,3,2]]  X-distance 7 
+  (B-L)_g+T3R_g              fam=3 p= 5  [[45,3,3]]  X-distance 7 
+  (B-L)_g+T3R_g              fam=3 p= 7  [[45,3,3]]  X-distance 7 
+  (B-L)_g only               fam=2 p= 3  [[30,1,3]]  X-distance 14 
+  (B-L)_g only               fam=2 p= 5  [[30,2,2]]  X-distance 14 
+  (B-L)_g only               fam=2 p= 7  [[30,2,2]]  X-distance 14 
+  (B-L)_g only               fam=2 p=11  [[30,2,2]]  X-distance None 
+  (B-L)_g only               fam=3 p= 3  [[45,1,3]]  X-distance 21 
+  (B-L)_g only               fam=3 p= 5  [[45,3,2]]  X-distance 15 
+  (B-L)_g only               fam=3 p= 7  [[45,3,2]]  X-distance 15 
+  T3R_g only                 fam=2 p= 3  [[30,2,2]]  X-distance 7 
+  T3R_g only                 fam=2 p= 5  [[30,2,2]]  X-distance 7 
+  T3R_g only                 fam=2 p= 7  [[30,2,2]]  X-distance 7 
+  T3R_g only                 fam=2 p=11  [[30,2,2]]  X-distance None 
+  T3R_g only                 fam=3 p= 3  [[45,3,2]]  X-distance 7 
+  T3R_g only                 fam=3 p= 5  [[45,3,2]]  X-distance 7 
+  T3R_g only                 fam=3 p= 7  [[45,3,2]]  X-distance 7 
+  Y_g only (tri-hypercharge) fam=2 p= 5  [[30,1,3]]  X-distance 14 
+  Y_g only (tri-hypercharge) fam=2 p= 7  [[30,1,3]]  X-distance 14 
+  Y_g only (tri-hypercharge) fam=3 p= 5  [[45,1,3]]  X-distance 21 
+  Y_g only (tri-hypercharge) fam=3 p= 7  [[45,1,3]]  X-distance 21 
+  Yukawa scan G=2 p=3 1HDM: realistic assignments 9, with family-differential charges 0 
+  Yukawa scan G=2 p=5 1HDM: realistic assignments 25, with family-differential charges 0 
+  Yukawa scan G=2 p=7 1HDM: realistic assignments 49, with family-differential charges 0 
+  Yukawa scan G=3 p=3 1HDM: realistic assignments 9, with family-differential charges 0 
+  Yukawa scan G=3 p=5 1HDM: realistic assignments 25, with family-differential charges 0 
+  Yukawa scan G=3 p=7 1HDM: realistic assignments 49, with family-differential charges 0 
+  Yukawa scan G=2 p=5 2HDM: realistic assignments 25, with family-differential charges 0 
+  Yukawa scan G=3 p=3 2HDM: realistic assignments 9, with family-differential charges 0 
+  Yukawa scan G=3 p=5 2HDM: realistic assignments 25, with family-differential charges 0 
+  doublet charge separating 3 vs (1,2)        : smallest achievable largest off-block mixing  CKM 0.0405   PMNS 0.655 
+  doublet charge separating 1 vs (2,3)        : smallest achievable largest off-block mixing  CKM 0.2265   PMNS 0.548 
+  doublet charge separating all three distinct: smallest achievable largest off-block mixing  CKM 0.2265   PMNS 0.655 
+  right-handed (T3R_g) charges: forbidden light columns, size m2/m3 = up 0.0037, down 0.0187, lepton 0.0589 
+== STEP 5: distance 4 and entangling transversal gates [82s]
+  single family: the only rows compatible with the five SO(10) Cartan rows are the Cartan rows (p = 3, 5, 7) 
+  integer ternary isotropic rows: 221 zero-sum supports, 132928 vectors, 1913966 isotropic pairs; pairs protecting all twins: 0 
+  integer ternary rows compatible with B5: 25, of which nonlinear: 0 
+  p= 5: nonlinear isotropic rows extending B5: 0 (0 orbits); (dZ, #weight-3 supports) -> orbits {} 
+  p= 7: compatible second nonlinear rows: 0 
+  p= 7: nonlinear isotropic rows extending B5: 588 (17 orbits); (dZ, #weight-3 supports) -> orbits {(3, 8): 17} 
+  p=11: nonlinear isotropic rows extending B5: 0 (0 orbits); (dZ, #weight-3 supports) -> orbits {} 
+  p=13: nonlinear isotropic rows extending B5: 4056 (57 orbits); (dZ, #weight-3 supports) -> orbits {(3, 8): 57} 
+  example p=7 row y = [4, 6, 6, 6, 6, 1, 0, 5, 5, 0, 1, 0, 4, 4, 4, 4]: [[30,2,3]]_7, X-distance 9, triorthogonal mod 7 but not over Z; 
+      P(any logical) = 2/9 e^3 + ...   vs coupled B5 at p=7: 25/18 e^3   (ratio 25/4) 
+  direct 2fam p5           cubic gates: 2 valid power vectors, logical rank 2, entangling rank 0; quadratic: 10, 2, 0 
+  coupled B5 2fam p5       cubic gates: 2 valid power vectors, logical rank 2, entangling rank 0; quadratic: 12, 2, 0 
+  coupled B5 2fam p7       cubic gates: 2 valid power vectors, logical rank 2, entangling rank 0; quadratic: 12, 2, 0 
+  coupled B5 3fam p5       cubic gates: 3 valid power vectors, logical rank 3, entangling rank 0; quadratic: 19, 3, 0 
+  SM (B-L,T3R) 2fam p5     cubic gates: 3 valid power vectors, logical rank 2, entangling rank 0; quadratic: 13, 2, 0 
+  SM (B-L,T3R) 3fam p5     cubic gates: 5 valid power vectors, logical rank 3, entangling rank 0; quadratic: 21, 3, 0 
+  nonlinear-row 2fam p7    cubic gates: 1 valid power vectors, logical rank 1, entangling rank 0; quadratic: 8, 2, 0 
+  family-number 2fam p5    cubic gates: 6 valid power vectors, logical rank 2, entangling rank 0; quadratic: 16, 2, 0 
+== STEP 4: operational cost of measuring the charge constraints [235s]
+  single p5              X-check weights [8, 8, 8, 8]; 10 Z-checks of weight 4; total check weight 72 
+  direct 2fam p5         X-check weights [8, 8, 8, 8, 8, 8, 8, 8]; 20 Z-checks of weight 4; total check weight 144 
+  coupled B5 2fam p5     X-check weights [15, 15, 16, 16, 16]; 23 Z-checks of weight 4; total check weight 170 
+  SM (B-L,T3R) 2fam p5   X-check weights [15, 15, 16, 16, 16]; 23 Z-checks of weight 4; total check weight 170 
+ALL OPEN-STEP CHECKS PASSED (243s)
