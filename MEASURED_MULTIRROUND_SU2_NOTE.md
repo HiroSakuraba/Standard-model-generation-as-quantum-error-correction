@@ -75,6 +75,24 @@ A single readout fault may produce a false syndrome while leaving data intact. A
 
 The price is extra measurement depth; under repeated real noise this depth produces further faults, which are not covered by the one-fault case analysis.
 
+## Combined prior-error and circuit-fault stress test: **FAIL**
+
+The optional \`--stress\` path exhaustively tests **15 possible single-module input Pauli errors, each together with each of 784 single-circuit-fault labels**: 11,760 cases. This is a *strictly harder model* than the passing clean-input one-fault test. The first GitHub Actions run of this diagnostic returned:
+
+| Outcome of the current adaptive decoder | Exact cases |
+|---|---:|
+| Fully corrected | 4,160 |
+| One correctable residual | 600 |
+| **Uncorrectable logical failure** | **4,760** |
+| **Recovery lookup undefined** | **2,240** |
+| Total | **11,760** |
+
+These figures count uniformly enumerated *fault labels*, not physical probabilities, and the last two rows are **not passed tests**. GitHub Actions succeeds because it checks that the diagnostic is **executed and reports** its shortcomings, while requiring full success only for the explicitly supported clean-input one-fault theorem.
+
+An example begins with a preexisting \(X\) error on module 0 and a further two-body error after data gate 2 of the first extraction gadget. The first two rounds disagree, correctly triggering a third measurement, but the standard single-error decoder leaves a logical fault; another paired fault raises a flag whose (flag, later-syndrome) lookup key is **undefined**. Repeating a noiseless syndrome by itself cannot convert a two-error pattern into a correctable one-module pattern.
+
+The difference between **one fault from a clean input** and **one incoming data error plus one fresh fault** is therefore decisive. The latter must not be silently inferred from the former. The full-output recovery of all 11,760 cases would require a substantially stronger decoder/schedule and may be obstructed by measurement-record ambiguities; the subsequent exact transcript-collision analysis is intended to establish which failures are fundamentally unresolvable without extra measurements.
+
 ## Fault-tolerance limits and next decisions
 
 The construction is **not** an end-to-end fault-tolerant error-correction implementation because:
