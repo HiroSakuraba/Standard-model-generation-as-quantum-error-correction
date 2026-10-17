@@ -71,4 +71,8 @@ Dependencies: Python standard library for the published reference generator, plu
 
 **Still open:** direct equivalence comparison against a previously published **indecomposable [[30,2,3]]_3, [[45,3,3]]_3, [[30,2,3]]_5, or [[45,3,3]]_5** generator matrix, should one be identified. The broader odd-prime punctured Reed–Muller families in [Saha–Prakash, *Physical Review A* **113**, 042405 (2026)](https://doi.org/10.1103/tzkz-9p2f) have not been exhaustively searched for matching parameters.
 
+### Same-looking parameters in the binary literature
+
+Shi, Lu, Kim and Solé, [*Triorthogonal codes and self-dual codes* (2024)](https://arxiv.org/abs/2408.09685), construct a binary triorthogonal example denoted **[[30,2,3]]**. This is a **qubit** code (p=2), not a qutrit code (p=3), and the authors use the third slot as a Z-distance in their triorthogonal-code tables. It is not a candidate for a p=3 local-unitary equivalence comparison. Identical numerical brackets without the subscript prime and a consistent distance convention are insufficient for code identification.
+
 These are formal stabilizer-code comparisons; they do not provide a physical flavor-symmetry mechanism or a Standard Model quantum recovery map.
