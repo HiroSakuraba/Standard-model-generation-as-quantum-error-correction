@@ -1,6 +1,6 @@
 # The five open steps: flavour physics, logical channels, equivalence, operational setting, and new lattices
 
-**Research extension, 17 October 2026.** Independent exploratory calculation, **not peer reviewed**. This note continues `RESEARCH_NOTE.md` and `THREE_GENERATION_FLAVOR_NOTE.md`, and works through the five "next steps" listed in the README. Everything below is reproduced by `python3 open_steps.py`. It needs Python 3.9+ and numpy, takes about 4 minutes (`--quick` skips the p = 13 search), and asserts every number quoted here. `open_steps_results.txt` records a complete run. The shared toolkit is `charge_lattice_tools.py`.
+**Research extension, 17 October 2026.** Independent exploratory calculation, **not peer reviewed**. This note continues `RESEARCH_NOTE.md` and `THREE_GENERATION_FLAVOR_NOTE.md`, and works through the five "next steps" listed in the README. Everything below is reproduced by `python3 open_steps.py`. It needs Python 3.9+ and numpy, takes about 4 minutes (`--quick` skips the p = 13 search), and asserts every number quoted here. `open_steps_results.txt` records a complete run. The shared toolkit is `charge_lattice_tools.py`. A subsequent deterministic single-Higgs proof and scoped classification comparison are in [`EXACT_SYMMETRY_AND_CLASSIFICATION.md`](EXACT_SYMMETRY_AND_CLASSIFICATION.md); the restricted two-Higgs scan in this note is not a theorem covering every 2HDM.
 
 Source paper: Shiroman Prakash and K. L. Ramya, *One generation of the Standard Model as a quantum error-correcting code*, [arXiv:2610.21879](https://arxiv.org/abs/2610.21879).
 
@@ -8,7 +8,7 @@ Source paper: Shiroman Prakash and K. L. Ramya, *One generation of the Standard 
 
 | Step | Question | Answer |
 |---|---|---|
-| 1 | Do realistic flavour Lagrangians leave any of these charges intact? | **No exact survivor.** The B3/B5 badge rows already fail to commute with SU(3)c × SU(2)L. The only gauge-compatible family charges are per-family **(B−L)** and **T₃R**. They give new `[[30,2,3]]_p` and `[[45,3,3]]_p` codes for every p ≥ 5, but an exhaustive Yukawa scan finds no realistic texture that preserves any family-differential charge (1HDM or 2HDM). Distance 3 needs charges on lepton doublets, which neutrino mixing breaks at O(1). The best approximate structure (right-handed T₃R per family, broken at 0.4–6 %) only gives distance 2. |
+| 1 | Do realistic flavour Lagrangians leave any of these charges intact? | **No exact survivor.** The B3/B5 badge rows already fail to commute with SU(3)c × SU(2)L. The only gauge-compatible family charges are per-family **(B−L)** and **T₃R**. They give new `[[30,2,3]]_p` and `[[45,3,3]]_p` codes for every p ≥ 5, and an exact single-Higgs quark-sector theorem excludes unbroken family-differential charges given full-rank masses and non-block-diagonal mixing. A restricted numerical two-Higgs texture scan finds no survivor within its assumptions. Distance 3 needs charges on lepton doublets, which neutrino mixing breaks at O(1). The best approximate structure (right-handed T₃R per family, broken at 0.4–6 %) only gives distance 2. |
 | 2 | What do the logical error channels look like? | Exact enumerators for all codes. Single-output error is the same as for direct sums at leading order. However, the coupled codes have **correlated two-output logical errors at order ε⁴**, while direct sums only get them at **ε⁶**. These come entirely from the 2+2 cross-family events. |
 | 3 | Are the coupled codes equivalent to direct sums? | **No, not even under arbitrary local unitaries with qudit permutations.** Every coupled stabilizer group is indecomposable: it has one matroid component, while a direct sum always has two. This covers monomial and local-Clifford equivalence. |
 | 4 | Where could the charge constraints be measured? | In a conjugate basis the X checks are **Z_p charge measurements** and the logical value is "the charge of the missing right-handed neutrinos." That is natural in engineered qudit registers and gauge-theory simulators, but impossible with real gauge charges because of superselection. Measuring the coupled codes costs about 18 % more total check weight than the direct sum. The correlated ε⁴ error is a concrete experimental signature. |
@@ -119,7 +119,7 @@ Two consequences:
 - **Tri-hypercharge alone gives k = 1**, because the right-handed neutrino has zero hypercharge. The family-gauged hypercharge models of [Fernández Navarro & King](https://arxiv.org/abs/2305.07690) therefore cannot by themselves separate the logical qudits. Family-dependent B−L (or T₃R) is required.
 - Both rows are needed for distance 3: B−L_g alone has lepton-doublet twins, and T₃R_g alone has right-handed twins.
 
-### 1c. Exhaustive Yukawa scan: no exact survivor
+### 1c. Finite Yukawa texture scan, with exact single-Higgs strengthening
 
 Take every family-dependent charge assignment `θ_g = a_g S3 + b_g S2` mod p, together with every Higgs charge. That's one Higgs doublet, and separately two doublets with independent up and down charges. Each Yukawa entry is allowed iff its total charge vanishes mod p. Call a texture **realistic** if:
 - Y_u, Y_d and Y_e can all be full rank (a perfect matching in the allowed pattern, then confirmed numerically with generic entries);
@@ -132,7 +132,7 @@ Take every family-dependent charge assignment `θ_g = a_g S3 + b_g S2` mod p, to
 | 3 | 3, 5, 7 | 1HDM | 9, 25, 49 | **0** |
 | 2 / 3 | 5 / 3, 5 | 2HDM | 25 / 9, 25 | **0** |
 
-The survivors are exactly the p² family-universal assignments. For those all punctures coincide and **k = 1**.
+Within these enumerated texture models the survivors are exactly the p² family-universal assignments. For those all punctures coincide and **k = 1**. The general unbroken single-Higgs claim has an independent algebraic proof in [`EXACT_SYMMETRY_AND_CLASSIFICATION.md`](EXACT_SYMMETRY_AND_CLASSIFICATION.md); the two-Higgs scan is a restricted computation, not a model-independent no-go theorem.
 
 This is the expected result: the only exact abelian symmetries left by generic Yukawas are family-universal. Here it is checked exhaustively within this class.
 
