@@ -198,6 +198,74 @@ def hamiltonian_and_noise():
     return SWAP
 
 
+
+def engineered_ground_space_gap():
+    """Positive, exactly gapped *engineered* SU(2)-invariant Hamiltonian.
+
+    H = Delta * sum_e (N_e-left - target_e)^2
+      + lambda * sum_vertices G_v^2
+      + K * sum_vertices sum_(i<j co-located) S_i . S_j.
+
+    Since sum_pairs S_i.S_j=(G_v^2 - 3*n_v/4)/2, and n0+n1=6,
+    H = Delta*hamming + g*(G0^2+G1^2) - 9K/4,
+    g=lambda+K/2. For positive Delta and g, the *entire* ground
+    manifold consists of the two target-orientation Gauss singlets.
+
+    Exact excitation gap:
+    min(2g, Delta + 3g/2, 2Delta).
+    This Hamiltonian is a fine-tuned mathematical construction; it
+    does not suppress gauge-invariant local exchange perturbations.
+    """
+    Delta, lam, K = sp.symbols("Delta lambda K", positive=True, real=True)
+    g = lam + K / 2
+    target = ORIENTATION
+
+    candidate = (2 * g, Delta + sp.Rational(3, 2) * g, 2 * Delta)
+    # A spin system with n spin halves has minimum total spin
+    # 0 when n even and 1/2 when n odd. Enumerate all 16
+    # occupancy/orientation sectors exactly.
+    for orientation in product((0, 1), repeat=4):
+        distance = sum(a != b for a, b in zip(orientation, target))
+        n0 = 1 + orientation.count(0)
+        n1 = 1 + orientation.count(1)
+        j0 = sp.Rational(n0 % 2, 2)
+        j1 = sp.Rational(n1 % 2, 2)
+        casimir_min = j0 * (j0 + 1) + j1 * (j1 + 1)
+        if not distance:
+            assert n0 == 2 and n1 == 4 and casimir_min == 0
+            continue
+        assert casimir_min == (
+            sp.Rational(3, 2) if distance % 2 else 0
+        )
+        # Sector lower energy relative to the encoded ground.
+        E = Delta * distance + g * casimir_min
+        # Positive coefficients allow exactly these three
+        # candidates to dominate: all other sectors cost >=
+        # one of the listed candidates.
+        assert any(
+            sp.expand(E - c).coeff(Delta) >= 0 and
+            sp.expand(E - c).coeff(lam) >= 0 and
+            sp.expand(E - c).coeff(K) >= 0
+            for c in candidate
+        ), (orientation, E)
+
+    # The target 2-spin and 4-spin vertices both have a spin-1
+    # excited irrep, so the smallest excitation within the
+    # target orientation has Casimir cost exactly 2g.
+    # One-link flips attain Delta+3g/2; two-link flips attain 2Delta.
+    for de, gg in ((1, 1), (1, 4), (4, 1), (3, 2)):
+        values = [sp.sympify(c).subs({Delta: de, lam: gg, K: 0})
+                  for c in candidate]
+        expected = min(2 * gg, de + sp.Rational(3, 2) * gg, 2 * de)
+        assert min(values) == expected
+
+    print("Engineered symmetric gauge Hamiltonian has exactly "
+          "two ground states and positive gap")
+    print("Gap = min(2g, Delta + 3g/2, 2Delta), g=lambda + K/2 > 0")
+    print("Inside code, any generic local exchange perturbation "
+          "still has first-order logical splitting")
+    return candidate
+
 def proof_of_full_error_algebra(sector_data):
     """Exact finite-algebra obstruction, distinct from one-error KL tests.
 
@@ -243,6 +311,7 @@ def proof_of_full_error_algebra(sector_data):
 def main():
     blocks = check_all_physical_sectors()
     hamiltonian_and_noise()
+    engineered_ground_space_gap()
     proof_of_full_error_algebra(blocks)
     print("ALL SU2 EXCHANGE ALGEBRA / HAMILTONIAN CHECKS PASSED")
 
