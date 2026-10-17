@@ -1,0 +1,24 @@
+name: Research smoke checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - research/exact-yukawa-and-code-fingerprints
+
+jobs:
+  exact-math:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact one-Higgs Yukawa enumeration (stdlib)
+        run: python exact_yukawa.py
+      - name: Install numerical dependency
+        run: python -m pip install numpy==2.3.3
+      - name: Coupled code fingerprint checks
+        run: python code_fingerprints.py
