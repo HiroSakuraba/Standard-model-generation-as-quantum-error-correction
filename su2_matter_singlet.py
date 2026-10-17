@@ -16,6 +16,7 @@ Run: python3 su2_matter_singlet.py
 from collections import defaultdict
 from fractions import Fraction
 from itertools import product
+from math import comb
 
 import sympy as sp
 
@@ -107,7 +108,57 @@ def projected_operator(basis, eigenvalue):
                      inner(basis[i], diagonal_action(basis[j], eigenvalue)))
 
 
+
+def singlet_multiplicity(num_doublets):
+    """Multiplicity of the trivial SU(2) irrep in (spin-1/2)^tensor n."""
+    if num_doublets % 2:
+        return 0
+    r = num_doublets // 2
+    return comb(2 * r, r) - (comb(2 * r, r + 1) if r else 0)
+
+
+def parallel_link_singlet_dimensions(num_links):
+    """Two matter doublets, one fundamental rishon on each parallel link.
+
+    Sum exact spin-0 tensor multiplicities over all end assignments.
+    Split by occupation of the first link's left endpoint to test
+    whether a gauge-invariant local N acts as a non-scalar observable.
+
+    No matrix diagonalization beyond the explicit 2-link test is
+    claimed. Counting uses standard SU(2) tensor decomposition.
+    """
+    assert num_links >= 1
+    by_first_end = [0, 0]
+    for end0 in (0, 1):
+        for left_of_remaining in range(num_links):
+            total_left = left_of_remaining + int(end0 == 0)
+            total_right = num_links - total_left
+            count = comb(num_links - 1, left_of_remaining)
+            ways = (singlet_multiplicity(1 + total_left) *
+                    singlet_multiplicity(1 + total_right))
+            by_first_end[end0] += count * ways
+    return tuple(by_first_end)
+
+
+def check_parallel_link_family():
+    expected = {1: 0, 2: 2, 3: 0, 4: 16,
+                5: 0, 6: 140, 7: 0, 8: 1344}
+    for links, target in expected.items():
+        by_end = parallel_link_singlet_dimensions(links)
+        assert sum(by_end) == target, (links, by_end)
+        if links % 2:
+            assert by_end == (0, 0)
+        else:
+            assert by_end[0] == by_end[1] == target // 2
+            # U=(-1)^N on the gauge-singlet space has both +1/-1
+            # eigenspaces; PUP cannot be scalar => KL fails for {I,U}.
+            assert all(x > 0 for x in by_end)
+    print("Parallel-link SU(2) singlets for 1..8 links:", expected)
+    print("Gauss-only local phase error: KL fails for every even link "
+          "count >=2 in this fixed-matter, one-rishon truncation")
+
 def test():
+    check_parallel_link_family()
     dims = {
         orientation: exact_sector_singlet_dimension(orientation)
         for orientation in ORIENTATIONS
