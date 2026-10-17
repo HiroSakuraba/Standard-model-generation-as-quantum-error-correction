@@ -93,6 +93,12 @@ An example begins with a preexisting \(X\) error on module 0 and a further two-b
 
 The difference between **one fault from a clean input** and **one incoming data error plus one fresh fault** is therefore decisive. The latter must not be silently inferred from the former.
 
+### Clarification against the published distance-three fault-tolerance criteria
+
+**Important correction (17 October 2026).** In the standard one-fault extended-rectangle definition, preservation of the **original logical state** is required when \(r+s\le1\), where \(r\) is incoming error weight and \(s\) is the number of new faults. The stronger experiment below takes **\(r=1,s=1\)**, outside that guarantee. The separate fault-tolerant containment condition constrains the output relative to *some* codeword when \(s\le1\), rather than requiring correct preservation of the original logical input under two independent faults.
+
+Accordingly, the 344 indistinguishability groups below show that **the original logical information cannot be perfectly recovered for every two-event history by decoding the existing transcript**. They are **not a counterexample to the standard one-fault fault-tolerance definition** and should not be described as a no-go against a published fault-tolerant five-qubit scheme. The correction and source-checked adaptive follow-up appear in [\`ADAPTIVE_FLAG_EC_AUDIT.md\`](ADAPTIVE_FLAG_EC_AUDIT.md).
+
 ### Exact indistinguishability result (stronger than an inadequate decoder)
 
 For each of the 11,760 stress cases the verifier independently reconstructs the complete actually observed transcript
@@ -114,9 +120,9 @@ It is **not** a no-go theorem for all five-qubit-code fault-tolerant correction 
 
 ## Fault-tolerance limits and next decisions
 
-The construction is **not** an end-to-end fault-tolerant error-correction implementation because:
+The construction is **not** an end-to-end demonstrated physical fault-tolerant error-correction implementation because:
 
-1. The certified property assumes **no preexisting data error when the new circuit fault occurs**. Handling one prior error **plus** one new fault requires the separate stress analysis and perhaps additional decoding logic.
+1. The certified property includes correction of one preexisting data error with zero new faults and fault containment from a clean input with one new fault. The additional **one prior error plus one new fault** analysis is a useful, stricter diagnostic, **not** a mandatory preservation-of-original-logical-state release criterion for a distance-three one-fault code.
 2. The third round, although physically simulated gate-by-gate in the noise-free branch, is **not itself exposed to an independent fault** under the single-fault-global-budget assumption; nor are there failures in the conditional feed-forward or recovery Pauli gates.
 3. The model omits idle noise, multi-location faults, correlated two-module noise, leakage out of the two-dimensional inner singlet sectors, and imperfections of ancilla reset.
 4. The controlled-\(X_\mathrm{in}\) and controlled-\(Z_\mathrm{in}\) operations are ideal encoded Clifford gates, **not yet decomposed into gauge-invariant, locality-respecting matter/rishon interactions**. The earlier SU(2) singlet analysis demonstrates only unconditionally applied single-module X/Z *at the algebraic level*, not their ancilla-controlled versions.
