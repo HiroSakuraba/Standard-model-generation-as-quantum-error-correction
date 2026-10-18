@@ -132,6 +132,21 @@ A fault in **either physical cross coupler** yields the same result up to numeri
 
 The composite's nominal final code leakage is approximately \(1.7\times10^{-6}\), and the tested one-coupler fault cases remain below \(2\times10^{-6}\), **worse nominal leakage than the \(9.8\times10^{-8}\) single shaped-gate result from PR #16**. The new sequence improves one error mechanism—coupling calibration sensitivity—while worsening duration and somewhat increasing leakage. Under substantial gate-duration-dependent decoherence it might perform **worse** than the short gate.
 
+### Falsification test: errors in the *extra* local exchange rotations
+
+The new composite pulses rely on exact intra-register \(X\) and \(Z\) exchange rotations both for echo flips and for tilting the corrective axes. A second stress test scales **all** such local rotation angles by the same factor \(1+\epsilon_{\rm local}\) while leaving both physical cross-coupler envelopes nominal.
+
+| Common intra-register exchange rotation calibration error | Logical operator deviation from nominal | Final code leakage |
+|---:|---:|---:|
+| \(-5\%\) | **0.481473** | \(1.73\times10^{-6}\) |
+| \(-1\%\) | **0.099783** | \(1.73\times10^{-6}\) |
+| \(+1\%\) | **0.101317** | \(1.73\times10^{-6}\) |
+| \(+5\%\) | **0.517885** | \(1.75\times10^{-6}\) |
+
+These results are **far worse** than the cross-coupler calibration deviations the SK1 sequence was designed to suppress. The test is a coherent simultaneous amplitude fault in every extra local exchange operation; it is not a measurement of actual device error rates. The local pulses are still treated as zero-duration ideal rotations *except for their miscalibrated angle*.
+
+**Research conclusion:** the composite is demonstrably *not* calibration-robust as a full physical control protocol. Its corrective rotations have become the dominant modeled vulnerability. Future optimization must include both sets of physical controls simultaneously; improving the cross-coupler error alone would be misleading.
+
 ### Convergence and full-spin audit
 
 At a \({+10\%}\) first-coupler fault, the composite deviation is approximately:
@@ -149,7 +164,7 @@ Calibration on 512 bins and retesting at higher resolution avoids treating an ac
 
 **Achieved:** an explicit **two-body-exchange-only**, noncommuting, SU(2)-gauge-invariant composite-control strategy; all local rotations and entangling pulses are constructed from specified physical spin operators. In the truncated eight-spin model it reduces small, independent, coherent cross-coupler miscalibration errors from **linear** to approximately **quadratic** scaling at the operator level, with full code leakage and duration exposed.
 
-**Not achieved:** low-overhead robust control, optimized local rotation synthesis, physical bandwidth/noise modeling, reliability under random/temporally changing calibration drifts, realistic ancilla preparation/readout, explicit leakage detection, or a complete five-module error-correction circuit compiled from these pulses. Importantly, the logical-rotation model treats physical local exchange pulses as *instantaneous and error-free*; correcting this approximation is the next essential check.
+**Not achieved:** calibration robustness of the full sequence (a mere 1% local-exchange rotation error causes ~0.10 operator deviation), low-overhead robust control, optimized local rotation synthesis, physical bandwidth/noise modeling, reliability under random/temporally changing calibration drifts, realistic ancilla preparation/readout, explicit leakage detection, or a complete five-module error-correction circuit compiled from these pulses. Importantly, the logical-rotation model treats physical local exchange pulses as *instantaneous and error-free*; correcting this approximation is the next essential check.
 
 **Next research release criteria:**
 
