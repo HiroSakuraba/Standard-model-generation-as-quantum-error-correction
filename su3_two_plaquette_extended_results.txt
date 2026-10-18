@@ -1,0 +1,74 @@
+MICROSCOPIC FIERZ + SU3 HAAR/determinant CHECKS PASSED
+
+====== TRUNCATION 7 ======
+GRAM 7 rank 7 time 0.0
+G off-diagonal []
+WLEFT 7 time 0.0
+WRIGHT 7 time 0.0
+WL[:,vac] [('L+', 1)]
+PROJECTED COMMUTATOR RANK 2
+TOTAL E COV DIAG [('vac', 0), ('L+', 16/3), ('L-', 16/3), ('R+', 16/3), ('R-', 16/3), ('O+', 8), ('O-', 8)]
+CHARGE CONJUGATION 4 3
+COMMUTANT hermitian 2
+COMMUTANT full 1
+COMMUTANT hermitian-plus-shared 2
+ELECTRIC-ONLY code exact PASS; Hermitian left Wilson logical X exact FAIL
+EIGENVALUES first 6: [-0.19898355  4.83333333  5.0141621   5.80798878  5.83333333  8.01815479]
+FULL FIRST GAP 5.032316886394343
+SEVEN-STATE FIRST GAP 5.032316886394343
+FULL GROUND ENERGY -0.19898355306101373 SEVEN GROUND -0.19898355306101373
+
+====== TRUNCATION 11 ======
+GRAM 11 rank 11 time 0.0
+G off-diagonal [('O+', 'L+R+', 1/3), ('O-', 'L-R-', 1/3)]
+WLEFT 11 time 0.0
+WRIGHT 11 time 0.0
+WL[:,vac] [('L+', 1)]
+PROJECTED COMMUTATOR RANK 0
+TOTAL E COV DIAG [('vac', 0), ('L+', 16/3), ('L-', 16/3), ('R+', 16/3), ('R-', 16/3), ('O+', 8), ('O-', 8), ('L+R+', 32/3), ('L+R-', 32/3), ('L-R+', 32/3), ('L-R-', 32/3)]
+CHARGE CONJUGATION 6 5
+COMMUTANT hermitian 2
+COMMUTANT full 1
+COMMUTANT hermitian-plus-shared 2
+ELECTRIC-ONLY code exact PASS; Hermitian left Wilson logical X exact FAIL
+EIGENVALUES first 6: [-0.2026696   4.82811085  4.83333333  5.72466732  5.73200918  7.99082425]
+FULL FIRST GAP 5.030780447923168
+SEVEN-STATE FIRST GAP 5.032316886394343
+FULL GROUND ENERGY -0.20266959518707947 SEVEN GROUND -0.19898355306101373
+
+====== TRUNCATION 17 ======
+GRAM 17 rank 17 time 0.0
+G off-diagonal [('O+', 'L+R+', 1/3), ('O-', 'L-R-', 1/3)]
+WLEFT 17 time 0.1
+WRIGHT 17 time 0.2
+WL[:,vac] [('L+', 1)]
+PROJECTED COMMUTATOR RANK 6
+TOTAL E COV DIAG [('vac', 0), ('L+', 16/3), ('L-', 16/3), ('R+', 16/3), ('R-', 16/3), ('O+', 8), ('O-', 8), ('L+R+', 32/3), ('L+R-', 32/3), ('L-R+', 32/3), ('L-R-', 32/3), ('L6', 40/3), ('L6b', 40/3), ('R6', 40/3), ('R6b', 40/3), ('L8', 12), ('R8', 12)]
+CHARGE CONJUGATION 10 7
+COMMUTANT hermitian 2
+COMMUTANT full 1
+COMMUTANT hermitian-plus-shared 2
+ELECTRIC-ONLY code exact PASS; Hermitian left Wilson logical X exact FAIL
+EIGENVALUES first 6: [-0.20516955  4.72670225  4.73019515  5.69279051  5.69991323  7.98886031]
+FULL FIRST GAP 4.931871796251475
+SEVEN-STATE FIRST GAP 5.032316886394343
+FULL GROUND ENERGY -0.20516954627325584 SEVEN GROUND -0.19898355306101373
+
+====== TRUNCATION 19 ======
+GRAM 19 rank 19 time 0.0
+G off-diagonal [('O+', 'L+R+', 1/3), ('O-', 'L-R-', 1/3), ('L+R-', 'X+', 1/3), ('L-R+', 'X-', 1/3)]
+WLEFT 19 time 0.0
+WRIGHT 19 time 0.0
+WL[:,vac] [('L+', 1)]
+PROJECTED COMMUTATOR RANK 6
+TOTAL E COV DIAG [('vac', 0), ('L+', 16/3), ('L-', 16/3), ('R+', 16/3), ('R-', 16/3), ('O+', 8), ('O-', 8), ('L+R+', 32/3), ('L+R-', 32/3), ('L-R+', 32/3), ('L-R-', 32/3), ('L6', 40/3), ('L6b', 40/3), ('R6', 40/3), ('R6b', 40/3), ('L8', 12), ('R8', 12), ('X+', 32/3), ('X-', 32/3)]
+CHARGE CONJUGATION 11 8
+COMMUTANT hermitian 2
+COMMUTANT full 1
+COMMUTANT hermitian-plus-shared 2
+ELECTRIC-ONLY code exact PASS; Hermitian left Wilson logical X exact FAIL
+EIGENVALUES first 6: [-0.20518831  4.72668232  4.72670225  5.69279051  5.69565803  7.96292174]
+FULL FIRST GAP 4.931870638564695
+SEVEN-STATE FIRST GAP 5.032316886394343
+FULL GROUND ENERGY -0.20518831377871227 SEVEN GROUND -0.19898355306101373
+ALL EXACT EXTENDED TWO-PLAQUETTE SU3 TESTS PASSED
