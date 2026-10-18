@@ -123,6 +123,19 @@ The operator-norm comparison is between **raw projected evolution matrices**, wi
 
 **Interpretation:** Lowering \(J/\Delta\) improves the perturbative approximation and suppresses finite-pulse leakage, but makes the gate slow: the desired phase accumulates only at order \(J^2/\Delta\). None of the tested finite pulses is shown to be exactly equivalent to a CZ after any specified calibration. The effect of hardware dephasing, pulse noise and finite ancilla lifetime is not modeled. We should not claim a useful error-correction clock rate or threshold from these results.
 
+### Numerical test of an elementary SU(2)-invariant coupling fault
+
+As a first *native-interaction-level* sensitivity experiment, perturb the strength of **only the \(S_{A_0}\cdot S_{D_0}\) exchange** by \(-10\%\) or \(+10\%\), retaining the other cross coupling and the original pulse duration \(t_{\pi/4}\) at nominal \(J/\Delta=0.2\).
+
+The entire faulty Hamiltonian is still SU(2)-gauge invariant. Comparing its full 256-state evolution against the **uncalibrated nominal second-order target** gives:
+
+| First cross-coupling fault | Operator-norm deviation | Maximum logical-block leakage probability |
+|---|---:|---:|
+| \(-10\%\) | 0.189651 | 0.002254 |
+| \(+10\%\) | 0.560640 | 0.008846 |
+
+These are coherent *deterministic perturbations*, **not fault probabilities, average infidelities, thresholds or evidence of a realistic 10% manufacturing error distribution**. The large difference between positive and negative perturbations arises from accumulated phase shifts and finite-pulse effects; no pulse recalibration or compensation was attempted. The full test is now an executable regression. This explicitly demonstrates that **gauge-invariant errors can change a logical operation substantially without triggering any gauge-syndrome alarm**.
+
 ## 5. Gauge-invariant faults and physical error propagation
 
 The simulator checks both cross exchanges commute exactly with the **full eight-spin Gauss-law generators** on all \(2^8\) basis vectors (2,048 exact commutator comparisons). Every intra-register Heisenberg exchange is likewise a color scalar.
