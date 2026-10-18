@@ -136,6 +136,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su3_two_plaquette_spin_network.py`](su3_two_plaquette_spin_network.py), [`su3_two_plaquette_results.txt`](su3_two_plaquette_results.txt) | Reproduce 252 exact SU(3) local Gauss checks, Haar Wilson transitions, matrix-algebra tests and toy finite-volume spectrum |
 | [`SU3_TWO_PLAQUETTE_19_STATE_AUDIT.md`](SU3_TWO_PLAQUETTE_19_STATE_AUDIT.md) | Nested 7→11→17→19 SU(3) loop basis; exact shared-link 1/8 and bar3/6 fusion, electric/Wilson error algebras and truncation study |
 | [`su3_two_plaquette_extended.py`](su3_two_plaquette_extended.py), [`su3_two_plaquette_extended_results.txt`](su3_two_plaquette_extended_results.txt) | Exact SU(3) determinant-twisted Haar integrals, Fierz checks, rational commutants and illustrative generalized spectra |
+| [`SU3_COMPLETE_MINIMAL_LINK_AUDIT.md`](SU3_COMPLETE_MINIMAL_LINK_AUDIT.md) | **Complete** SU(3) two-square minimal-link `1⊕3⊕bar3` Gauss singlets: nine total; epsilon junctions; exact Wilson leakage and exchange-error obstruction |
+| [`su3_complete_minimal_links.py`](su3_complete_minimal_links.py), [`su3_complete_minimal_links_results.txt`](su3_complete_minimal_links_results.txt) | Exhaustive `3^7` irrep enumeration; 324 local Gauss checks; 9-state Haar matrices and five-coupling finite-model spectrum |
 
 ## Reproduce
 
@@ -173,6 +175,7 @@ OPENBLAS_NUM_THREADS=1 python3 su2_native_vertex_controls.py # source-motivated 
 OPENBLAS_NUM_THREADS=1 python3 su3_single_plaquette_error_algebra.py # SU3 character fusion/error-algebra (SymPy, NumPy); not a glueball mass
 OPENBLAS_NUM_THREADS=1 python3 su3_two_plaquette_spin_network.py # two adjacent SU(3) plaquettes, explicit local Gauss constraints (SymPy, NumPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_two_plaquette_extended.py # exact 19-state SU3 flux-fusion audit (SymPy, NumPy, SciPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_complete_minimal_links.py # full 9-state minimal-link SU3 Gauss sector (SymPy, NumPy)
 ```
 
 Existing checks:
