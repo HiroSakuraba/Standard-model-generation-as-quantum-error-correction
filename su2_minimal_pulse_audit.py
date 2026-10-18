@@ -56,8 +56,8 @@ def weak_coupling_obstruction():
     disturbed = scale*a*b*(1+eps_a)*(1+eps_b)
     assert sp.diff(disturbed, eps_a).subs({eps_a:0,eps_b:0}) == theta
     assert sp.diff(disturbed, eps_b).subs({eps_a:0,eps_b:0}) == theta
-    assert sp.expand(disturbed-theta) == theta*(
-        eps_a + eps_b + eps_a*eps_b)
+    assert sp.simplify(disturbed-theta-theta*(
+        eps_a + eps_b + eps_a*eps_b)) == 0
     print("Second-order fixed-envelope ZZ phase: each coupler has "
           "nonzero first derivative when entangling phase is nonzero.")
 
