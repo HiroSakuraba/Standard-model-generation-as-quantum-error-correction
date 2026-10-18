@@ -8,7 +8,7 @@ error class (if flagged) or ordinary weight-one lookup.
 
 IMPORTANT provenance: this reuses OUR independently analyzed
 controlled-Pauli flag gadget from flagged_su2_measurement.py, NOT a
-gate-for-gate transcription of Fig. 1(c) from Chao--Reichardt.
+gate-for-gate transcription of Fig. 2(c) of arXiv:1705.02329v1 from Chao--Reichardt.
 The encoded controls remain ideal; no SU(2) physical implementation.
 
 It enumerates the same exact Pauli fault alphabet as the previous

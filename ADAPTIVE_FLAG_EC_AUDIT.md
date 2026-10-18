@@ -4,7 +4,7 @@
 
 ## 1. Primary-source check and an important scientific correction
 
-The primary reference is Rui Chao and Ben W. Reichardt, [*Quantum Error Correction with Only Two Extra Qubits*, *Phys. Rev. Lett.* **121**, 050502 (2018)](https://doi.org/10.1103/PhysRevLett.121.050502), especially **Figure 1(c)** and the numbered error-correction procedure on pages 1–2 of the [accepted manuscript](https://link.aps.org/accepted/10.1103/PhysRevLett.121.050502). Their published **five-qubit fault-tolerant adaptive control flow** is:
+The primary reference is Rui Chao and Ben W. Reichardt, [*Quantum Error Correction with Only Two Extra Qubits*, *Phys. Rev. Lett.* **121**, 050502 (2018)](https://doi.org/10.1103/PhysRevLett.121.050502), especially **Figure 2(c)** and the numbered error-correction procedure on pages 2–3 of the [original arXiv manuscript](https://arxiv.org/pdf/1705.02329) (version 1, 2017). Their published **five-qubit fault-tolerant adaptive control flow** is:
 
 1. Measure each stabilizer using a flagged gadget in a specified order.
 2. At the *first* observed flag **or** nontrivial syndrome bit, **stop** the remaining flagged checks.
@@ -14,7 +14,7 @@ The primary reference is Rui Chao and Ben W. Reichardt, [*Quantum Error Correcti
 
 This source provides a constructive full fault-tolerance argument **for the circuits and procedures actually studied in that paper**.
 
-**What is implemented here:** exactly that **branching/measurement/recovery strategy**, but reusing our *independently developed*, optimized controlled-\(P\) flag gadget from [\`flagged_su2_measurement.py\`](flagged_su2_measurement.py), in which a syndrome ancilla is prepared in \(|+\rangle\), measured in X, and two flag CNOTs are inserted after data interactions 1 and 3. The conditional lookup is taken from our previous **exact simulator enumeration**. This is **not** a gate-for-gate transcription or independent reproduction of Chao–Reichardt Figure 1(c); no paper circuit is silently substituted by assumption.
+**What is implemented here:** exactly that **branching/measurement/recovery strategy**, but reusing our *independently developed*, optimized controlled-\(P\) flag gadget from [\`flagged_su2_measurement.py\`](flagged_su2_measurement.py), in which a syndrome ancilla is prepared in \(|+\rangle\), measured in X, and two flag CNOTs are inserted after data interactions 1 and 3. The conditional lookup is taken from our previous **exact simulator enumeration**. This is **not** a gate-for-gate transcription or independent reproduction of Chao–Reichardt Figure 2(c) of the original arXiv manuscript; no paper circuit is silently substituted by assumption.
 
 **Correction to interpretation of PR #12.** The earlier experiment found **344 pairs of identical classical records + true final stabilizer syndromes with differing logical Pauli actions** when a **preexisting input error and a *new* circuit fault were both present**. That establishes limits on exact preservation of the original logical state for that *two-event* model and observation schedule. But a standard distance-three **one-fault** criterion requires preservation of the input logical information when the *total* input-error weight and the new fault count satisfy \(r+s\le1\)—**not** when \(r=s=1\). The cited literature has a separate output-containment condition when the EC unit itself suffers one fault. Consequently these 344 ambiguity groups **do not alone disprove standard one-fault fault tolerance**. They remain genuine stress-test data and should not be erased.
 

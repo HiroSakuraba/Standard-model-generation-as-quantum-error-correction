@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/adaptive-flag-ec-criteria
+      - research/su2-controlled-exchange-gadgets
 
 jobs:
   exact-math:
@@ -50,3 +50,7 @@ jobs:
         run: python measured_multiround_su2.py --stress
       - name: Published-style adaptive five-qubit flag EC and one-fault criteria audit
         run: python paper_style_flag_ec.py --stress
+      - name: SU2 ancilla-conditioned local exchanges and controlled Clifford signatures
+        run: python su2_controlled_exchange.py
+      - name: Published Chao-Reichardt Figure 2(d) flagged error catalog
+        run: python published_flag_figure2_catalog.py
