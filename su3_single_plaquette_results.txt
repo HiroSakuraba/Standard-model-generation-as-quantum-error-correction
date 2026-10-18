@@ -1,0 +1,10 @@
+Six-character exact SU(3) Casimir, fusion and error-algebra tests: PASS
+Adjoint-only algebra dimension 8, commutant 5; KL-encoded qubit PASS
+Fundamental gauge-invariant Wilson loop grows algebra to M6; KL broken: PASS
+CUTOFF: {'cutoff': 1, 'dim': 3, 'lowest_energies': [-0.404071483, 1.237404817, 1.833333333], 'first_gap': 1.6414763}
+CUTOFF: {'cutoff': 2, 'dim': 6, 'lowest_energies': [-0.475400015, 0.901359721, 1.681945514, 2.84664752], 'first_gap': 1.376759736, 'low_two_eigenstates_Casimir_KL_traceless_norm': 0.816251115}
+CUTOFF: {'cutoff': 3, 'dim': 10, 'lowest_energies': [-0.480034458, 0.861636809, 1.669924729, 2.534697155], 'first_gap': 1.341671267}
+CUTOFF: {'cutoff': 4, 'dim': 15, 'lowest_energies': [-0.480144206, 0.860048087, 1.669585947, 2.510883528], 'first_gap': 1.340192294}
+CUTOFF 3: full fundamental/electric algebra M_10 verified by exact commutant
+CUTOFF 4: full fundamental/electric algebra M_15 verified by exact commutant
+JSON_RESULTS={"adjoint_algebra_dim": 8, "casimir": ["0", "4/3", "4/3", "3", "10/3", "10/3"], "commutant_dims": {"Casimir_and_C_even_fundamental_loop": 2, "Casimir_and_adjoint_loop": 5, "Casimir_and_fundamental_and_conjugate_loops": 1, "Casimir_only": 10}, "conditional_code": "|3> and |anti-3> exactly satisfy KL against entire alg(C2, chi8)", "full_algebra_dim": 36, "fundamental_breaks": "P chi3 P = [[0,0],[1,0]]", "real_fundamental_algebra_dim": 20, "reps": [[0, 0], [1, 0], [0, 1], [1, 1], [2, 0], [0, 2]]}
