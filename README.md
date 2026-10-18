@@ -140,6 +140,9 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su3_complete_minimal_links.py`](su3_complete_minimal_links.py), [`su3_complete_minimal_links_results.txt`](su3_complete_minimal_links_results.txt) | Exhaustive `3^7` irrep enumeration; 324 local Gauss checks; 9-state Haar matrices and five-coupling finite-model spectrum |
 | [`SU3_PUBLISHED_SQUARE_CHAIN_BENCHMARK.md`](SU3_PUBLISHED_SQUARE_CHAIN_BENCHMARK.md) | **Exact published comparison:** Chen–Müller–Yao zero-flux two-plaquette SU(3) Hamiltonian (PRD Appendix B Table VI, Eqs. 3–5, 10–11) matches the complete nine-state model |
 | [`su3_published_square_chain_benchmark.py`](su3_published_square_chain_benchmark.py), [`su3_published_square_chain_benchmark_results.txt`](su3_published_square_chain_benchmark_results.txt) | Independent qutrit-to-link bijection, all 162 directed Wilson entries, electric term and complete source-normalized 9×9 Hamiltonian identity |
+| [`SU3_THREE_PLAQUETTE_PUBLISHED_CHAIN_AUDIT.md`](SU3_THREE_PLAQUETTE_PUBLISHED_CHAIN_AUDIT.md) | **Three-square SU(3)** complete minimal qutrit chain (27 states, 10 links), all nine exact published magnetic blocks, electric/magnetic error-algebra classification and finite-volume comparison |
+| [`su3_three_plaquette_chain.py`](su3_three_plaquette_chain.py), [`su3_three_plaquette_results.txt`](su3_three_plaquette_results.txt) | Exact PRD Tables I/VI crosscheck, 27D Hamiltonian, 9D parent regression and dimensionless finite-size spectra/correlations |
+| [`su3_three_plaquette_error_algebra.py`](su3_three_plaquette_error_algebra.py), [`su3_three_plaquette_error_algebra_results.txt`](su3_three_plaquette_error_algebra_results.txt) | Exact finite-field commutant-rank witness: Hermitian M14⊕M13, complex Wilson M27; not an active-code no-go |
 
 ## Reproduce
 
@@ -179,6 +182,8 @@ OPENBLAS_NUM_THREADS=1 python3 su3_two_plaquette_spin_network.py # two adjacent 
 OPENBLAS_NUM_THREADS=1 python3 su3_two_plaquette_extended.py # exact 19-state SU3 flux-fusion audit (SymPy, NumPy, SciPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_complete_minimal_links.py # full 9-state minimal-link SU3 Gauss sector (SymPy, NumPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_published_square_chain_benchmark.py # exact source-to-code match to PRD 114 074502 Table VI (SymPy, NumPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_three_plaquette_chain.py # exact 27-state source-benchmarked SU3 chain (SymPy, NumPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_three_plaquette_error_algebra.py # F97 exact commutant certificate (SymPy)
 ```
 
 Existing checks:
