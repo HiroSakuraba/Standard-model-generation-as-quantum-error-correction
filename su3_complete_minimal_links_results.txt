@@ -1,0 +1,24 @@
+Gauss constraints: 7 basis vectors x 6 vertices x 6 exact Lie generators = 252 zero residuals
+Complete per-link irrep cutoff 1+3+anti3: 3^7=2187 rep assignments, Gauss singlets = 9
+Gauge-invariant states by occupied links: {0: 1, 4: 4, 6: 2, 7: 2}
+New epsilon-junction configurations: (1, -1, -1, 1, -1, -1, -1) (-1, 1, 1, -1, 1, 1, 1)
+Both baryon color networks: 2916 integer amplitudes each; 252 old + 72 new = 324 exact Gauss checks PASS
+Trace-polynomial Gram: exact diagonal entries [1, 1, 1, 1, 1, 1, 1, 4/3, 4/3]
+Exact Haar fundamental Wilson matrices reproduce all 7-state entries
+Wilson discarded-block operator norm from 7-state host to junction states: 1/sqrt(3) exactly
+Additional magnetic transitions from original states to baryon channels:
+W_L cov[7:,:7] = Matrix([[0, 0, 0, 0, 2/3, 0, 0], [0, 0, 0, 0, 0, 2/3, 0]])
+W_R cov[7:,:7] = Matrix([[0, 0, 0, 0, 0, 2/3, 0], [0, 0, 2/3, 0, 0, 0, 0]])
+Hermitian error algebra preserves charge-conjugation sectors: dimensions 5+4
+Electric Casimir diag: [0, 16/3, 16/3, 16/3, 16/3, 8, 8, 28/3, 28/3]
+Electric-only exact KL PASS, fundamental Wilson logical X remains FAIL
+Exact commutant Hermitian 2
+Exact commutant Hermitian+link-Casimirs 2
+Exact commutant full complex 1
+Spectrum: {'g': 0.25, 'nine_ground': -0.01197607598161273, 'nine_gap': 5.22030940931495, 'seven_ground': -0.011973470411269383, 'seven_gap': 5.220306803744602}
+Spectrum: {'g': 0.5, 'nine_ground': -0.04877335895595908, 'nine_gap': 5.132106692289295, 'seven_ground': -0.04872973784080342, 'seven_gap': 5.132063071174134}
+Spectrum: {'g': 1.0, 'nine_ground': -0.1997102670325796, 'nine_gap': 5.033043600365912, 'seven_ground': -0.1989835530610138, 'seven_gap': 5.0323168863943435}
+Spectrum: {'g': 2.0, 'nine_ground': -0.7957793820572996, 'nine_gap': 5.129112715390635, 'seven_ground': -0.7853342179166689, 'seven_gap': 5.118667551250001}
+Spectrum: {'g': 4.0, 'nine_ground': -2.784611010032171, 'nine_gap': 6.117944343365501, 'seven_ground': -2.6924164347203234, 'seven_gap': 6.025749768053655}
+JSON_RESULTS={"configs": {"B+": [1, -1, -1, 1, -1, -1, -1], "B-": [-1, 1, 1, -1, 1, 1, 1], "L+": [1, 0, -1, 0, -1, 1, 0], "L-": [-1, 0, 1, 0, 1, -1, 0], "O+": [1, 1, -1, -1, -1, 0, 1], "O-": [-1, -1, 1, 1, 1, 0, -1], "R+": [0, 1, 0, -1, 0, -1, 1], "R-": [0, -1, 0, 1, 0, 1, -1], "vac": [0, 0, 0, 0, 0, 0, 0]}, "dim": 9, "distribution": {"0": 1, "4": 4, "6": 2, "7": 2}, "gauss_new": 72, "magnetic_left": [["0", "0", "1", "0", "0", "0", "0", "0", "0"], ["1", "0", "0", "0", "0", "0", "0", "0", "0"], ["0", "1", "0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0", "0", "2/3"], ["0", "0", "0", "0", "0", "0", "1/3", "0", "0"], ["0", "0", "0", "1/3", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0", "2/3", "0"], ["0", "0", "0", "0", "1/2", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "1/2", "0", "0", "0"]], "magnetic_right": [["0", "0", "0", "0", "1", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0", "2/3", "0"], ["0", "0", "0", "0", "0", "0", "1/3", "0", "0"], ["1", "0", "0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "1", "0", "0", "0", "0", "0"], ["0", "1/3", "0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0", "0", "2/3"], ["0", "0", "0", "0", "0", "1/2", "0", "0", "0"], ["0", "0", "1/2", "0", "0", "0", "0", "0", "0"]], "spectrum": [{"g": 0.25, "nine_gap": 5.22030940931495, "nine_ground": -0.01197607598161273, "seven_gap": 5.220306803744602, "seven_ground": -0.011973470411269383}, {"g": 0.5, "nine_gap": 5.132106692289295, "nine_ground": -0.04877335895595908, "seven_gap": 5.132063071174134, "seven_ground": -0.04872973784080342}, {"g": 1.0, "nine_gap": 5.033043600365912, "nine_ground": -0.1997102670325796, "seven_gap": 5.0323168863943435, "seven_ground": -0.1989835530610138}, {"g": 2.0, "nine_gap": 5.129112715390635, "nine_ground": -0.7957793820572996, "seven_gap": 5.118667551250001, "seven_ground": -0.7853342179166689}, {"g": 4.0, "nine_gap": 6.117944343365501, "nine_ground": -2.784611010032171, "seven_gap": 6.025749768053655, "seven_ground": -2.6924164347203234}], "state_labels": ["vac", "L+", "L-", "R+", "R-", "O+", "O-", "B+", "B-"]}
+ALL COMPLETE MINIMAL-LINK SU(3) GAUSS AND WILSON TESTS PASSED
