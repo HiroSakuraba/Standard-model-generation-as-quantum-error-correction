@@ -132,6 +132,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su2_native_vertex_controls.py`](su2_native_vertex_controls.py) | Exact 16-state SU(2) Casimir/exchange tests, numerical finite-pulse channel and independently checked full-spin evolution |
 | [`SU3_PLAQUETTE_GAUGE_ERROR_ALGEBRA.md`](SU3_PLAQUETTE_GAUGE_ERROR_ALGEBRA.md) | SU(3) character-truncated one-loop error-algebra test: adjoint-only conditional qubit and fundamental Wilson-loop obstruction |
 | [`su3_single_plaquette_error_algebra.py`](su3_single_plaquette_error_algebra.py), [`su3_single_plaquette_results.txt`](su3_single_plaquette_results.txt) | Exact 6/10/15-state SU(3) commutants, conditional Knill–Laflamme overlaps and illustrative eigenvalue gaps |
+| [`SU3_TWO_PLAQUETTE_GAUSS_ERROR_AUDIT.md`](SU3_TWO_PLAQUETTE_GAUSS_ERROR_AUDIT.md) | Exact two-face SU(3) link-color spin networks: local Gauss-law tests, shared-link Wilson amplitudes and KL/noiseless-subsystem limits |
+| [`su3_two_plaquette_spin_network.py`](su3_two_plaquette_spin_network.py), [`su3_two_plaquette_results.txt`](su3_two_plaquette_results.txt) | Reproduce 252 exact SU(3) local Gauss checks, Haar Wilson transitions, matrix-algebra tests and toy finite-volume spectrum |
 
 ## Reproduce
 
@@ -167,6 +169,7 @@ python3 su2_graph_qutrit_witness.py         # explicit 3-state gauge-singlet cod
 OPENBLAS_NUM_THREADS=1 python3 su2_offgraph_robustness.py # 256D Hamiltonian + CPTP recovery (SymPy, NumPy, SciPy)
 OPENBLAS_NUM_THREADS=1 python3 su2_native_vertex_controls.py # source-motivated four-spin vertex, coupling/echo audit (SymPy, NumPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_single_plaquette_error_algebra.py # SU3 character fusion/error-algebra (SymPy, NumPy); not a glueball mass
+OPENBLAS_NUM_THREADS=1 python3 su3_two_plaquette_spin_network.py # two adjacent SU(3) plaquettes, explicit local Gauss constraints (SymPy, NumPy)
 ```
 
 Existing checks:
