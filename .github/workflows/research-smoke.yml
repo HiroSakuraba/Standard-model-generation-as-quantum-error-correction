@@ -28,6 +28,8 @@ jobs:
         run: python published_qutrit_family.py
       - name: Reed-Muller published-family obstruction
         run: python reed_muller_family_exclusion.py
+      - name: E8 chirality obstruction as a code obstruction
+        run: python e8_comparison.py
       - name: Walsh-character rigidity and explicit disguised direct sums
         run: python walsh_character_lattice.py
       - name: Operational gauge simulator, Gauss limitation and toric KL recovery
