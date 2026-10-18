@@ -134,6 +134,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su3_single_plaquette_error_algebra.py`](su3_single_plaquette_error_algebra.py), [`su3_single_plaquette_results.txt`](su3_single_plaquette_results.txt) | Exact 6/10/15-state SU(3) commutants, conditional Knill–Laflamme overlaps and illustrative eigenvalue gaps |
 | [`SU3_TWO_PLAQUETTE_GAUSS_ERROR_AUDIT.md`](SU3_TWO_PLAQUETTE_GAUSS_ERROR_AUDIT.md) | Exact two-face SU(3) link-color spin networks: local Gauss-law tests, shared-link Wilson amplitudes and KL/noiseless-subsystem limits |
 | [`su3_two_plaquette_spin_network.py`](su3_two_plaquette_spin_network.py), [`su3_two_plaquette_results.txt`](su3_two_plaquette_results.txt) | Reproduce 252 exact SU(3) local Gauss checks, Haar Wilson transitions, matrix-algebra tests and toy finite-volume spectrum |
+| [`SU3_TWO_PLAQUETTE_19_STATE_AUDIT.md`](SU3_TWO_PLAQUETTE_19_STATE_AUDIT.md) | Nested 7→11→17→19 SU(3) loop basis; exact shared-link 1/8 and bar3/6 fusion, electric/Wilson error algebras and truncation study |
+| [`su3_two_plaquette_extended.py`](su3_two_plaquette_extended.py), [`su3_two_plaquette_extended_results.txt`](su3_two_plaquette_extended_results.txt) | Exact SU(3) determinant-twisted Haar integrals, Fierz checks, rational commutants and illustrative generalized spectra |
 
 ## Reproduce
 
@@ -170,6 +172,7 @@ OPENBLAS_NUM_THREADS=1 python3 su2_offgraph_robustness.py # 256D Hamiltonian + C
 OPENBLAS_NUM_THREADS=1 python3 su2_native_vertex_controls.py # source-motivated four-spin vertex, coupling/echo audit (SymPy, NumPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_single_plaquette_error_algebra.py # SU3 character fusion/error-algebra (SymPy, NumPy); not a glueball mass
 OPENBLAS_NUM_THREADS=1 python3 su3_two_plaquette_spin_network.py # two adjacent SU(3) plaquettes, explicit local Gauss constraints (SymPy, NumPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_two_plaquette_extended.py # exact 19-state SU3 flux-fusion audit (SymPy, NumPy, SciPy)
 ```
 
 Existing checks:
