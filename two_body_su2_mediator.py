@@ -217,6 +217,23 @@ def full_eight_spin_dynamics(code,heff):
               f"operator-deviation={error:.6f}, max-leakage={leakage:.6f}")
     assert results[0][2]>results[1][2]>results[2][2]
     assert results[0][3]>results[1][3]>results[2][3]
+    # Demonstrate a coherent, GAUGE-INVARIANT elementary coupling fault.
+    # Only the first cross-exchange strength is shifted by +/-10%;
+    # the nominal pulse time and target are NOT recalibrated.
+    nominal_j=0.2
+    nominal_time=6*np.pi/nominal_j**2
+    eigen_eff,u_eff=np.linalg.eigh(nominal_j**2*h_eff)
+    target=u_eff@np.diag(np.exp(-1j*eigen_eff*nominal_time))@u_eff.conj().T
+    for fractional in (-0.10,0.10):
+        faulty=penalty+nominal_j*((1+fractional)*swaps[(0,4)]+swaps[(1,5)])
+        energy,u=np.linalg.eigh(faulty)
+        evolved=(embedding.conj().T@u)@np.diag(np.exp(-1j*energy*nominal_time))@(u.conj().T@embedding)
+        deviation=float(np.linalg.norm(evolved-target,ord=2))
+        leakage=float(max(0,1-min(np.linalg.eigvalsh(evolved.conj().T@evolved))))
+        assert deviation<1.0 and leakage<0.1
+        print(f"Gauge-invariant coupling fault {fractional:+.0%} on one "
+              f"exchange: operator-deviation={deviation:.6f}, "
+              f"max-leakage={leakage:.6f}")
     print("Finite-pulse effect and leakage decrease with J/Delta, "
           "while required gate time increases: verified")
 
