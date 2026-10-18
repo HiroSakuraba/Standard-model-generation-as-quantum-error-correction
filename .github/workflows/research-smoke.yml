@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/su2-controlled-exchange-gadgets
+      - research/two-body-su2-mediator
 
 jobs:
   exact-math:
@@ -56,3 +56,5 @@ jobs:
         run: python su2_controlled_exchange.py
       - name: Published Chao-Reichardt Figure 2(d) flagged error catalog
         run: python published_flag_figure2_catalog.py
+      - name: SU2 two-body singlet mediator, exact SW and full 256-state dynamics
+        run: OPENBLAS_NUM_THREADS=1 python two_body_su2_mediator.py
