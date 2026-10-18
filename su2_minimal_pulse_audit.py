@@ -191,9 +191,19 @@ def limited_shape_search(model):
               f"nominal deviation={values['deviation']:.8g}, "
               f"leakage={values['leakage']:.8g}, "
               f"worst +/-5% coupler deviation={worst:.8f}")
-        outcome[a]=(duration,values,worst)
+        # At the finite searched duration bound a candidate may have
+        # low leakage but a WRONG entangling phase; that does not
+        # qualify as a CZ-class logical gate.
+        cz_qualified = values["deviation"] < 1e-3
+        print("  CZ-class nominal accuracy requirement (<0.001):",
+              "PASS" if cz_qualified else "FAIL")
+        outcome[a]=(duration,values,worst,cz_qualified)
         assert np.isfinite(worst)
         assert values["leakage"]<.05
+        if a in (-0.2,0.0):
+            assert cz_qualified
+        else:
+            assert not cz_qualified
     print("Three-point waveform scan only; no claim of a universal "
           "no-go or globally best simple waveform.")
     return outcome
