@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/minimal-pulse-robustness-audit
+      - research/crocswap-six-qubit-symplectic-codes
 
 jobs:
   exact-math:
@@ -46,6 +46,8 @@ jobs:
         run: python su2_exchange_algebra.py
       - name: Five SU2 singlet blocks and exact 5-qubit recovery (1024 KL overlaps)
         run: python five_block_su2_recovery.py
+      - name: CrocSwap six-qubit Pauli spread and exact [[6,1,3]] Knill-Laflamme audit
+        run: python crocswap_pauli_qec_bridge.py
       - name: Exact single-fault propagation for bare and flagged SU2 stabilizer gadgets
         run: python flagged_su2_measurement.py
       - name: Two measured flagged rounds and adaptive third under all single faults
