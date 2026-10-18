@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/su2-sk1-composite-pulse
+      - research/minimal-pulse-robustness-audit
 
 jobs:
   exact-math:
@@ -64,3 +64,5 @@ jobs:
         run: OPENBLAS_NUM_THREADS=1 python su2_shaped_pulse.py
       - name: SK1-style composite SU2 gate robustness, both couplers and 256-state crosscheck
         run: OPENBLAS_NUM_THREADS=1 python su2_sk1_composite_pulse.py
+      - name: Simple SU2 pulse versus full composite calibration budget and bounded waveform search
+        run: OPENBLAS_NUM_THREADS=1 python su2_minimal_pulse_audit.py
