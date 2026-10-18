@@ -93,22 +93,24 @@ class PhysicalComposite:
         self._diagonal = {}
         self._rotation = {}
 
-    def rotation(self, name, angle):
-        key = (name, float(angle))
+    def rotation(self, name, angle, local_error=0.0):
+        """An intra-block exchange rotation with coherent amplitude error."""
+        key = (name, float(angle), float(local_error))
         if key not in self._rotation:
             values, vectors = eigh(self.locals[name])
             self._rotation[key] = (
-                vectors * np.exp(-0.5j*angle*values)) @ vectors.T
+                vectors * np.exp(-0.5j*angle*(1+local_error)*values)) @ vectors.T
         return self._rotation[key]
 
-    def ry(self, angle):
-        """R_Y on the data logical, via native SU(2)-scalar X/Z exchanges."""
-        return (self.rotation("Zd", np.pi/2) @
-                self.rotation("Xd", angle) @
-                self.rotation("Zd", -np.pi/2))
+    def ry(self, angle, local_error=0.0):
+        """R_Y on data, synthesized from separately faulty X/Z exchanges."""
+        return (self.rotation("Zd", np.pi/2,local_error) @
+                self.rotation("Xd", angle,local_error) @
+                self.rotation("Zd", -np.pi/2,local_error))
 
-    def echo_flip(self):
-        return self.rotation("Xa", np.pi) @ self.rotation("Xd", np.pi)
+    def echo_flip(self, local_error=0.0):
+        return (self.rotation("Xa",np.pi,local_error) @
+                self.rotation("Xd",np.pi,local_error))
 
     def eigensteps(self, fault1, fault2, bins):
         key = (float(fault1), float(fault2), int(bins))
@@ -130,9 +132,10 @@ class PhysicalComposite:
             U = (vectors * np.exp(-1j*duration*energies/bins)) @ vectors.T @ U
         return U
 
-    def echo(self, duration, fault1=0.0, fault2=0.0, bins=CAL_BINS):
+    def echo(self, duration, fault1=0.0, fault2=0.0, bins=CAL_BINS,
+             local_error=0.0):
         pulse = self.smooth(duration, fault1, fault2, bins)
-        flip = self.echo_flip()
+        flip = self.echo_flip(local_error)
         return flip @ pulse @ flip @ pulse
 
     def nonlocal_phase(self, U):
@@ -159,11 +162,13 @@ class PhysicalComposite:
         return float(target), float(correct)
 
     def composite(self, t_target, t_correct,
-                  fault1=0.0, fault2=0.0, bins=CAL_BINS):
+                  fault1=0.0, fault2=0.0, bins=CAL_BINS,
+                  local_error=0.0):
         phi = math.acos(-1/8)
-        plus, minus = self.ry(phi), self.ry(-phi)
-        target = self.echo(t_target,fault1,fault2,bins)
-        correct = self.echo(t_correct,fault1,fault2,bins)
+        plus = self.ry(phi,local_error)
+        minus = self.ry(-phi,local_error)
+        target = self.echo(t_target,fault1,fault2,bins,local_error)
+        correct = self.echo(t_correct,fault1,fault2,bins,local_error)
         # Two noncommuting tilted correction axes generate SK1-style
         # first-order amplitude cancellation, not a commuting echo.
         return (minus @ correct @ minus.conj().T @
@@ -283,6 +288,17 @@ def test():
                     assert composite[0]<.012
                 else:
                     assert composite[0]<.04
+
+    # Crucial negative control: the composite is robust to the
+    # CROSS couplers above, not necessarily to calibration of its
+    # additional intra-block exchange rotations.
+    for e in (-.05,-.01,.01,.05):
+        faulty = model.composite(t,c,local_error=e)
+        err,leak = aligned_error(model.code,faulty,nominal_composite)
+        print(f"All intra-block exchange rotations miscalibrated {e:+.0%}:",
+              {"deviation":err,"leakage":leak})
+        assert np.isfinite(err) and np.isfinite(leak)
+        assert 0<=leak<=1
 
     # Check temporal-discretization stability INDEPENDENT of the grid
     # used for duration calibration (512). Low-bin interference can
