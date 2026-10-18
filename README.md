@@ -122,6 +122,12 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su2_sk1_composite_pulse.py`](su2_sk1_composite_pulse.py) | Full 8-spin modeled noncommuting SU(2) singlet control, independent coupler faults, 256/14D crosscheck, pulse convergence |
 | [`SU2_MINIMAL_CONTROL_DECISION.md`](SU2_MINIMAL_CONTROL_DECISION.md) | Worst-case simple-versus-composite control budget, modest waveform search, analytic weak-coupling sensitivity limitation |
 | [`su2_minimal_pulse_audit.py`](su2_minimal_pulse_audit.py) | Exact 14D microscopic Hamiltonian simulation, both cross-coupler and extra-local control drift, fixed nominal comparisons |
+| [`SU2_ALLOWED_ERROR_ALGEBRA.md`](SU2_ALLOWED_ERROR_ALGEBRA.md) | Exact four/eight-spin gauge-invariant exchange algebra and restricted-error Knill–Laflamme tests |
+| [`su2_error_algebra_capacity.py`](su2_error_algebra_capacity.py) | Exact singlet algebra verifier (SymPy) |
+| [`SU2_EXCHANGE_GRAPH_CAPACITY.md`](SU2_EXCHANGE_GRAPH_CAPACITY.md) | Exchange-graph geometry and constructive 14D-singlet qutrit code |
+| [`su2_bridge_error_geometry.py`](su2_bridge_error_geometry.py), [`su2_graph_qutrit_witness.py`](su2_graph_qutrit_witness.py) | Exact bridge-error tests and explicit gauge-invariant qutrit witness |
+| [`SU2_OFFGRAPH_ROBUSTNESS.md`](SU2_OFFGRAPH_ROBUSTNESS.md) | Weak parasitic exchange: exact error-algebra obstruction vs finite-time, recoverable logical fidelity |
+| [`su2_offgraph_robustness.py`](su2_offgraph_robustness.py) | Full 256D spin evolution, independent 14D crosscheck and explicit CPTP erasure recovery |
 
 ## Reproduce
 
@@ -151,6 +157,10 @@ OPENBLAS_NUM_THREADS=1 python3 two_body_su2_mediator.py # two-body SU(2) mediato
 OPENBLAS_NUM_THREADS=1 python3 su2_shaped_pulse.py # optimized SU(2) smooth waveform, leakage and coupler robustness
 OPENBLAS_NUM_THREADS=1 python3 su2_sk1_composite_pulse.py # SK1-style noncommuting gauge-invariant robustness sequence
 OPENBLAS_NUM_THREADS=1 python3 su2_minimal_pulse_audit.py # decision on simpler pulse with all modeled calibration faults
+python3 su2_error_algebra_capacity.py       # exact symmetry-error algebra (requires SymPy)
+python3 su2_bridge_error_geometry.py        # exact graph-limited Knill-Laflamme conditions (requires SymPy)
+python3 su2_graph_qutrit_witness.py         # explicit 3-state gauge-singlet code (requires SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su2_offgraph_robustness.py # 256D Hamiltonian + CPTP recovery (SymPy, NumPy, SciPy)
 ```
 
 Existing checks:
