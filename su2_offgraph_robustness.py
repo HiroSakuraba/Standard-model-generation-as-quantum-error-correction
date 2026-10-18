@@ -19,7 +19,7 @@ import sympy as sp
 
 from su2_error_algebra_capacity import (
     four_spin_code, projected, h, singlet_exchange_representation,
-    commutant_dimension, noncrossing_matchings, valence_state,
+    commutant_dimension, noncrossing_matchings, valence_state, tensor,
 )
 
 
@@ -30,6 +30,9 @@ def exact_kl_defect():
     # Star geometry: protected logical |A_i> \otimes |D_0>.
     # h04 h14 compressed: (1/3) <S_A0.S_A1> (S_D0.S_D0)
     p_both = S01 / 4
+    physical_code = [tensor(psi, a[0]) for psi in a]
+    direct_256 = projected(physical_code, lambda psi: h(h(psi, 1, 4), 0, 4))
+    assert direct_256 == p_both  # independent exact 256-basis-state contraction
     assert p_both == sp.diag(-sp.Rational(3, 16), sp.Rational(1, 16))
     trless = p_both - sp.trace(p_both) * sp.eye(2) / 2
     assert trless == sp.diag(-sp.Rational(1, 8), sp.Rational(1, 8))
