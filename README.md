@@ -130,6 +130,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su2_offgraph_robustness.py`](su2_offgraph_robustness.py) | Full 256D spin evolution, independent 14D crosscheck and explicit CPTP erasure recovery |
 | [`SU2_NATIVE_VERTEX_CONTROL_AUDIT.md`](SU2_NATIVE_VERTEX_CONTROL_AUDIT.md) | Published exchange-enabled quantum-link vertex comparison: six-pair Gauss enforcement, coupling mismatch and selective finite-pulse echo |
 | [`su2_native_vertex_controls.py`](su2_native_vertex_controls.py) | Exact 16-state SU(2) Casimir/exchange tests, numerical finite-pulse channel and independently checked full-spin evolution |
+| [`SU3_PLAQUETTE_GAUGE_ERROR_ALGEBRA.md`](SU3_PLAQUETTE_GAUGE_ERROR_ALGEBRA.md) | SU(3) character-truncated one-loop error-algebra test: adjoint-only conditional qubit and fundamental Wilson-loop obstruction |
+| [`su3_single_plaquette_error_algebra.py`](su3_single_plaquette_error_algebra.py), [`su3_single_plaquette_results.txt`](su3_single_plaquette_results.txt) | Exact 6/10/15-state SU(3) commutants, conditional Knill–Laflamme overlaps and illustrative eigenvalue gaps |
 
 ## Reproduce
 
@@ -164,6 +166,7 @@ python3 su2_bridge_error_geometry.py        # exact graph-limited Knill-Laflamme
 python3 su2_graph_qutrit_witness.py         # explicit 3-state gauge-singlet code (requires SymPy)
 OPENBLAS_NUM_THREADS=1 python3 su2_offgraph_robustness.py # 256D Hamiltonian + CPTP recovery (SymPy, NumPy, SciPy)
 OPENBLAS_NUM_THREADS=1 python3 su2_native_vertex_controls.py # source-motivated four-spin vertex, coupling/echo audit (SymPy, NumPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_single_plaquette_error_algebra.py # SU3 character fusion/error-algebra (SymPy, NumPy); not a glueball mass
 ```
 
 Existing checks:
