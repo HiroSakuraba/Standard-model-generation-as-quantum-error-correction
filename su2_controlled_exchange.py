@@ -84,6 +84,77 @@ def check_full_gauss_invariance():
     print("64-state SU(2) Gauss commutators: all three exchanges exact PASS")
 
 
+
+def onsite_conditioned_swap(orientation, state, rishon_spin):
+    """Gauge-covariant direct-sum extension of matter1<->rishon spin SWAP.
+
+    The spin exchange occurs ONLY when the rishon is at the vertex1
+    endpoint with matter1; otherwise the operator is identity on the
+    whole orientation sector. Thus no fictitious cross-vertex swap is
+    applied when link orientation differs from our target sector.
+    """
+    assert rishon_spin in (3, 4, 5)
+    if orientation[rishon_spin - 2] != 1:
+        return dict(state)
+    out = {}
+    for spins, coefficient in state.items():
+        dest = list(spins)
+        dest[1], dest[rishon_spin] = dest[rishon_spin], dest[1]
+        dest = tuple(dest)
+        out[dest] = out.get(dest, 0) + coefficient
+    return {k: v for k, v in out.items() if v}
+
+
+def generic_gauss(orientation, state, vertex, generator):
+    """Exact integer action of G_z (twice) or G_plus in all sectors."""
+    local = (vertex,) + tuple(2 + i for i, end in enumerate(orientation)
+                               if end == vertex)
+    out = {}
+    for spins, coeff in state.items():
+        if generator == "2z":
+            weight = sum(1 - 2 * spins[i] for i in local)
+            if weight:
+                out[spins] = out.get(spins, 0) + weight * coeff
+        elif generator == "+":
+            for index in local:
+                if spins[index] == 1:
+                    dest = list(spins)
+                    dest[index] = 0
+                    dest = tuple(dest)
+                    out[dest] = out.get(dest, 0) + coeff
+        else:
+            raise ValueError(generator)
+    return {k: v for k, v in out.items() if v}
+
+
+def check_all_orientation_gauge_invariance():
+    """Check [S_1j^{co-located}, G_v]=0 on all 1024 kinematic states.
+
+    The 1024 states are 16 allowed endpoint orientations times the
+    64 six-spin computational configurations. Only active on-site
+    exchanges are applied; absent rishons trigger identity.
+    """
+    tested = 0
+    for orientation in product((0, 1), repeat=4):
+        for spins in ALL_SPINS:
+            ket = {spins: 1}
+            for j in (3, 4, 5):
+                for v in (0, 1):
+                    for generator in ("2z", "+"):
+                        lhs = generic_gauss(
+                            orientation,
+                            onsite_conditioned_swap(orientation, ket, j),
+                            v, generator)
+                        rhs = onsite_conditioned_swap(
+                            orientation, generic_gauss(
+                                orientation, ket, v, generator), j)
+                        assert lhs == rhs, (
+                            orientation, spins, j, v, generator)
+                        tested += 1
+    assert tested == 16 * 64 * 3 * 2 * 2
+    print("Complete four-link kinematic space: 1024 orientations/spins,"
+          f" {tested} exact Gauss commutator checks PASS")
+
 def projected_matrix(basis, transform):
     return sp.Matrix(2, 2, lambda i, j:
                      dot(basis[i], transform(basis[j])))
@@ -144,6 +215,7 @@ def verify_clifford_signatures(kind, gate):
 
 def test():
     check_full_gauss_invariance()
+    check_all_orientation_gauge_invariance()
     q0, q1 = logical_basis()
     basis = (q0, q1)
 
