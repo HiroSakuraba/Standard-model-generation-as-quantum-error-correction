@@ -118,6 +118,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`two_body_su2_mediator.py`](two_body_su2_mediator.py) | Exact SU(2) invariants and second-order Hamiltonian, 256-state pulse simulation, coherent single-exchange calibration faults |
 | [`SU2_SMOOTH_PULSE_OPTIMIZATION.md`](SU2_SMOOTH_PULSE_OPTIMIZATION.md) | Pulse-shaping experiment, 256-state vs 14-singlet consistency, convergence, coherent gate deviations and exchange calibration sensitivity |
 | [`su2_shaped_pulse.py`](su2_shaped_pulse.py) | Deterministic bounded smooth-pulse optimization, 1024-bin verification, SU(2) invariant-sector reduction and full-spin independent crosscheck |
+| [`SU2_SK1_COMPOSITE_PULSE.md`](SU2_SK1_COMPOSITE_PULSE.md) | SK1-inspired SU(2)-invariant exchange-composite pulse, all calibrated error cases, full-spin audit and ninefold duration cost |
+| [`su2_sk1_composite_pulse.py`](su2_sk1_composite_pulse.py) | Full 8-spin modeled noncommuting SU(2) singlet control, independent coupler faults, 256/14D crosscheck, pulse convergence |
 
 ## Reproduce
 
@@ -145,6 +147,7 @@ python3 su2_controlled_exchange.py       # explicit SU(2)-invariant ancilla-cond
 python3 published_flag_figure2_catalog.py # paper Figure 2(d) original flagged error syndromes
 OPENBLAS_NUM_THREADS=1 python3 two_body_su2_mediator.py # two-body SU(2) mediator, leakage and coherent gate faults
 OPENBLAS_NUM_THREADS=1 python3 su2_shaped_pulse.py # optimized SU(2) smooth waveform, leakage and coupler robustness
+OPENBLAS_NUM_THREADS=1 python3 su2_sk1_composite_pulse.py # SK1-style noncommuting gauge-invariant robustness sequence
 ```
 
 Existing checks:
@@ -160,6 +163,7 @@ python3 open_steps.py                # about 4 minutes → ALL OPEN-STEP CHECKS 
 Between them, the scripts check cubic anomaly cancellation in exact integer arithmetic, compute finite-field ranks, logical-qudit counts and distances, run the exhaustive 1,080-case p = 3 minimality search, and enumerate every logical support of size 1–4 in the three-generation codes over F₃ and F₅. They also find X distances exactly and check the two-flavour mixing identity with exact fractions (cos θ = 4/5, sin θ = 3/5 gives an off-diagonal of 24/25; this is a toy angle, not a physical rate).
 
 ## Open next steps
+- **SK1-inspired composite exchange control:** [`SU2_SK1_COMPOSITE_PULSE.md`](SU2_SK1_COMPOSITE_PULSE.md), verified by [`su2_sk1_composite_pulse.py`](su2_sk1_composite_pulse.py). Noncommuting intra-block SU(2)-invariant exchange rotations plus six smoothly shaped cross-register exchange pulses cancel the leading coherent calibration response: a ±1% fault on either physical cross coupler changes a fixed-calibration logical gate by ~`0.00030` rather than ~`0.0087` for a single echoed primitive; at ±10%, ~`0.03` versus ~`0.087`. Independent physical 256D and symmetry-reduced 14D composite propagation agree to ~`1.1e-11`. **Major limitations:** ~`344/Delta` cross-exchange duration (~9x the prior short gate) *plus* uncounted intra-block rotations; ~`1.7e-6` nominal code leakage (larger than PR #16). **A separate exact numerical stress test shows merely ±1% common miscalibration of those extra local rotations produces ~`0.10` logical deviation (±5% produces ~`0.48–0.52`).** Thus this is NOT a robust full control sequence: local rotation calibration, physical pulse timing, bandwidth, and integrated stabilizer extraction remain unresolved. This is deterministic Hamiltonian simulation, not a viable device-level threshold or a Standard Model code.
 
 The original five steps are addressed in Part 4 and [`OPEN_STEPS_NOTE.md`](OPEN_STEPS_NOTE.md). What's left:
 

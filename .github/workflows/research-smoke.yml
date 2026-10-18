@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/su2-shaped-pulse-optimization
+      - research/su2-sk1-composite-pulse
 
 jobs:
   exact-math:
@@ -62,3 +62,5 @@ jobs:
         run: python -m pip install scipy==1.17.0
       - name: SU2 smooth-pulse optimization, 1024-bin convergence and full-spin crosscheck
         run: OPENBLAS_NUM_THREADS=1 python su2_shaped_pulse.py
+      - name: SK1-style composite SU2 gate robustness, both couplers and 256-state crosscheck
+        run: OPENBLAS_NUM_THREADS=1 python su2_sk1_composite_pulse.py
