@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - research/measured-multiround-su2-recovery
+      - research/adaptive-flag-ec-criteria
 
 jobs:
   exact-math:
@@ -48,3 +48,5 @@ jobs:
         run: python flagged_su2_measurement.py
       - name: Two measured flagged rounds and adaptive third under all single faults
         run: python measured_multiround_su2.py --stress
+      - name: Published-style adaptive five-qubit flag EC and one-fault criteria audit
+        run: python paper_style_flag_ec.py --stress
