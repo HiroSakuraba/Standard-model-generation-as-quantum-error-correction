@@ -325,8 +325,21 @@ def run():
         opt=optimize_pulse(U)
         T=opt['time'];d=opt['active_detuning']
         metrics=exact_full_channel(K,U,d,T)
-        arms.append({'U_over_t':U,'single_pulse_F_e':opt['optimized_metrics']['entanglement_fidelity'],
+        # Separate phenomenological survival *scenario*, not a Lindblad solve.
+        # Four active fermions have an assumed independent T1 of 30 us.
+        gate_ns=1000*T/(2*np.pi*10.)  # hypothetical hopping t/h=10 MHz
+        syndrome_ns=12*gate_ns+4*100.  # hypothetical link transport 100 ns
+        no_loss=float(np.exp(-4*syndrome_ns/(1000*30.)))
+        arms.append({'U_over_t':U,
+                     'single_pulse_F_e':opt['optimized_metrics']['entanglement_fidelity'],
                      'duration_in_inverse_hopping_t':T,'detuning':d,
+                     'illustrative_t_over_h_MHz':10.,
+                     'illustrative_link_transport_ns_each':100.,
+                     'illustrative_four_fermion_T1_us':30.,
+                     'hypothetical_syndrome_duration_ns':float(syndrome_ns),
+                     'illustrative_no_loss_probability':no_loss,
+                     'illustrative_loss_weighted_syndrome_F_e':float(
+                       no_loss*metrics['unconditional_F_e_ideal_feedback']),
                      'complete_syndrome_ideal_feedback_reference':metrics})
     return {'initial_extended_Gauss_acceptance':initial_gauss,
             'active_fermionic_Fock_dimension':N_FOCK,
@@ -339,7 +352,7 @@ def run():
             'arms':arms,'limitations':[
               'Feedback is an ideal code-colour dressed SWAP reference, not a synthesized Hubbard feedback; doublon/hole occupation leakage is not recovered',
               'Two-site Hubbard pulse acts only when mediator location agrees with local matter; link transport is exact wedge representation without physical hopping pulses',
-              'Full Gauss covariance of all Fock states must be separately checked before a gauge-invariance claim',
+              'Finite S3 Gauss covariance is tested on arbitrarily leaked Fock sectors; full continuous SU3 gauge-link dynamics are not implemented',
               'No particle loss or dephasing evolution, no ramp or pulse amplitude constraint; four-fermion loss survival is only an assumed factor',
               'SU3 Hubbard hopping is onsite/common-vertex only; finite S3 links are distinct gauge vertices',
               'Not the original nine-quark 21D/65-syndrome recovery code']}
