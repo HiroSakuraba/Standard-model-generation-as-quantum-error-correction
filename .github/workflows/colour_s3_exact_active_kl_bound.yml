@@ -1,0 +1,37 @@
+name: Exact S3 four-logical active KL bound and electric subgroup classification
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_exact_active_kl_bound.py
+      - test_colour_s3_exact_active_kl_bound.py
+      - COLOUR_S3_EXACT_ACTIVE_KL_BOUND_AUDIT.md
+      - .github/workflows/colour_s3_exact_active_kl_bound.yml
+  workflow_dispatch:
+
+jobs:
+  exact-quantum-code-bound:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical and exact symbolic requirements
+        run: python -m pip install numpy scipy sympy
+      - name: Exact S4 irrep projectors, active KL impossibility and eight subgroup census
+        run: python -m unittest -v test_colour_s3_exact_active_kl_bound
+      - name: Write full exact-math active KL classification report
+        run: python colour_s3_exact_active_kl_bound.py
+      - name: Archive rational proof inputs, subgroups and claim boundaries
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-s3-exact-four-logical-active-kl-no-go
+          path: colour_s3_exact_active_kl_bound_results.json
+          if-no-files-found: ignore
