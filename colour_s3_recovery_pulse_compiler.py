@@ -422,7 +422,7 @@ def finite_gradient_error(label="AS",cycles=1,seed=14,epsilon=1e-6):
             "max_gradient_error":max(x["absolute_error"] for x in checks)}
 
 
-def study(cycles=(1,2,4),maxiter=60,labels=LABELS):
+def study(cycles=(1,2,4,8,16),maxiter=80,labels=LABELS):
     if not cycles or any(not isinstance(x,int) or x<1 for x in cycles):
         raise ValueError("positive cycles required")
     if tuple(sorted(cycles))!=tuple(cycles):
