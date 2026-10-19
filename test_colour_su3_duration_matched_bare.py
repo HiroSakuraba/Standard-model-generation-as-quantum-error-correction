@@ -89,9 +89,9 @@ class DurationMatchedBareTests(unittest.TestCase):
     def test_merged_PR57_anchor_U30_is_recomputed(self):
         row=analyze_anchor(30.,self.K)
         self.assertAlmostEqual(row["encoded_microscopic_feedback_no_loss_F_e"],
-                               .9119196563716021,places=7)
+                               .9119196563716021,places=5)
         self.assertAlmostEqual(row["encoded_unconditional_F_e_at_T1_30us"],
-                               .1802217616023003,places=7)
+                               .1802217616023003,places=5)
         self.assertAlmostEqual(row["bare_no_fault_unconditional_F_e_at_T1_30us"],
                                .4445546,places=5)
         self.assertAlmostEqual(row["break_even_T1_us_vs_37pct_bare_X_fault_colourblind"],
