@@ -31,7 +31,7 @@ jobs:
         run: python su3_cp22_pulse_optimization.py --iterations 7 --steps 24 --output su3_cp22_pulse_optimized_results.json
       - name: Full five-ququart 8-cycle exact and approximate Monte Carlo
         run: |
-          python su3_five_ququart_trajectories.py --shots 4 --leakage 0.01 \
+          python su3_five_ququart_trajectories.py --shots 4 --include-optimistic --leakage 0.01 \
             --t1-ns 30000 --tphi-ns 45000 --pointer-error 0.001 \
             --backaction-error 0.001 --extraction-entanglers 24 \
             --output su3_five_ququart_trajectories_results.json
