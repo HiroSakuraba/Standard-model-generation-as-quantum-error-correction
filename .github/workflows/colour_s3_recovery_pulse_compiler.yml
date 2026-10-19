@@ -26,7 +26,7 @@ jobs:
         run: python -m pip install numpy scipy sympy
       - name: Verify analytic gradients, three-outcome target and charged-bus native cost ledger
         run: python -m unittest -v test_colour_s3_recovery_pulse_compiler
-      - name: Optimize both six-exchange-group recovery targets at 13, 26 and 52 pulse depths
+      - name: Optimize both six-exchange-group recovery targets at 13, 26, 52, 104 and 208 pulse depths
         run: python colour_s3_recovery_pulse_compiler.py
       - name: Upload actual angle schedules, pointer outcomes, depth-vs-fidelity and resource estimates
         if: always()
