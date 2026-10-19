@@ -46,30 +46,28 @@ to numerical tolerance, for both subgroups.
 
 This is a **time-separated single-fault correction protocol**. It assumes no additional errors occur during recovery, and it does not make the one-round code correct an arbitrary product of error operators. Whether a sufficiently fast physical syndrome/readout can occur between real microscopic events is unresolved.
 
-## 3. Explicit gauge-preserving coherent recovery exists—but it is global
+## 3. Explicit gauge-preserving three-outcome coherent recovery—but globally supported
 
-Let \(P_C=CC^\dagger\), \(P_V=VV^\dagger\) on the 14D physical Gauss Hilbert space. Define a gauge-neutral qubit pointer and coherent syndrome unitary
+Let \(P_C=CC^\dagger\) and \(P_V=VV^\dagger\) on the 14D physical Gauss Hilbert space, and \(P_{\mathrm{rest}}=I_{14}-P_C-P_V\), of rank six. Use a gauge-neutral **three-level pointer** starting in \(|0\rangle\), not just a two-level pointer. This distinction matters because the compound errors can populate the six-dimensional orthogonal complement.
 
-\[
-U_{\rm synd}=(I-P_V)\otimes I_2+P_V\otimes X,
-\]
-
-and a physical isometric swap
+Define pointer swaps \(X_{01}\) between \(|0\rangle,|1\rangle\) and \(X_{02}\) between \(|0\rangle,|2\rangle\). The coherent syndrome operation is
 
 \[
-F=CV^\dagger+VC^\dagger+(I-P_C-P_V).
+U_{\rm synd}=P_C\otimes I_3+
+ P_V\otimes X_{01}+P_{\mathrm{rest}}\otimes X_{02}.
 \]
 
-The pointer-controlled feedback unitary is
+Define \(F=CV^\dagger+VC^\dagger+P_{\mathrm{rest}}\) and apply feedback controlled on pointer 1:
 
 \[
 U_{\rm feed}=I_{14}\otimes|0\rangle\langle0|+
-F\otimes|1\rangle\langle1|.
+F\otimes|1\rangle\langle1|+
+I_{14}\otimes|2\rangle\langle2|.
 \]
 
-The code verifies both unitaries are unitary on the entire 28-dimensional physical-plus-pointer space, that the full sequence maps \(C\otimes|0\rangle\) to itself and \(V\otimes|0\rangle\) to \(C\otimes|1\rangle\), and that the code and syndrome are local-Gauss invariant in the original 486D register. Therefore the corresponding global projectors can be lifted to the gauge-invariant sector without violating the symmetry.
+Both are unitary on the entire **42-dimensional** physical-plus-pointer space. The tests verify three complete input routes: \(C|0\rangle\to C|0\rangle\); \(V|0\rangle\to C|1\rangle\); and any state in \(P_{\rm rest}\) goes to the same flagged physical state with pointer \(|2\rangle\), with no postselection. Because C and V lie inside the original full 486D simultaneous Gauss sector, their projector lifts \(W P W^\dagger\) commute with both vertex gauge actions.
 
-**This is an explicit abstract quantum recovery unitary, not a gate-level native Hamiltonian decomposition.** Projecting onto V may couple all four matter qutrits and the link. We have not shown that it can be efficiently synthesized from local Gauss-invariant one-/two-/three-register operations or a mobile charged ancilla. Neither its energy, depth, pulse duration nor leakage has been calibrated. The nominal 1 μs round below is an illustrative parameter, not a predicted runtime of these global operators.
+**This is not a local pulse implementation.** Projecting onto the four-dimensional code, four-dimensional error syndrome and six-dimensional complement generally requires operators involving all four matter qutrits and the gauge link. Unitarity and gauge invariance do *not* imply few-body physical implementability. The number, duration, strength and failure probability of elementary charged-carrier operations required to realize this 42D unitary are unknown. In particular the illustrative 1 μs round below is not an estimate derived from this construction.
 
 ## 4. A normalized 20-event CPTP fault model with an order parameter
 
@@ -155,4 +153,4 @@ OPENBLAS_NUM_THREADS=1 python -m unittest -v test_colour_s3_correlated_recovery_
 OPENBLAS_NUM_THREADS=1 python colour_s3_correlated_recovery_cadence.py
 \`\`\`
 
-The dedicated GitHub workflow archives both groups, all 12 ordered two-fault cases per group, the explicit 28D coherent syndrome unitary tests, 20-event weighted channels, exact passive bound and no-loss/lifetime comparisons in JSON.
+The dedicated GitHub workflow archives both groups, all 12 ordered two-fault cases per group, the explicit 42D three-outcome coherent syndrome unitary tests, 20-event weighted channels, exact passive bound and no-loss/lifetime comparisons in JSON.
