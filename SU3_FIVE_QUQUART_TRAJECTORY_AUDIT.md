@@ -41,6 +41,35 @@ OPENBLAS_NUM_THREADS=1 python su3_five_ququart_trajectories.py --shots 4 --leaka
 
 These are **synthetic scenarios**, not recommended physical parameter values.
 
+## Initial numerical validation and sensitivity design
+
+An initial complete-trajectory run on this PR executed eight regression tests
+and all eight cycles on both circuit variants. In the **illustrative serial**
+configuration (580 ns per CP22, 30 ns per local gate, 30 µs T1 and 45 µs Tφ),
+mean recovered entanglement fidelity was effectively 0.25 for both variants.
+This is the maximally mixed-qubit recovery floor, consistent with decay over
+approximately 6–8 milliseconds of serial gate execution. It **does not**
+establish a model-independent quantum memory no-go result.
+
+We specifically distinguish **transient** fourth-level occupation before
+and after each stage's loss/dephasing from *final* leakage. Relaxation may
+empty the fourth level by the final readout while irreversibly erasing the
+encoded information. The latter cannot be inferred from a small final
+leakage number.
+
+The workflow now adds a separate **deliberately speculative optimistic arm**
+with 25 ns CP22, 1 ns local gates, 1 ms T1 and Tφ, and lower leakage
+coupling. These are stress-test assumptions, **not** plausible measured
+parameters supplied by the cited papers. Both arms run exact 40-CP22 and
+approximate 32-CP22 layouts, each with four sampled trajectories. Four
+samples are too few to establish tight performance bounds: treat means
+and standard errors as exploratory diagnostics, not experimental forecasts.
+
+The pulse optimizer retains the *independently verified finer-time-step
+baseline* whenever the bounded random search does not improve fidelity.
+An apparently different optimum must not be called a gain unless it
+outperforms the same benchmark under equal time discretization.
+
 ## Research decisions
 
 A useful physical claim requires (i) calibrated native pulse or robust optimized multi-control waveform across *all* required CP22 angles, including local frames and spectators, (ii) pulse-time Lindblad quantum dynamics or a benchmarked lower-cost trajectory method per gate, (iii) a gauge-compatible treatment of leaked sectors, (iv) an actually synthesized and noisy six-outcome syndrome extraction network, and (v) a **same-device, same-time, equally noise-budgeted uncontrolled and analog baseline**. A low full-circuit fidelity under present scenarios is a meaningful cost warning, not a general impossibility proof.
