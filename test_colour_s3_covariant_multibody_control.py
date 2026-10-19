@@ -34,7 +34,7 @@ class CovariantMultibodyTests(unittest.TestCase):
         for name,op,H in (
             ("edge",dressed_exchange,dressed_hamiltonian),
             ("onsite",onsite_swap,onsite_hamiltonian)):
-            self.assertLess(np.linalg.norm(H(H(x))),0.1+np.linalg.norm(x))
+            self.assertLess(np.linalg.norm(H(H(x))-H(x)),2e-12)
             self.assertLess(np.linalg.norm(physical_pulse(x,name,np.pi)-op(x)),2e-12)
             self.assertLess(np.linalg.norm(physical_pulse(x,name,.7).conj().T
                   @physical_pulse(x,name,.7)-x.conj().T@x),1e-10)
