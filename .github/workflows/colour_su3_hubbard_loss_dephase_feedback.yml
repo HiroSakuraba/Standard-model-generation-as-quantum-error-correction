@@ -1,0 +1,37 @@
+name: Persistent Hubbard microscopic feedback and CPTP loss dephasing
+
+on:
+  pull_request:
+    paths:
+      - colour_su3_hubbard_loss_dephase_feedback.py
+      - test_colour_su3_hubbard_loss_dephase_feedback.py
+      - COLOUR_SU3_HUBBARD_LOSS_DEPHASE_FEEDBACK_AUDIT.md
+      - .github/workflows/colour_su3_hubbard_loss_dephase_feedback.yml
+  workflow_dispatch:
+
+jobs:
+  full-feedback-noise:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical requirements
+        run: python -m pip install numpy scipy
+      - name: Validate microscopic feedback, CPTP loss, Gauss-preserving and breaking dephasing
+        run: python -m unittest -v test_colour_su3_hubbard_loss_dephase_feedback
+      - name: Generate complete whole-circuit noise and fidelity audit
+        run: python colour_su3_hubbard_loss_dephase_feedback.py
+      - name: Upload numerical evidence and seeded trajectory results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-su3-hubbard-feedback-loss-dephase
+          path: colour_su3_hubbard_loss_dephase_feedback_results.json
+          if-no-files-found: ignore
