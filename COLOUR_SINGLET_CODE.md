@@ -62,9 +62,9 @@ Every exchange has zero matrix elements on K, so all 36 Knill–Laflamme conditi
 
 **Distance exactly 3.** A 3-cycle of quarks commutes with J and acts non-trivially on K, so some three-quark error is undetectable.
 
-**Colour exchange is invisible.** One-gluon exchange between quarks i and j is T_i·T_j = ½(P_ij − ⅓). On K, every interaction Σ c_ij T_i·T_j is a constant, for any couplings c_ij. The script checks this with random c_ij.
+**Exchange compression is not dynamical protection.** One-gluon exchange between quarks i and j is T_i·T_j = ½(P_ij − ⅓). Its *projected matrix* on K is scalar, but P_ij actually moves the state into the orthogonal −i sector. For a single-pair colour Hamiltonian the uncorrected code survival is cos²(t/2), not 1. Recovery requires an explicit syndrome measurement and correction. See [the independent sign-twist theorem and recovery audit](COLOUR_SIGN_TWIST_THEOREM_AND_RECOVERY.md).
 
-**Size.** A search for a 22-dimensional correcting subcode failed (residual 0.864), so 21 appears to be the largest. In qutrit units this is [[9, log₃ 21 ≈ 2.77, 3]]₃. The quantum Singleton bound allows 5 qutrits, so the code is not efficient. What it offers is symmetry: it is invariant under every global colour rotation and also corrects local errors.
+**Size.** A search for a 22-dimensional correcting subcode failed (residual 0.864), but this is not a proof of global maximality. Dimension 21 **is** provably maximal among subspaces with zero exchange compression; larger codes with other scalar compressions have not been ruled out. As a non-power-of-three subspace this is a length-9, dimension-21, distance-3 qutrit code; the notation [[9, log₃ 21 ≈ 2.77, 3]]₃ is descriptive, not a standard integer-logical-qutrit stabilizer parameter. The quantum Singleton bound allows 5 qutrits, so the code is not efficient. What it offers is symmetry: it is invariant under every global colour rotation and also corrects local errors.
 
 ## Why nine, and why colour
 

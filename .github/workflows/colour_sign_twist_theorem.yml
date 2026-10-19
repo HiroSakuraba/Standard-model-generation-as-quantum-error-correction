@@ -1,0 +1,32 @@
+name: Colour nine-quark independent sign-twist theorem
+
+on:
+  pull_request:
+    paths:
+      - colour_sign_twist_theorem.py
+      - test_colour_sign_twist_theorem.py
+      - COLOUR_SIGN_TWIST_THEOREM_AND_RECOVERY.md
+      - COLOUR_SINGLET_CODE.md
+      - .github/workflows/colour_sign_twist_theorem.yml
+  workflow_dispatch:
+
+jobs:
+  check-theorem:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy
+      - name: Test independent Young orthogonal representation and recovery
+        run: python -m unittest -v test_colour_sign_twist_theorem
+      - name: Emit auditable independent result
+        run: python colour_sign_twist_theorem.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: colour-sign-twist-independent-theorem
+          path: colour_sign_twist_theorem_results.json
