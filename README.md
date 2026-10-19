@@ -7,6 +7,8 @@
 > Independent exploratory study by Benjamin John Schulz, October 2026. Not peer-reviewed.
 > Builds on Shiroman Prakash & K. L. Ramya, *One generation of the Standard Model as a quantum error-correcting code*, [arXiv:2610.21879](https://arxiv.org/abs/2610.21879) ([their code](https://github.com/spdei/standard-model-code)).
 
+
+📄 **Paper:** [*Beyond One Generation: Family-Coupled Quantum Codes from Standard Model Charges*](paper/generation_codes.pdf) ([PDF](paper/generation_codes.pdf) · [HTML](https://hirosakuraba.github.io/Standard-model-generation-as-quantum-error-correction/paper/generation_codes.html) · [source](paper/generation_codes.md)). Rebuild with `paper/build.sh`.
 ---
 
 ## The background, in plain terms

@@ -1,0 +1,30 @@
+:root{--ink:#1b1f24;--muted:#5b6470;--rule:#d8dce2;--accent:#2f7d6d;--bg:#fdfcf9}
+@media (prefers-color-scheme: dark){:root{--ink:#e7e9ec;--muted:#a3abb6;--rule:#3a414b;--accent:#5fc4ad;--bg:#14171c}
+  figure img{background:#fff;border-radius:6px;padding:6px}}
+html{background:var(--bg)}
+body{max-width:46rem;margin:0 auto;padding:2.5rem 1.1rem 5rem;color:var(--ink);background:var(--bg);
+  font:18px/1.65 "Latin Modern Roman","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+header#title-block-header{text-align:center;margin-bottom:2.5rem}
+h1.title{font-size:2.4rem;margin:.2rem 0 .3rem;line-height:1.15}
+p.subtitle{font-size:1.3rem;margin:0 0 1rem;color:var(--muted);font-style:italic}
+p.author,p.date{margin:.15rem 0;color:var(--muted)}
+div.abstract{text-align:left;font-size:.95rem;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1rem 0;margin-top:1.6rem}
+div.abstract-title{font-weight:bold;text-align:center;margin-bottom:.4rem}
+h1{font-size:1.55rem;margin-top:2.6rem;line-height:1.25}
+h2{font-size:1.2rem;margin-top:1.8rem}
+a{color:var(--accent)}
+code{font-size:.85em}
+math{font-size:1.05em}
+figure{margin:2rem 0;text-align:center}
+figure img{max-width:100%;height:auto}
+figcaption{font-size:.88rem;color:var(--muted);text-align:left;margin-top:.5rem}
+table{border-collapse:collapse;margin:1.6rem auto;font-size:.88rem;display:block;overflow-x:auto;max-width:100%}
+table caption{caption-side:bottom;font-size:.86rem;color:var(--muted);text-align:left;padding-top:.5rem}
+th,td{padding:.35rem .6rem;border-bottom:1px solid var(--rule)}
+thead th{border-bottom:2px solid var(--ink)}
+ol li{margin-bottom:.35rem}
+.download{text-align:center;font-size:.9rem;margin:-1rem 0 2rem}
+math[display="block"]{display:block;overflow-x:auto;overflow-y:hidden;max-width:100%;padding:.2rem 0}
+p:has(> math[display="block"]){overflow-x:auto}
+body{overflow-wrap:break-word}
+@media (max-width:600px){body{font-size:16.5px;padding:1.5rem 1rem 4rem}h1.title{font-size:1.9rem}}
