@@ -9,7 +9,7 @@ from colour_s3_recovery_pulse_compiler import (
 from colour_s3_direct_logical_compiler import (
     logical_fault_states,effort_weight_for_name,
     DirectLogicalCompiler,direct_gradient_check,
-    compile_direct,benchmark,
+    compile_direct,benchmark,no_jump_lifetime_comparison,
 )
 
 
@@ -119,6 +119,29 @@ class DirectLogicalFidelityTests(unittest.TestCase):
             "two_register_native_or_abstract_primitive_count"],0)
         self.assertAlmostEqual(result["native_primitive_cost"][
             "hypothetical_serial_duration_ns_including_readout"],0.,places=12)
+
+    def test_loss_frontier_can_reverse_noiseless_logical_advantage(self):
+        # A noise-free score above identity may be made worse by
+        # incremental physical time. All figures hypothetical.
+        r=no_jump_lifetime_comparison(.82,.63+.37/9,2500.)
+        self.assertGreater(r[
+            "threshold_T1_us_for_circuit_to_beat_zero_gate_policy"],30.)
+        self.assertLess(r[
+            "threshold_T1_us_for_circuit_to_beat_zero_gate_policy"],100.)
+        by_t1={x["assumed_T1_us"]:x for x in r["loss_scenarios"]}
+        self.assertFalse(by_t1[30.][
+            "candidate_outperforms_identity_under_these_assumptions"])
+        self.assertTrue(by_t1[100.][
+            "candidate_outperforms_identity_under_these_assumptions"])
+        identity=no_jump_lifetime_comparison(.63+.37/9,.63+.37/9,0.)
+        self.assertIsNone(identity[
+            "threshold_T1_us_for_circuit_to_beat_zero_gate_policy"])
+        self.assertAlmostEqual(identity["loss_scenarios"][1][
+            "candidate_no_jump_weighted_logical_F_e"],.63+.37/9,places=12)
+        with self.assertRaises(ValueError):
+            no_jump_lifetime_comparison(.82,.67,-1.)
+        with self.assertRaises(ValueError):
+            no_jump_lifetime_comparison(.82,.67,100.,T1_us_values=(0.,))
 
     def test_invalid_probabilities_and_penalty_are_rejected(self):
         for v in (-.01,1.01,float("nan")):
