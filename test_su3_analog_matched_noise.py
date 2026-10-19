@@ -91,8 +91,8 @@ class AnalogMatchedNoiseTests(unittest.TestCase):
         self.assertLess(np.linalg.norm(schedule[0][0]-schedule[0][1]),1e-12)
 
     def test_clean_channel_reproduces_two_matched_references(self):
-        scen=Scenario(t1_ns=1e14,tphi_ns=1e14,
-                pointer_t1_ns=1e14,pointer_read_ns=0.,
+        scen=Scenario(t1_ns=float('inf'),tphi_ns=float('inf'),
+                pointer_t1_ns=float('inf'),pointer_read_ns=0.,
                 pointer_assignment_error=0.,pointer_reset_ns=0.,shots=1)
         schedule=propagation_schedule(self.states,self.H,scen)
         conf=pointer_confusion(scen)
