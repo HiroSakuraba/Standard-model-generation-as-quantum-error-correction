@@ -251,11 +251,14 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
                         'mean_transient_leakage_before_stage_noise':float(np.mean(leakage_pre)),
                         'maximum_transient_leakage_after_stage_noise':max(leakage_post),
                         'loss_quanta_sampled':total['loss_quanta']})
-        if summary is None:summary=dict(total)
+        if summary is None:
+            summary={key:value for key,value in total.items()
+                     if key!='loss_quanta'}
         assert total['cp22']==((8160 if approximate else 10080)*cycles//CYCLES)
     fs=np.array([x['F_e_sample'] for x in metrics])
     ls=np.array([x['population_in_fourth_level_end'] for x in metrics])
     trans=np.array([x['maximum_transient_leakage_before_stage_noise'] for x in metrics])
+    sampled_loss=np.array([x['loss_quanta_sampled'] for x in metrics])
     return {'variant':'approximate_32_cp22' if approximate else 'exact_40_cp22',
             'hilbert_dimension':SIZE,'full_cycles':cycles,
             'trajectory_count':shots,'random_seed':seed,'per_CP22_mixing_radians':leakage,
@@ -273,6 +276,7 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
             'sample_standard_error':float(fs.std(ddof=1)/np.sqrt(shots)) if shots>1 else None,
             'sample_mean_final_leakage_probability':float(ls.mean()),
             'sample_mean_maximum_transient_leakage_before_noise':float(trans.mean()),
+            'sample_mean_loss_quanta':float(sampled_loss.mean()),
             'trajectories':metrics,
             'warning':'Exploratory finite-trajectory CPTP unraveling. Noise is lumped after every stage; no pulse-time Lindblad, gauge-preserving leaked-sector dynamics, calibrated CP22, or noisy extraction circuit.'}
 
@@ -282,6 +286,8 @@ def main():
     p.add_argument('--shots',type=int,default=4)
     p.add_argument('--include-optimistic',action='store_true',
                    help='Add explicitly speculative 25ns/1ns, T1=Tphi=1ms, leakage=.001 sensitivity arm')
+    p.add_argument('--optimistic-shots',type=int,default=24,
+                   help='Samples per circuit in speculative arm, default 24')
     p.add_argument('--leakage',type=float,default=.01)
     p.add_argument('--t1-ns',type=float,default=30000.)
     p.add_argument('--tphi-ns',type=float,default=45000.)
@@ -309,7 +315,7 @@ def main():
               backaction_error=args.backaction_error,
               readout_ns=args.readout_ns,reset_ns=args.reset_ns,
               extraction_entanglers=args.extraction_entanglers,
-              shots=args.shots,seed=args.seed+5000+i*1000)
+              shots=args.optimistic_shots,seed=args.seed+5000+i*1000)
               for i,x in enumerate((False,True))]
         for row in opt:
             row['scenario']='speculative_ultrafast_25ns_CP_1ns_local_1ms_T1'
