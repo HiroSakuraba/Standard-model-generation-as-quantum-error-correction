@@ -68,6 +68,8 @@ def creation_annihilation(dst:int,src:int,state:int):
 
 
 def one_body(dst,src):
+    if dst==src:
+        return np.diag([float((state>>src)&1) for state in FOCK]).astype(complex)
     result=np.zeros((15,15),complex)
     for j,s in enumerate(FOCK):
         term=creation_annihilation(dst,src,s)
