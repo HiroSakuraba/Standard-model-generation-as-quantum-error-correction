@@ -60,9 +60,9 @@ and computes the full gradient using forward states and backward-adjoint states.
 
 ## 3. Finite depth sweep: report failures rather than assuming success
 
-The default experiment fits both \(AS\) and \(BS\) recovery targets at **1, 2 and 4 cycles**, or respectively **13, 26 and 52** tunable rotations, with a bounded iteration budget. It tries identity, reproducible small random angles, and a warm start from the preceding depth when available. It always keeps the best verified result, including the unoptimized identity schedule as a reference.
+The default experiment fits both \(AS\) and \(BS\) recovery targets at **1, 2, 4, 8 and 16 cycles**, or respectively **13, 26, 52, 104 and 208** tunable rotations, with a bounded iteration budget. It tries identity, reproducible small random angles, and a warm start from the preceding depth when available. It always keeps the best verified result, including the unoptimized identity schedule as a reference.
 
-This intentionally does **not** assume the 52-pulse depth reaches a satisfactory recovery. The research output prints and records: coherent input-isometry fidelity, entire-42D unitary fidelity, per-branch target overlaps, intended-versus-wrong pointer probabilities, actual angles and optimization termination. A result not sufficiently close to the ideal target is a **failed or incomplete compilation at that depth**, regardless of the exact \(\mathfrak{su}(42)\) controllability theorem from PR #65.
+This intentionally does **not** assume even the 208-pulse depth reaches a satisfactory recovery. The research output prints and records: coherent input-isometry fidelity, entire-42D unitary fidelity, per-branch target overlaps, intended-versus-wrong pointer probabilities, actual angles and optimization termination. A result not sufficiently close to the ideal target is a **failed or incomplete compilation at that depth**, regardless of the exact \(\mathfrak{su}(42)\) controllability theorem from PR #65.
 
 The choices of cycle ordering, angle limits and optimization iterations are **search heuristics**, not lower bounds on any best possible circuit.
 
