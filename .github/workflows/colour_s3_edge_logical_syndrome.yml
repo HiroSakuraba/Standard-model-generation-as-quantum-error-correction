@@ -1,0 +1,37 @@
+name: S3 edge-local dressed-swap logical syndrome
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_edge_logical_syndrome.py
+      - test_colour_s3_edge_logical_syndrome.py
+      - COLOUR_S3_EDGE_LOGICAL_SYNDROME_AUDIT.md
+      - .github/workflows/colour_s3_edge_logical_syndrome.yml
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical prerequisites
+        run: python -m pip install numpy scipy
+      - name: Verify gauge-covariant qutrit syndrome circuit
+        run: python -m unittest -v test_colour_s3_edge_logical_syndrome
+      - name: Execute non-Abelian edge logical-syndrome experiment
+        run: python colour_s3_edge_logical_syndrome.py
+      - name: Archive reproducible report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: colour-s3-edge-logical-syndrome-results
+          path: colour_s3_edge_logical_syndrome_results.json
+          if-no-files-found: ignore
