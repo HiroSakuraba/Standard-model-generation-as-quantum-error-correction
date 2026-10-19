@@ -154,6 +154,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`SU3_CONTROL_SYNTHESIS_AND_COST_AUDIT.md`](SU3_CONTROL_SYNTHESIS_AND_COST_AUDIT.md) | SU3 refocusing control compilation: local cubic-electric versus conditional programmable magnetic phases, quadratic-only obstruction, exact selective twirl, finite-pulse cost |
 | [`su3_native_control_compilation.py`](su3_native_control_compilation.py), [`su3_native_control_compilation_results.json`](su3_native_control_compilation_results.json) | 243D 5-face selective clock/complex-drive pulse sweeps and native Hamiltonian noise stress |
 | [`su3_control_mask_scan.py`](su3_control_mask_scan.py), [`su3_control_mask_scan_results.json`](su3_control_mask_scan_results.json) | Exhaustive all-32 face-control subset optimization with fixed nonlocal decoder and source-normalized dynamics |
+| [`SU3_TRANSMON_QUTRIT_GATE_COMPILATION_AUDIT.md`](SU3_TRANSMON_QUTRIT_GATE_COMPILATION_AUDIT.md) | Native transmon-qutrit candidate: exact 99 neighbor-conditioned Wilson transitions, conditional two-level Givens and 8-cycle gate-depth/leakage-cost sensitivity |
+| [`su3_qutrit_gate_compiler.py`](su3_qutrit_gate_compiler.py), [`su3_qutrit_gate_compiler_results.json`](su3_qutrit_gate_compiler_results.json), [`su3_qutrit_gate_compiler_output.txt`](su3_qutrit_gate_compiler_output.txt) | Five-qutrit Strang compiler validated against full 243D source Hamiltonian and explicit toy CPTP failure mixture |
 
 ## Reproduce
 
@@ -201,6 +203,7 @@ OPENBLAS_NUM_THREADS=1 python3 su3_native_eigen_encoding.py --output-json su3_na
 OPENBLAS_NUM_THREADS=1 python3 su3_cubic_casimir_echo.py # SU3 cubic Casimir Z3 Hamiltonian refocusing and finite-duration control (NumPy, SciPy, SymPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_native_control_compilation.py # selective SU3 control synthesis and finite timing/error costs (SymPy, NumPy, SciPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_control_mask_scan.py # exhaustive 32-mask refocusing/decoder audit (SymPy, NumPy, SciPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_qutrit_gate_compiler.py # conditional magnetic plaquette Givens compilation and gate-count stress (NumPy, SciPy, SymPy)
 ```
 
 Existing checks:
