@@ -1,0 +1,46 @@
+name: SU3 five-ququart trajectories and CP22 pulse optimization
+
+on:
+  pull_request:
+    paths:
+      - su3_five_ququart_trajectories.py
+      - su3_cp22_pulse_optimization.py
+      - test_su3_five_ququart_trajectories.py
+      - SU3_FIVE_QUQUART_TRAJECTORY_AUDIT.md
+      - .github/workflows/su3_five_ququart_trajectories.yml
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical environment
+        run: python -m pip install numpy scipy sympy
+      - name: Exact local gates, 1024-state leakage, Kraus, readout tests
+        run: python -m unittest -v test_su3_five_ququart_trajectories
+      - name: Bounded two-transmon CP22 pulse optimization
+        run: python su3_cp22_pulse_optimization.py --iterations 7 --steps 24 --output su3_cp22_pulse_optimized_results.json
+      - name: Full five-ququart 8-cycle exact and approximate Monte Carlo
+        run: |
+          python su3_five_ququart_trajectories.py --shots 4 --leakage 0.01 \
+            --t1-ns 30000 --tphi-ns 45000 --pointer-error 0.001 \
+            --backaction-error 0.001 --extraction-entanglers 24 \
+            --output su3_five_ququart_trajectories_results.json
+      - name: Upload the exact parameters and sample measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: su3-five-ququart-trajectory-and-pulse-optimization
+          path: |
+            su3_cp22_pulse_optimized_results.json
+            su3_five_ququart_trajectories_results.json
+          if-no-files-found: ignore
