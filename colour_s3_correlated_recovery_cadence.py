@@ -78,6 +78,9 @@ def branch_kraus(C,V,op):
     k0=C.conj().T@op@C
     k1=V.conj().T@op@C
     capture=sum(float(np.linalg.norm(x,"fro")**2/LOGICAL) for x in (k0,k1))
+    if not -1e-10<=capture<=1+1e-10:
+        raise AssertionError("Nonphysical syndrome capture "+str(capture))
+    capture=float(np.clip(capture,0.,1.))
     fe=sum(float(abs(np.trace(x)/LOGICAL)**2) for x in (k0,k1))
     return (k0,k1),{
         "unconditional_F_e":fe,
@@ -216,6 +219,9 @@ def matched_channel(C,V,group,E,sizes,p_e=.37,p_g=.4,
             **record
         })
     expected=1-(85/144)*p_e*p_g*electric_first_fraction
+    if not -1e-10<=capture<=1+1e-10:
+        raise AssertionError("Nonphysical mixture capture "+str(capture))
+    capture=float(np.clip(capture,0.,1.))
     assert abs(one-expected)<2e-11,(one,expected)
     return {
         "p_electric":p_e,"p_exchange":p_g,
@@ -245,7 +251,7 @@ def passive_group_trivial_best(C,group,E,sizes):
     unconstrained approximate passive implementation.
     """
     sizes_np=np.sqrt(np.asarray(sizes))
-    P=sum(group)/N_GROUP
+    P=sum(group,group[0]*0)/N_GROUP
     E_phys=gauge_fixed_normalized_matrix(E,sizes)
     P_phys=gauge_fixed_normalized_matrix(P,sizes)
     eigs,V=np.linalg.eigh(P_phys)
