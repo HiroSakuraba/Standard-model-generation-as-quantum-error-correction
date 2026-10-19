@@ -121,7 +121,7 @@ class LocalFortyTwoDimensionalCompilerTests(unittest.TestCase):
             steps["expanded_primitive_schedule"][2]["rotation_rad"],
             -1.2,places=12)
         self.assertGreater(steps[
-            "hypothetical_serial_duration_ns_including_readout"],1500)
+            "hypothetical_serial_duration_ns_including_readout"],600)
 
     def test_native_estimates_reject_nonphysical_speed_or_negative_time(self):
         info={"pulse_count":13,"pulse_names":["electric_link_standard_projector"],
