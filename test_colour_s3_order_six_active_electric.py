@@ -10,7 +10,9 @@ from colour_s3_order_six_active_electric import (
     LOGICAL, closure_matrices, ordered_pair_centralizer_basis,
     exact_restricted_algebra_certificate, exact_sector_spectrum,
     gauge_fixed_normalized_matrix, construct_active_code,
-    verify_five_plus_one_kraus_recovery, common_gauss_physical_crosscheck,
+    verify_five_plus_one_kraus_recovery,
+    compound_exchange_after_electric_diagnostic,
+    common_gauss_physical_crosscheck,
     study,
 )
 
@@ -92,6 +94,19 @@ class OrderSixActiveCodeTests(unittest.TestCase):
             self.assertAlmostEqual(r["code_syndrome_probability"],1/9,places=11)
             self.assertAlmostEqual(r["electric_syndrome_probability"],8/9,places=11)
 
+    def test_sequential_two_fault_error_not_silently_claimed_corrected(self):
+        for label,group,E in self.groups():
+            C,V,_=construct_active_code(label,group,E,self.sizes)
+            rows=compound_exchange_after_electric_diagnostic(
+                C,V,group,E,self.sizes)
+            self.assertEqual(len(rows),6)
+            self.assertAlmostEqual(
+                rows[0]["recovered_F_e_without_postselection"],1.,places=10)
+            self.assertLess(min(x[
+                "recovered_F_e_without_postselection"] for x in rows),.2)
+            self.assertGreater(max(x[
+                "flagged_outside_syndrome_probability"] for x in rows),.5)
+
     def test_extended_gauge_sector_physical_embedding_486D(self):
         for label,group,E in self.groups():
             C,V,_=construct_active_code(label,group,E,self.sizes)
@@ -114,7 +129,7 @@ class OrderSixActiveCodeTests(unittest.TestCase):
         r=study()
         self.assertTrue(r["active_advantage_against_passive_at_abstract_KL_level"])
         self.assertFalse(r["full_instrument_native_hardware_compiled"])
-        self.assertTrue(any("multi-fault words" in x for x in r["limitations"]))
+        self.assertTrue(any("sequential gR compound faults" in x for x in r["limitations"]))
         self.assertEqual(len(r["results"]),2)
         self.assertTrue(r["virtual_intermediate_physics"][
             "Hubbard_previous_PR55_to_PR58"].startswith("explicit high-energy"))
