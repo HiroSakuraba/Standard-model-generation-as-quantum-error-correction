@@ -1,0 +1,37 @@
+name: S3 correlated electric-exchange errors and syndrome cadence
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_correlated_recovery_cadence.py
+      - test_colour_s3_correlated_recovery_cadence.py
+      - COLOUR_S3_CORRELATED_RECOVERY_CADENCE_AUDIT.md
+      - .github/workflows/colour_s3_correlated_recovery_cadence.yml
+  workflow_dispatch:
+
+jobs:
+  ordered-fault-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical and exact-rational dependencies
+        run: python -m pip install numpy scipy sympy
+      - name: Regress all fault orders, interleaved recovery, lifetime and passive bounds
+        run: python -m unittest -v test_colour_s3_correlated_recovery_cadence
+      - name: Generate complete correlated-error and syndrome-cadence results
+        run: python colour_s3_correlated_recovery_cadence.py
+      - name: Preserve order-specific fault and timing sensitivity JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: s3-correlated-electric-exchange-syndrome-cadence
+          path: colour_s3_correlated_recovery_cadence_results.json
+          if-no-files-found: ignore
