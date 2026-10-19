@@ -12,6 +12,8 @@ The three physical gauge-covariant operators A=onsite SWAP(A0,A1), B=onsite SWAP
 
 **The no-go error set is every one of those 24 elements as separately possible Kraus error operators,** plus the link-electric phase fault \(R=I-2E\), where \(E=P_{\rm standard}\) is the single-link central projector of PR #60. A stochastic probability distribution assigning nonzero support to all 25 unitary errors defines a physically legitimate but presently *synthetic* quantum channel. The no-go concerns this **25-dimensional operator-error span**, not a sparse channel containing only \(\{I,A,B,S,R\}\). Distinct generators may generate the same algebra as Hamiltonians without generating the same span of single-step Kraus errors, and exact KL conditions depend on the latter.
 
+The 24 distinct S4 group elements are **not 24 linearly independent operator matrices** on the 14D physical sector: their group-algebra image has exact dimension **14** (the sum of irreducible matrix-algebra dimensions (1^2+2^2+3^2)). Adding E or (R=I-2E) raises the linear operator span to exactly **15**, verified by direct rational column rank. Therefore **25 listed possible Kraus operators correspond to a 15-dimensional linear error span**, not a 25-dimensional span. The KL proof requires the full *14D group algebra within that span* and E; the distinct fault-list count and the span rank must not be conflated.
+
 There are no physical calibration rates or microscopic jump operators making all 24 events equally likely. We do **not** claim that realistic hardware produces this whole fault set; it is a completeness/possibility bound within the finite-group model.
 
 ## 2. Exact S4 representation decomposition
@@ -75,7 +77,7 @@ Therefore
 \boxed{\text{No perfect active 4D code corrects all 24 matter permutations plus this link-electric phase fault.}}
 \]
 
-This proof uses exact integer/rational character and polynomial identities plus the elementary injectivity argument above. It is stronger than the absence of a noiseless subsystem and has no floating-point rank threshold. It is **not** a no-go for an error set with only three individual swap generators plus R, nor for approximate error correction, changing the code dimension, adding independent physical resources, or full SU(3).
+This proof uses exact integer/rational character, operator-span rank and polynomial identities plus the elementary injectivity argument above. It is stronger than the absence of a noiseless subsystem and has no floating-point rank threshold. It is **not** a no-go for an error set with only three individual swap generators plus R, nor for approximate error correction, changing the code dimension, adding independent physical resources, or full SU(3).
 
 ## 4. Exhaustive exact classification of smaller exchange subgroups plus R
 
