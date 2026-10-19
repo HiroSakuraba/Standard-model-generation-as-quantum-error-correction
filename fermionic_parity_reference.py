@@ -115,8 +115,8 @@ def audit():
     naive=alpha*z0+beta*z1
     parity_even=np.where(p_data==0,naive,0.)
     parity_odd=np.where(p_data==1,naive,0.)
-    naive_twirl_X=(np.vdot(parity_even,parity_odd[::-1])+
-                    np.vdot(parity_odd,parity_even[::-1]))
+    naive_twirl_X=(np.vdot(parity_even,parity_even[::-1])+
+                    np.vdot(parity_odd,parity_odd[::-1]))
     assert abs(naive_twirl_X)<1e-12
     # The *full unpunctured* extra X_ALL projects to the unique + state.
     plus=(K[:,0]+K[:,1])/np.sqrt(2)
