@@ -1,0 +1,37 @@
+name: S3 charged bus SU3-isotropic local control Hamiltonian
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_native_exchange_hamiltonian.py
+      - test_colour_s3_native_exchange_hamiltonian.py
+      - COLOUR_S3_NATIVE_EXCHANGE_HAMILTONIAN_AUDIT.md
+      - .github/workflows/colour_s3_native_exchange_hamiltonian.yml
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical dependencies
+        run: python -m pip install numpy scipy
+      - name: Verify SU3 exchange identity, commutant restriction, native H evolution and syndrome
+        run: python -m unittest -v test_colour_s3_native_exchange_hamiltonian
+      - name: Audit anisotropy sensitivity and imaginary hardware timing
+        run: python colour_s3_native_exchange_hamiltonian.py
+      - name: Upload numerical result with scope limitations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-s3-native-exchange-hamiltonian-results
+          path: colour_s3_native_exchange_hamiltonian_results.json
+          if-no-files-found: ignore
