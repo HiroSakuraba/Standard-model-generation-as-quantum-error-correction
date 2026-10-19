@@ -1,0 +1,37 @@
+name: S3 order-six gauge-exchange active electric error code
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_order_six_active_electric.py
+      - test_colour_s3_order_six_active_electric.py
+      - COLOUR_S3_ORDER_SIX_ACTIVE_ELECTRIC_AUDIT.md
+      - .github/workflows/colour_s3_order_six_active_electric.yml
+  workflow_dispatch:
+
+jobs:
+  constructive-four-logical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical and exact symbolic requirements
+        run: python -m pip install numpy scipy sympy
+      - name: Regress exact subgroup commutant and four-state correctable codes
+        run: python -m unittest -v test_colour_s3_order_six_active_electric
+      - name: Generate seven-fault recovery and exact Gauss report
+        run: python colour_s3_order_six_active_electric.py
+      - name: Archive algebra and all seven error-recovery branches
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: finite-s3-active-six-exchange-electric-code
+          path: colour_s3_order_six_active_electric_results.json
+          if-no-files-found: ignore
