@@ -13,6 +13,8 @@ We report **two different unencoded logical channels**, which must not be confus
 1. **Clean direct storage:** no imposed logical error. This measures the cost of attempting to correct a fault that is not present. It is a deliberately strong unencoded reference, not an error-correction challenge.
 2. **Matched 37% *logical-fault probability*:** with probability 0.37 apply \(X\) to the first of the two stored colour qubits and leave it uncorrected. The \(X\) branch is traceless in the logical four-dimensional space. The encoded candidate instead receives the known-pair **dressed-exchange** channel with probability 0.37, as in PRs #48–57. **These are not the same microscopic physical noise process.** The matching is **logical dimension and source-event probability only**, so any crossover is a controlled *phenomenological comparison*, not evidence of a physically superior gauge device.
 
+**Gauge-admissibility caveat:** the two-colour direct qubit subspace of one fundamental colour qutrit is NOT invariant under the finite (S_3) signed-permutation gauge action (nor under the irreducible full SU(3) fundamental). Accordingly, this is a **separate direct-storage hardware reference with no imposed Gauss-law constraint**, not a second physical encoding available inside the same gauge-invariant two-vertex simulator. A physically admissible gauge-invariant unencoded comparator would require additional colour-neutral encoding resources. We do not assert that the two memories have interchangeable gauge constraints.
+
 No third-party external device benchmarks or measured T1 values are presented; all physical-scale parameters are hypothetical.
 
 ## 2. Exact two-fermion loss and dephasing channel
