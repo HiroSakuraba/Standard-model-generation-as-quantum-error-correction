@@ -277,7 +277,11 @@ def main():
     p.add_argument('--cp-ns',type=float,default=580.)
     p.add_argument('--local-ns',type=float,default=30.)
     p.add_argument('--pointer-error',type=float,default=.001)
-    p.add_argument('--backaction-error',type=float,default=.0)\n    p.add_argument('--extraction-entanglers',type=int,default=0)\n    p.add_argument('--readout-ns',type=float,default=800.)\n    p.add_argument('--reset-ns',type=float,default=300.)\n    p.add_argument('--seed',type=int,default=19)
+    p.add_argument('--backaction-error',type=float,default=.0)
+    p.add_argument('--extraction-entanglers',type=int,default=0)
+    p.add_argument('--readout-ns',type=float,default=800.)
+    p.add_argument('--reset-ns',type=float,default=300.)
+    p.add_argument('--seed',type=int,default=19)
     p.add_argument('--output',default='su3_five_ququart_trajectories_results.json')
     args=p.parse_args()
     rows=[simulate(approximate=x,leakage=args.leakage,t1_ns=args.t1_ns,
