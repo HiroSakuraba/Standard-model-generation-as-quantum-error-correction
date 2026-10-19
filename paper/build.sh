@@ -7,7 +7,7 @@ pandoc generation_codes.md -o generation_codes.pdf --pdf-engine=xelatex \
   --default-image-extension=pdf -H header.tex \
   -V geometry:margin=1in -V fontsize=11pt -V colorlinks=true -V linkcolor=teal -V urlcolor=teal \
   -V fontfamily=fontspec -V mainfont="Latin Modern Roman" -V mathfont="Latin Modern Math"
-pandoc generation_codes.md -o generation_codes.html -s --mathml --embed-resources \
+pandoc generation_codes.md -o generation_codes.html -s --mathml --embed-resources --lua-filter eqno.lua \
   --default-image-extension=svg --css paper.css \
   --metadata pagetitle="Beyond One Generation" \
   -V include-before='<p class="download"><a href="generation_codes.pdf">PDF version</a></p>'

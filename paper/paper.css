@@ -28,3 +28,7 @@ math[display="block"]{display:block;overflow-x:auto;overflow-y:hidden;max-width:
 p:has(> math[display="block"]){overflow-x:auto}
 body{overflow-wrap:break-word}
 @media (max-width:600px){body{font-size:16.5px;padding:1.5rem 1rem 4rem}h1.title{font-size:1.9rem}}
+.eqno{float:right;margin-top:1.05em;margin-left:.6rem;color:var(--muted);font-size:.95rem}
+.box{border-left:3px solid var(--accent);padding:.1rem 0 .1rem 1rem;margin:1.2rem 0}
+math[display="block"]{text-align:center}
+math[display="block"]{width:fit-content;margin-left:auto;margin-right:auto}
