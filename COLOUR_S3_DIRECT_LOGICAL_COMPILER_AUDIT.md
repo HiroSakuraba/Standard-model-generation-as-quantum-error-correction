@@ -68,9 +68,25 @@ The compiler uses bounded L-BFGS-B, deterministic small/medium random starts, th
 
 A selected control sequence can be better than doing nothing while still not approximating the *specific ideal 42D projector unitary*. Direct logical optimization only enforces good code recovery for the **specified restricted single-fault channel**; the diagnostic output separately records complete 14-column isometry overlap, full 42D unitary overlap, and all three original syndrome-branch metrics. Improving F_e alone does not establish proper three-outcome flagged classification, arbitrary sequential-fault correction, or a universal syndrome extractor.
 
+## 4. Direct objective can win noiselessly while still losing on gate duration
+
+The bounded direct-channel optimizer was intentionally tested against the literal zero-gate policy. Its dedicated Actions benchmark uses the synthetic electric probability 0.37, the exact PR63 seven-fault family and both order-six group codes.
+
+On its **initial verified run**, the direct-channel logical-fidelity optimizer obtained **AS 0.805135 at 104 tunable controls** and **BS 0.821588 at 104 controls**. At **52 controls**, BS already obtained **0.808768**, whereas the same AS depth obtained only 0.688859. The zero-gate reference is 0.671111. These are *actual operational logical-channel scores under the toy model's ideal fixed code projection*, not overlaps with an arbitrary 42D unitary. The full original three-outcome isometry overlap can remain extremely low while the measured-channel objective improves—so **this is not a solved global syndrome extractor**.
+
+Using the previously stipulated **hypothetical** coupling speeds (10 MHz per drive, 100 ns per charged-link transport, 300 ns readout for nonzero policies), the 104-control schedules take ~3.445 μs (AS) and ~3.242 μs (BS); the 52-control BS schedule takes ~2.068 μs. A separate lifetime sensitivity check assumes only four independent active fermions of survival time T1; any loss is a flagged erasure. Thus the illustrative recovered score with additional circuit duration \(t\) is \(F_e\,e^{-4t/T_1}\). **This does not account for loss or decoherence of the pointer, charged mediator, reference or spectators, or for the ideal final code projection**, so it remains an optimistic sensitivity calculation, not physical quantum-memory fidelity.
+
+The threshold for a nonzero policy to beat literal zero-gate policy is
+
+\[
+ T_1>\frac{4t}{\ln(F_{e,\rm compiled}/F_{e,\rm identity})}.
+\]
+
+When \(F_{e,\rm compiled}\leq F_{e,\rm identity}\), no finite positive T1 makes the extra gate cost worthwhile. The program computes this threshold separately for every candidate and reports a 10, 30, 100, 300 μs sensitivity grid. This directly tests whether a noiseless numerical improvement survives even the limited four-particle loss model, **without silently treating the cost-penalty heuristic as actual time**.
+
 ## 4. Validation and experiment
 
-Twelve dedicated tests cover the clean/electric input-state reduction, no-postselection single-step channel, ideal and do-nothing baselines, independent seven-Kraus numerical agreement, analytic-gradient checks at 13 and 26 controls with/without effort regularization, finite control angles, deterministic repeatability, identity/no-readout fallback, input validation and depth warm starts.
+Thirteen dedicated tests cover the clean/electric input-state reduction, no-postselection single-step channel, ideal and do-nothing baselines, independent seven-Kraus numerical agreement, analytic-gradient checks at 13 and 26 controls with/without effort regularization, finite control angles, deterministic repeatability, identity/no-readout fallback, input validation and depth warm starts.
 
 The benchmark enumerates both AS and BS at **13, 26, 52, 104** tunable controls, with an explicit maximum optimizer-iteration budget. For each candidate it archives its full floating-point angles and names, initialized-start ledger, unconditional seven-error logical F_e and gain over do-nothing, expanded charged-mediator operations and transports, tentative timing and loss-sensitivity figures, and all three ideal-target diagnostic overlaps.
 
