@@ -1,0 +1,36 @@
+name: SU3 five-plaquette compiled CP22 verification
+
+on:
+  pull_request:
+    paths:
+      - su3_full_refocusing_cp22.py
+      - test_su3_full_refocusing_cp22.py
+      - .github/workflows/su3_full_refocusing_cp22.yml
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical dependencies
+        run: python -m pip install numpy scipy sympy
+      - name: Test source blocks, five-site embedding and full gate sequence
+        run: python -m unittest -v test_su3_full_refocusing_cp22
+      - name: Generate independent exact/approximate run JSON
+        run: python su3_full_refocusing_cp22.py --rounds 1 --output su3_full_refocusing_cp22_results.json
+      - name: Save numeric outputs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: su3-full-refocusing-cp22-results
+          path: su3_full_refocusing_cp22_results.json
+          if-no-files-found: ignore
