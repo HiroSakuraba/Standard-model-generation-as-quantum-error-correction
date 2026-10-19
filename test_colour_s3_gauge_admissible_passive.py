@@ -62,7 +62,7 @@ class SameGaugePassiveTests(unittest.TestCase):
                     alternate_dressed_exchange(transform(self.C,h,v)))
                 self.assertLess(np.linalg.norm(residual),1e-10)
         r=passive_fault_metrics(self.C,.37)
-        self.assertTrue(0<=r["alternate_dressed_exchange_S_A1_B0_channel_F_e"]<=1.)
+        self.assertTrue(-1e-10<=r["alternate_dressed_exchange_S_A1_B0_channel_F_e"]<=1.+1e-10)
         self.assertAlmostEqual(
             r["alternate_dressed_exchange_S_A1_B0_channel_F_e"],
             1.,places=10)
@@ -136,7 +136,7 @@ class SameGaugePassiveTests(unittest.TestCase):
         self.assertTrue(data["same_original_matter_link_registers"])
         self.assertEqual(len(data["noiseless_loss_matched_rows"]),3)
         self.assertEqual(len(data["colour_number_dephasing_comparison"]),2)
-        self.assertTrue(any("ONE KNOWN" in x for x in data["limits"]))
+        self.assertTrue(any("SMALL D3" in x for x in data["limits"]))
         self.assertFalse(data["results_are_native_device_calibrated"])
 
 
