@@ -267,7 +267,7 @@ def check_fermionic(n, lin, z0, z1, weights):
     assert rank2(G) == 5          # X checks RM(1,4); Z checks = its dual RM(2,4), rank 11; 5 + 11 = 16 -> k = 0
     print('16 modes (nu^c added): the unpunctured RM(1,4) code has k = 0; its unique state is')
     print('  (|0_L>|0>_nu + |1_L>|1>_nu)/sqrt2, with N in {0, 8, 16}: fermion-even, invariant under i^N and')
-    print('  e^{i pi N/4}, not under e^{i pi N/8}.  nu^c is the reference mode that makes the qubit physical.')
+    print('  e^{i pi N/4}, not under e^{i pi N/8}.  the full unpunctured stabilizers select one k=0 state; a weaker even-parity relational code has k=1.')
 
 
 # ------------------------------------------------------------------- Fidkowski-Kitaev-type count
