@@ -62,7 +62,6 @@ def exchange_eigenbasis_q():
         Q[row,:]=vec.conj()
     assert np.linalg.norm(Q.conj().T@Q-np.eye(9))<1e-13
     diag=np.diag([(-1 if j%3==0 else 1) for j in range(9)])
-    swap=swap_matter(0,1).reshape((3,3,3,3))
     swap2=np.zeros((9,9),complex)
     for i in range(3):
         for j in range(3):
