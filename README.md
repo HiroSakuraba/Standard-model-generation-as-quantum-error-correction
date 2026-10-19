@@ -73,6 +73,15 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 4. **Where it could be measured.** In a Fourier-rotated basis, the checks are measurements of conserved charges mod p, and the protected digit is "the charge of the missing right-handed neutrinos." That fits engineered qudit hardware and gauge-theory simulators. It can't work with real gauge charges, because nature forbids superposing different charge sectors. The joined codes cost about 18 % more to measure. The ε⁴ correlated errors are a concrete experimental signature.
 5. **Distance 4 and entangling gates.** Distance 4 is impossible for every lattice built this way (there's a short proof) and wasn't found in wider searches. Exotic mod-7 and mod-13 charges cut the weakest error patterns from 50 to 8, which lowers the leading distillation error 6.25× at p = 7, but they aren't consistent physical charges. No tested code has a diagonal transversal entangling logical gate within the degree-2 and degree-3 families searched.
 
+## Part 5: toward a Standard Model code
+
+The cubic-Casimir echo used one fact about SU(3). Four new notes use the rest of the Standard Model the same way:
+
+1. **The full centre echo** ([`SM_CENTER_ECHO.md`](SM_CENTER_ECHO.md)). Exactly one finite set of gauge-centre pulses leaves every quark, lepton and the Higgs untouched: the ℤ6 behind the rule 6Y ≡ 3d − 2t (mod 6). It erases the pure-gauge magnetic terms and keeps all matter hopping. Its eigenvalue flags fractional electric charge. The right-handed neutrino is the only field no centre pulse can reach.
+2. **Confinement as a code** ([`COLOUR_SINGLET_CODE.md`](COLOUR_SINGLET_CODE.md)). Colour singlets detect any error on one quark but cannot correct it, because swapping two quarks acts inside the singlet space. Nine quarks are the exception. Their 42 singlet states contain a 21-dimensional code that corrects any single-quark colour error or two lost quarks. The code comes from the Pauli principle for nine quarks filling three colours and three flavours.
+3. **The global form as a code** ([`GLOBAL_FORM_CODES.md`](GLOBAL_FORM_CODES.md)). The undecided quotient (SU(3)×SU(2)×U(1))/Γ amounts to choosing one of 12 stabilizer bases of a single six-level qudit. The four values of Γ are the orbits under θ-angle shifts, and those shifts act as Clifford phase gates.
+4. **The fermionic 16** ([`FERMIONIC_GENERATION_CODE.md`](FERMIONIC_GENERATION_CODE.md)). Written in bits, one generation is the 16-point Reed–Muller code. Removing ν^c gives the 15-qubit code with a transversal T gate, and SO(10) is the smallest SO(2r) that gives a non-Clifford gate. As fermions, the 15-mode code's logical qubit is the fermion parity itself, which superselection forbids. Adding ν^c fixes this. The mod-16 anomaly does not show up in these codes.
+
 ## What this does *not* show
 
 - **Particles aren't computing anything.** Each particle is a label for a column in a table. Real hardware would need a physical system, measurements and noise modelling, and none of that follows from the mathematics.
@@ -96,6 +105,10 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`OPEN_STEPS_NOTE.md`](OPEN_STEPS_NOTE.md) | Technical note, part 3: flavour Lagrangian, exact logical channels, equivalence, operational setting, distance-4 / entangling-gate searches |
 | [`open_steps.py`](open_steps.py), [`charge_lattice_tools.py`](charge_lattice_tools.py) | Verification script for part 3 (asserts every reported number) and its exact mod-p toolkit (needs numpy) |
 | [`open_steps_results.txt`](open_steps_results.txt) | Recorded output of a completed run |
+| [`SM_CENTER_ECHO.md`](SM_CENTER_ECHO.md), [`sm_center_echo.py`](sm_center_echo.py) | Part 5.1: the ℤ6 centre echo for the whole gauge group, its echo table, fractional-charge syndrome and lattice weights |
+| [`COLOUR_SINGLET_CODE.md`](COLOUR_SINGLET_CODE.md), [`colour_singlet_code.py`](colour_singlet_code.py) | Part 5.2: colour-singlet codes; the 21-dimensional distance-3 code in nine-quark singlets |
+| [`GLOBAL_FORM_CODES.md`](GLOBAL_FORM_CODES.md), [`global_form_codes.py`](global_form_codes.py) | Part 5.3: the 12 line spectra of the SM as stabilizer bases of a six-level qudit |
+| [`FERMIONIC_GENERATION_CODE.md`](FERMIONIC_GENERATION_CODE.md), [`spinor_reed_muller.py`](spinor_reed_muller.py) | Part 5.4: binary Reed–Muller shadow of SO(2r) spinors and the Majorana generation code |
 | [`OPERATIONAL_GAUGE_QEC.md`](OPERATIONAL_GAUGE_QEC.md) | Exact Knill–Laflamme recovery versus gauge constraints: what works for a simulator and what remains unproved for the Standard Model |
 | [`operational_gauge_qec.py`](operational_gauge_qec.py) | Pure-Python gauge-ring Gauss-only failure and 3×3 lattice-gauge toric-code recovery verification |
 | [`abstract_stabilizer_recovery.py`](abstract_stabilizer_recovery.py) | Full single-site Weyl syndrome and recovery verification for the original charge CSS codes (requires NumPy) |
@@ -175,6 +188,10 @@ python3 local_purity.py                 # exact four-site reduced-projector puri
 python3 published_qutrit_family.py     # reproduces external 2025 paper matrices
 python3 reed_muller_family_exclusion.py # source-scoped 2026 family no-go and exact charge moments
 python3 e8_comparison.py               # E8 chirality obstruction as a code obstruction; requires numpy
+python3 sm_center_echo.py               # Z6 centre echo for SU(3)xSU(2)xU(1) with matter (NumPy, SciPy)
+python3 colour_singlet_code.py          # nine-quark colour-singlet distance-3 code, full 3^9 KL check (NumPy, SciPy; ~1 min)
+python3 global_form_codes.py            # 12 global forms as stabilizer bases of one 6-level qudit (NumPy)
+python3 spinor_reed_muller.py           # SO(2r) spinors -> Reed-Muller; Majorana generation code (NumPy)
 python3 walsh_character_lattice.py       # all-prime rigidity and masked direct-sum theorem
 python3 operational_gauge_qec.py         # Gauss-only failure vs genuine lattice-gauge recovery
 python3 abstract_stabilizer_recovery.py  # all single-site Pauli errors on charge-code qudits

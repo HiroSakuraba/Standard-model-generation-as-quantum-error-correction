@@ -10,7 +10,7 @@ on:
 jobs:
   exact-math:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,6 +30,10 @@ jobs:
         run: python reed_muller_family_exclusion.py
       - name: E8 chirality obstruction as a code obstruction
         run: python e8_comparison.py
+      - name: Global forms of the SM gauge group as six-level qudit stabilizer bases
+        run: python global_form_codes.py
+      - name: SO(2r) spinor Reed-Muller shadow and Majorana generation code
+        run: python spinor_reed_muller.py
       - name: Walsh-character rigidity and explicit disguised direct sums
         run: python walsh_character_lattice.py
       - name: Operational gauge simulator, Gauss limitation and toric KL recovery
@@ -60,6 +64,10 @@ jobs:
         run: OPENBLAS_NUM_THREADS=1 python two_body_su2_mediator.py
       - name: Install deterministic pulse-control numerical solver
         run: python -m pip install scipy==1.17.0
+      - name: Full SM Z6 centre echo with matter hopping
+        run: OPENBLAS_NUM_THREADS=1 python sm_center_echo.py
+      - name: Nine-quark colour-singlet distance-3 code and full 3^9 KL check
+        run: OPENBLAS_NUM_THREADS=1 python colour_singlet_code.py
       - name: SU2 smooth-pulse optimization, 1024-bin convergence and full-spin crosscheck
         run: OPENBLAS_NUM_THREADS=1 python su2_shaped_pulse.py
       - name: SK1-style composite SU2 gate robustness, both couplers and 256-state crosscheck
