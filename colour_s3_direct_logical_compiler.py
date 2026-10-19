@@ -231,6 +231,56 @@ def direct_gradient_check(label="AS",cycles=1,seed=812,
             "sampled_coordinate_derivatives":rows}
 
 
+def no_jump_lifetime_comparison(logical_Fe,identity_Fe,duration_ns,
+                                T1_us_values=(10.,30.,100.,300.)):
+    """Hypothetical four-active-fermion loss, identity is zero-time.
+
+    Every loss event is an orthogonal erasure (F_e=0). Four independent
+    active particles survive time tau with exp(-4*tau/T1). This
+    intentionally omits charged mediator, reference, pointer and
+    other hardware losses, as well as the time for the UNCOMPILED
+    final ideal code-subspace decoder used by the logical score.
+
+    Compared to literal do-nothing storage during the SAME physical
+    recovery interval, zero gate overhead remains the reference.
+    Both strategies must in reality endure a common storage interval;
+    its common survival factor cancels from the ratio, leaving just
+    the extra *recovery execution* time cost here.
+    """
+    for x in (logical_Fe,identity_Fe,duration_ns):
+        if not np.isfinite(x):
+            raise ValueError("finite fidelity and durations required")
+    if not 0<=logical_Fe<=1+1e-10 or not 0<identity_Fe<=1:
+        raise ValueError("fidelity outside [0,1]")
+    if duration_ns<0:raise ValueError("negative gate time")
+    records=[]
+    for T1 in T1_us_values:
+        if not np.isfinite(T1) or T1<=0:
+            raise ValueError("particle lifetime must be finite positive")
+        survival=float(np.exp(-4*duration_ns/(1000*T1)))
+        with_loss=float(logical_Fe*survival)
+        records.append({
+            "assumed_T1_us":float(T1),
+            "four_active_fermion_survival":survival,
+            "candidate_no_jump_weighted_logical_F_e":with_loss,
+            "literal_identity_policy_logical_F_e":float(identity_Fe),
+            "candidate_outperforms_identity_under_these_assumptions":
+                bool(with_loss>identity_Fe+1e-12),
+        })
+    threshold=None
+    if logical_Fe>identity_Fe+1e-12 and duration_ns>0:
+        threshold=float(
+            4*duration_ns/(1000*np.log(logical_Fe/identity_Fe)))
+    return {
+        "assumed_lifetime_model":"four active independent identical fermion T1, erasure on any loss; missing pointer, mediator, spectator and reference loss",
+        "additional_recovery_duration_ns":float(duration_ns),
+        "threshold_T1_us_for_circuit_to_beat_zero_gate_policy":threshold,
+        "loss_scenarios":records,
+        "same_unmodelled_ideal_code_projection_used_for_both_policies":True,
+        "not_a_device_calibrated_physical_fidelity":True,
+    }
+
+
 def compile_direct(label,cycles,maxiter=100,seed=66,
                    p_electric=.37,effort_lambda=.0005,
                    warmstart=None):
@@ -300,9 +350,10 @@ def compile_direct(label,cycles,maxiter=100,seed=66,
         not np.any(np.abs(angles)>1e-9))
     duration=report["native_primitive_cost"][
         "hypothetical_serial_duration_ns_including_readout"]
-    report["optimistic_four_active_fermion_30us_T1_weighted_logical_F_e_not_physical"]=float(
-        outcome["actual_unconditional_logical_entanglement_F_e"]*
-        np.exp(-4*duration/(1000*30.)))
+    report["hypothetical_four_fermion_lifetime_frontier"]=no_jump_lifetime_comparison(
+        outcome["actual_unconditional_logical_entanglement_F_e"],
+        outcome["do_nothing_baseline_logical_F_e"],duration)
+    report["optimistic_four_active_fermion_30us_T1_weighted_logical_F_e_not_physical"]=report["hypothetical_four_fermion_lifetime_frontier"]["loss_scenarios"][1]["candidate_no_jump_weighted_logical_F_e"]
     return report
 
 
@@ -343,6 +394,7 @@ def benchmark(cycles=(1,2,4,8),maxiter=100,labels=("AS","BS"),
             "The default optimizer remains a cyclic 13-control gate template, not a provably minimal circuit or hardware-native implementation.",
             "All controls gauge-preserving only in the signed-permutation finite S3 model; opposite-vertex same-colour projector fails general continuous SU3 symmetry.",
             "Pulse lengths/rates are synthetic and neglect pointer, charged-carrier, reference, and spectator loss, electronic dephasing, compound faults during recovery, and virtual QCD fluctuations.",
+            "The four-active-fermion independent T1 frontier compares circuit overhead against no extra gate, but assumes an uncompiled final ideal projection into the code, no noise during pulses except flagged active-particle loss, and no added charged mediator/reference/pointer lifetimes.",
             "No physical quantum-memory advantage or Standard-Model nine-quark 21D/65-syndrome code established.",
         ]
     }
@@ -364,6 +416,8 @@ def main():
             "isometry_overlap":logic["isometry_coherent_overlap"],
             "native_expanded_count":native["two_register_native_or_abstract_primitive_count"],
             "synthetic_serial_time_ns":native["hypothetical_serial_duration_ns_including_readout"],
+            "illustrative_T1_30us_survival_weighted_logical_F_e":r["optimistic_four_active_fermion_30us_T1_weighted_logical_F_e_not_physical"],
+            "threshold_T1_us_to_beat_do_nothing":r["hypothetical_four_fermion_lifetime_frontier"]["threshold_T1_us_for_circuit_to_beat_zero_gate_policy"],
             "best_initialization":r["selected_initialization"],
         },sort_keys=True),flush=True)
 
