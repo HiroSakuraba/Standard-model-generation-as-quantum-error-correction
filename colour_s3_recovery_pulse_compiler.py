@@ -143,6 +143,75 @@ def target_three_outcome(label):
     return named,Uideal,initial,goal,branches
 
 
+def single_fault_logical_recovery_fidelity(U,label,p_electric=.37):
+    """Unconditional recovered logical entanglement fidelity, NO postselection.
+
+    For each of the six admitted matter-exchange errors g and electric
+    R=I-2E from PR63, initialize code state C and neutral pointer |0>,
+    apply the EXACT fault operator, then the ACTUAL compiled U42.
+    Measure pointer and count only output in C with pointer 0 OR 1 as
+    recovered logical information. Pointer 2 and leakage outside C
+    are orthogonal flagged failure, never renormalized away.
+
+    This gives true logical F_e for the trace-decreasing recovered
+    subchannel with erasures flagged to orthogonal states. Use a
+    separately specified synthetic 7-Kraus mixture: R with p=.37,
+    each of six g with (1-p)/6. It does not model double faults,
+    hardware leakage, T1/T2 or measurement assignment errors.
+    """
+    if U.shape!=(TOTAL,TOTAL):
+        raise ValueError("Expected physical-system×pointer 42D unitary")
+    if not np.isfinite(p_electric) or not 0<=p_electric<=1:
+        raise ValueError("p_electric must be in [0,1]")
+    classes,ops,sizes,_=controls_for_group(label)
+    A,B,S,E=ops
+    subgroup=closure_matrices((A,S) if label=="AS" else (B,S))
+    C,V,_=construct_active_code(label,subgroup,E,sizes)
+    Ephys=gauge_fixed_normalized_matrix(E,sizes)
+    faults=[(f"exchange_{i}",gauge_fixed_normalized_matrix(g,sizes),
+             (1-p_electric)/6) for i,g in enumerate(subgroup)]
+    faults.append(("electric_phase",np.eye(DIM)-2*Ephys,p_electric))
+    pointer0=np.eye(POINTER)[:,[0]]
+    P=C@C.conj().T
+    records=[]
+    weighted=0.
+    for name,fault,weight in faults:
+        evolved=U@np.kron(fault@C,pointer0)
+        split=evolved.reshape(DIM,POINTER,4)
+        Kraus=[C.conj().T@split[:,i,:] for i in (0,1)]
+        recovered=float(sum(abs(np.trace(k)/4)**2 for k in Kraus))
+        captured=float(sum(np.linalg.norm(k,"fro")**2/4 for k in Kraus))
+        flag=float(np.linalg.norm(split[:,2,:],"fro")**2/4)
+        # Unflagged output outside C in pointer 0 or 1 is also a
+        # logical failure; preserve it in the unconditional ledger.
+        missed=1-captured-flag
+        assert -1e-10<=missed<=1+1e-10,(name,missed)
+        assert -1e-10<=recovered<=captured+1e-10
+        record={
+            "error":name,"synthetic_fault_probability":weight,
+            "unconditional_recovered_logical_entanglement_fidelity":
+                recovered,
+            "logical_code_capture_probability":captured,
+            "pointer_2_flagged_probability":flag,
+            "unflagged_outside_logical_code_probability":float(
+                max(0.,missed)),
+        }
+        weighted+=weight*recovered
+        records.append(record)
+    assert abs(sum(r["synthetic_fault_probability"] for r in records)-1)<1e-12
+    return {
+        "fault_model":"R probability p, each of six permitted individual exchange unitaries probability (1-p)/6; NO compound faults",
+        "electric_probability":p_electric,
+        "unconditional_seven_fault_mixture_logical_F_e":float(weighted),
+        "worst_individual_fault_logical_F_e":min(x[
+            "unconditional_recovered_logical_entanglement_fidelity"]
+            for x in records),
+        "individual_faults":records,
+        "pointer_2_or_outside_code_events_not_postselected":True,
+        "unsimulated_hardware_ancilla_noise":True,
+    }
+
+
 def pulse_pattern(n_controls,cycles):
     if not isinstance(cycles,int) or cycles<1:
         raise ValueError("cycles must be positive integer")
@@ -253,6 +322,8 @@ class SpectralCompiler:
             "per_branch":cases,
             "physical_global_phase_irrelevant":True,
             "no_postselection_used":True,
+            "synthetic_seven_single_fault_logical_recovery":
+                single_fault_logical_recovery_fidelity(U,self.label),
         }
 
 
@@ -467,7 +538,8 @@ def study(cycles=(1,2,4,8,16),maxiter=80,labels=LABELS):
         "benchmark":results,
         "limitations":[
             "This is a FINITE reproducible numerical schedule, but optimized objective is only the 14D system × initial-pointer-0 ISOMETRY; report the separate full 42D unitary overlap rather than claiming the whole unitary was compiled.",
-            "Each code/electric/flagged branch is independently tested, but input-isometry coherent overlap is not the same as unconditional recovered logical entanglement fidelity under a stochastic fault channel.",
+            "Input-isometry coherent overlap is NOT the same as logical recovery: a separate unpostselected seven-operator synthetic channel F_e is computed by projecting both recognized pointer branches back into C and treating all pointer-2/outside-code outcomes as orthogonal failures.",
+            "The seven-error logical recovery channel uses electric p=.37 and uniform six-element exchange alternatives, not a device-derived noise distribution or multiple correlated electric-exchange faults.",
             "A low benchmark fidelity means the approximate recovery is NOT usable; Lie universal reachability does not guarantee convergence at short pulse depth.",
             "The expansion realizes dressed-S fractionals with five abstract charged-mediator two-register operations; mobile charge transport and local exchange are assumed coherent, tunable primitives, NOT derived device pulses.",
             "The opposite-vertex equal-colour local control is gauge-invariant only under finite signed S3, NOT continuous SU3.",
@@ -491,6 +563,7 @@ def main():
                 "three_outcome_input_isometry_coherent_fidelity"],
             "whole_42D_fidelity":item["fidelity_diagnostics"][
                 "entire_42D_unitary_fidelity_to_selected_extension"],
+            "synthetic_seven_fault_unconditional_logical_F_e":item["fidelity_diagnostics"]["synthetic_seven_single_fault_logical_recovery"]["unconditional_seven_fault_mixture_logical_F_e"],
             "branch_scores":{k:v["coherent_target_branch_overlap_squared"]
                 for k,v in item["fidelity_diagnostics"]["per_branch"].items()},
             "native_expanded_count":item[
