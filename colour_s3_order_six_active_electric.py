@@ -271,6 +271,38 @@ def verify_five_plus_one_kraus_recovery(C,Verror,group,E,sizes):
     return output
 
 
+def compound_exchange_after_electric_diagnostic(C,Verror,group,E,sizes):
+    """EXPLORATORY NEGATIVE CONTROL: a second fault gR, outside the set.
+
+    Compute the SAME decoder's syndrome-captured probability and
+    entanglement fidelity for R followed by each independent g.
+    Lost syndrome weight is FLAGGED, not renormalized into a false
+    perfect score. These gR composite operators were NEVER claimed
+    to be in the single-step seven-Kraus correctable error set.
+    """
+    P=C@C.T
+    Q=Verror@Verror.T
+    R=np.eye(D)-2*gauge_fixed_normalized_matrix(E,sizes)
+    rows=[]
+    for i,g in enumerate(group):
+        compound=gauge_fixed_normalized_matrix(g,sizes)@R
+        k0=C.T@P@compound@C
+        k1=Verror.T@Q@compound@C
+        captured=sum(np.linalg.norm(k,"fro")**2/LOGICAL for k in (k0,k1))
+        fidelity=sum(abs(np.trace(k)/LOGICAL)**2 for k in (k0,k1))
+        rows.append({
+            "group_element_index":i,
+            "two_step_operator":"g R (electric phase then matter exchange)",
+            "recovered_F_e_without_postselection":float(fidelity),
+            "captured_syndrome_probability":float(captured),
+            "flagged_outside_syndrome_probability":float(1-captured),
+        })
+    assert abs(rows[0]["recovered_F_e_without_postselection"]-1)<2e-11
+    assert any(x["recovered_F_e_without_postselection"]<.2 for x in rows)
+    assert any(x["flagged_outside_syndrome_probability"]>.5 for x in rows)
+    return rows
+
+
 def common_gauss_physical_crosscheck(classes,sizes,C,Verror,label):
     """Embed constructed logical and syndrome subspaces into 486D gauge W.
 
@@ -309,12 +341,14 @@ def study():
         proof=exact_restricted_algebra_certificate(label,group,E)
         C,V,code=construct_active_code(label,group,E,sizes)
         branches=verify_five_plus_one_kraus_recovery(C,V,group,E,sizes)
+        compounds=compound_exchange_after_electric_diagnostic(C,V,group,E,sizes)
         physical=common_gauss_physical_crosscheck(classes,sizes,C,V,label)
         results.append({
             "label":label,
             "exact_no_4D_passive_noiseless_subsystem":proof,
             "active_four_logical_code":code,
             "ideal_recovered_error_branches":branches,
+            "outside_error_set_sequential_fault_negative_control":compounds,
             "486D_physical_Gauss_embedding":physical,
             "passive_common_scalar_sector_max_dimension":2,
         })
@@ -330,7 +364,7 @@ def study():
             "claim":"Virtual QFT contributions may change microscopic dynamics and fault distributions but do not affect this exact conditional finite-model KL theorem without modifying its Hamiltonian/noise assumptions"
         },
         "limitations":[
-            "A mathematical four-state actively correctable code is established against exactly 7 alternatives for each proper six-element exchange subgroup plus R; this is NOT the full 24-swap family nor multi-fault words gR or Rg",
+            "A mathematical four-state actively correctable code is established against exactly 7 alternatives for each proper six-element exchange subgroup plus R; it FAILS for some sequential gR compound faults and does not cover Rg or the full 24-swap family",
             "The exact 11D error-algebra commutant rules out a four-logical noiseless subsystem, stronger than just absence of a four-dimensional passive common eigenspace",
             "The recovery uses ideal projectors onto 4D code and 4D electric syndrome subspaces and a partial isometry; no native gauge-preserving gate decomposition is supplied",
             "The two codewords' electric branches overlap with amplitude minus one third; treating error outcomes as orthogonal before syndrome projection would be wrong",
