@@ -9,7 +9,7 @@ from colour_su3_duration_matched_bare import (
     required_T1_crossover_us, physical_duration_ns, analyze_anchor,
     duration_matched_grid, noisy_colour_bare_comparison, run,
 )
-from colour_gauge_link_s3 import physical_isometry
+from colour_gauge_link_s3 import physical_isometry, REP
 from colour_s3_edge_logical_syndrome import code_isometry
 
 
@@ -85,6 +85,16 @@ class DurationMatchedBareTests(unittest.TestCase):
             self.assertEqual(encoded>bare,lifetime>threshold)
         self.assertIsNone(required_T1_crossover_us(.6,1.,T,.37))
         self.assertEqual(required_T1_crossover_us(.8,1.,T,1.),0.)
+
+    def test_bare_two_colour_subspace_is_not_an_S3_gauss_code(self):
+        # Two-dimensional colour-basis storage is an external direct
+        # hardware reference, not a gauge-invariant finite-S3 code.
+        P=np.diag([1.,1.,0.])
+        residual=max(np.linalg.norm(D@P-P@D) for D in REP)
+        self.assertGreater(residual,0.5)
+        sample=bare_reference(1000.)
+        self.assertFalse(sample["bare_subspace_in_local_S3_Gauss_sector"])
+        self.assertTrue(sample["bare_external_hardware_reference_not_gauge_admissible"])
 
     def test_merged_PR57_anchor_U30_is_recomputed(self):
         row=analyze_anchor(30.,self.K)
