@@ -217,6 +217,8 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
     for trajectory in range(shots):
         y=initial_entangled_map(K)
         total=Counter()
+        leakage_pre=[]
+        leakage_post=[]
         for stage,weight in stage_iter(cycles):
             dt=T*weight/(CYCLES)
             phase_diag[:]=1
@@ -229,10 +231,12 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
                 y,c=apply_compiled_site(y,site,small_dt,phase,approximate,leakage)
                 counts.update(c)
             y=phase_diag[:,None]*y
+            leakage_pre.append(float(np.vdot(y[~IN_CODE,:],y[~IN_CODE,:]).real/2))
             duration=counts['cp22']*cp_ns+counts['local']*local_ns
             total.update(counts)
             total['time_ns']+=duration
             y,jumps=sample_noise(y,duration,t1_ns,tphi_ns,rng)
+            leakage_post.append(float(np.vdot(y[~IN_CODE,:],y[~IN_CODE,:]).real/2))
             total['loss_quanta']+=jumps
         # Time spent extracting and measuring a syndrome exposes ALL data
         # ququarts to idle noise. Entanglers are a COST assumption only.
@@ -243,11 +247,15 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
         f,leak=readout_fidelity(y,V,pointer_error,backaction_error)
         metrics.append({'trajectory':trajectory,'F_e_sample':f,
                         'population_in_fourth_level_end':leak,
+                        'maximum_transient_leakage_before_stage_noise':max(leakage_pre),
+                        'mean_transient_leakage_before_stage_noise':float(np.mean(leakage_pre)),
+                        'maximum_transient_leakage_after_stage_noise':max(leakage_post),
                         'loss_quanta_sampled':total['loss_quanta']})
         if summary is None:summary=dict(total)
         assert total['cp22']==((8160 if approximate else 10080)*cycles//CYCLES)
     fs=np.array([x['F_e_sample'] for x in metrics])
     ls=np.array([x['population_in_fourth_level_end'] for x in metrics])
+    trans=np.array([x['maximum_transient_leakage_before_stage_noise'] for x in metrics])
     return {'variant':'approximate_32_cp22' if approximate else 'exact_40_cp22',
             'hilbert_dimension':SIZE,'full_cycles':cycles,
             'trajectory_count':shots,'random_seed':seed,'per_CP22_mixing_radians':leakage,
@@ -264,6 +272,7 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
             'sample_mean_recovered_entanglement_fidelity':float(fs.mean()),
             'sample_standard_error':float(fs.std(ddof=1)/np.sqrt(shots)) if shots>1 else None,
             'sample_mean_final_leakage_probability':float(ls.mean()),
+            'sample_mean_maximum_transient_leakage_before_noise':float(trans.mean()),
             'trajectories':metrics,
             'warning':'Exploratory finite-trajectory CPTP unraveling. Noise is lumped after every stage; no pulse-time Lindblad, gauge-preserving leaked-sector dynamics, calibrated CP22, or noisy extraction circuit.'}
 
@@ -271,6 +280,8 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--shots',type=int,default=4)
+    p.add_argument('--include-optimistic',action='store_true',
+                   help='Add explicitly speculative 25ns/1ns, T1=Tphi=1ms, leakage=.001 sensitivity arm')
     p.add_argument('--leakage',type=float,default=.01)
     p.add_argument('--t1-ns',type=float,default=30000.)
     p.add_argument('--tphi-ns',type=float,default=45000.)
@@ -290,6 +301,19 @@ def main():
                    readout_ns=args.readout_ns,reset_ns=args.reset_ns,
                    extraction_entanglers=args.extraction_entanglers,shots=args.shots,
                    seed=args.seed+i*1000) for i,x in enumerate((False,True))]
+    for row in rows:
+        row['scenario']='serial_580ns_CP_30ns_local_30us_T1'
+    if args.include_optimistic:
+        opt=[simulate(approximate=x,leakage=.001,t1_ns=1e6,tphi_ns=1e6,
+              cp_ns=25.,local_ns=1.,pointer_error=args.pointer_error,
+              backaction_error=args.backaction_error,
+              readout_ns=args.readout_ns,reset_ns=args.reset_ns,
+              extraction_entanglers=args.extraction_entanglers,
+              shots=args.shots,seed=args.seed+5000+i*1000)
+              for i,x in enumerate((False,True))]
+        for row in opt:
+            row['scenario']='speculative_ultrafast_25ns_CP_1ns_local_1ms_T1'
+        rows.extend(opt)
     out={'study':'five-ququart encoded reference trajectories; exact vs approx digital CP22',
          'noise_model':'stage-lumped bosonic loss + stochastic Gaussian dephasing; explicit coherent CP22 leakage',
          'rows':rows,'limitations':[
