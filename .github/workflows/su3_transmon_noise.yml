@@ -1,0 +1,42 @@
+name: SU3 transmon leakage and analog-versus-digital research
+
+on:
+  pull_request:
+    paths:
+      - su3_transmon_noise_probe.py
+      - su3_analog_digital_noise_comparison.py
+      - test_su3_transmon_noise_probe.py
+      - SU3_PHYSICAL_NOISE_AND_ANALOG_AUDIT.md
+      - .github/workflows/su3_transmon_noise.yml
+  workflow_dispatch:
+
+jobs:
+  physical-channels-and-analog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install scientific dependencies
+        run: python -m pip install numpy scipy sympy
+      - name: Test CPTP Kraus, four-level leakage, unitary control and syndrome lower bound
+        run: python -m unittest -v test_su3_transmon_noise_probe
+      - name: Sweep two-transmon detuning pulse (four-level pair, exact CPTP channels)
+        run: python su3_transmon_noise_probe.py --output su3_transmon_noise_probe_results.json
+      - name: Compare native analog finite pulses and expanded digital circuits
+        run: python su3_analog_digital_noise_comparison.py --tau 0.002 --scale-mhz 0.01 --output su3_analog_digital_noise_comparison_results.json
+      - name: Save numerical results (including if earlier step fails)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: su3-physical-pair-and-analog-comparison
+          path: |
+            su3_transmon_noise_probe_results.json
+            su3_analog_digital_noise_comparison_results.json
+          if-no-files-found: ignore
