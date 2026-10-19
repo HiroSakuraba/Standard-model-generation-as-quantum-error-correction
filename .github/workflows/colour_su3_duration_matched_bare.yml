@@ -1,0 +1,37 @@
+name: SU3 Hubbard QEC versus duration-matched bare logical memory
+
+on:
+  pull_request:
+    paths:
+      - colour_su3_duration_matched_bare.py
+      - test_colour_su3_duration_matched_bare.py
+      - COLOUR_SU3_DURATION_MATCHED_BARE_AUDIT.md
+      - .github/workflows/colour_su3_duration_matched_bare.yml
+  workflow_dispatch:
+
+jobs:
+  direct-memory-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric dependencies
+        run: python -m pip install numpy scipy
+      - name: Validate analytical bare Kraus, break-even lifetimes and microscopic PR57 anchors
+        run: python -m unittest -v test_colour_su3_duration_matched_bare
+      - name: Recalculate 180 duration- and lifetime-matched benchmarks
+        run: python colour_su3_duration_matched_bare.py
+      - name: Preserve full scenario and stochastic benchmark JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-su3-duration-matched-bare-benchmark
+          path: colour_su3_duration_matched_bare_results.json
+          if-no-files-found: ignore
