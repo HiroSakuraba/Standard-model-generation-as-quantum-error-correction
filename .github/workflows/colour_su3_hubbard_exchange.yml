@@ -1,0 +1,37 @@
+name: Microscopic SU3 Hubbard pointer-detuned virtual exchange
+
+on:
+  pull_request:
+    paths:
+      - colour_su3_hubbard_virtual_exchange.py
+      - test_colour_su3_hubbard_virtual_exchange.py
+      - COLOUR_SU3_HUBBARD_EXCHANGE_AUDIT.md
+      - .github/workflows/colour_su3_hubbard_exchange.yml
+  workflow_dispatch:
+
+jobs:
+  exact-fock-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical requirements
+        run: python -m pip install numpy scipy
+      - name: Test SU3 invariance, Fock signs, doublons and exact controlled exchange
+        run: python -m unittest -v test_colour_su3_hubbard_virtual_exchange
+      - name: Record microscopic pulse and leakage benchmarks
+        run: python colour_su3_hubbard_virtual_exchange.py
+      - name: Archive benchmark data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: su3-two-orbital-hubbard-virtual-exchange
+          path: colour_su3_hubbard_virtual_exchange_results.json
+          if-no-files-found: ignore
