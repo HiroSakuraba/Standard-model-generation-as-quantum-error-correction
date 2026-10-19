@@ -156,6 +156,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su3_control_mask_scan.py`](su3_control_mask_scan.py), [`su3_control_mask_scan_results.json`](su3_control_mask_scan_results.json) | Exhaustive all-32 face-control subset optimization with fixed nonlocal decoder and source-normalized dynamics |
 | [`SU3_TRANSMON_QUTRIT_GATE_COMPILATION_AUDIT.md`](SU3_TRANSMON_QUTRIT_GATE_COMPILATION_AUDIT.md) | Native transmon-qutrit candidate: exact 99 neighbor-conditioned Wilson transitions, conditional two-level Givens and 8-cycle gate-depth/leakage-cost sensitivity |
 | [`su3_qutrit_gate_compiler.py`](su3_qutrit_gate_compiler.py), [`su3_qutrit_gate_compiler_results.json`](su3_qutrit_gate_compiler_results.json), [`su3_qutrit_gate_compiler_output.txt`](su3_qutrit_gate_compiler_output.txt) | Five-qutrit Strang compiler validated against full 243D source Hamiltonian and explicit toy CPTP failure mixture |
+| [`SU3_INTERIOR_TRANSMON_GATE_COMPILATION.md`](SU3_INTERIOR_TRANSMON_GATE_COMPILATION.md) | Constructive full interior SU3 three-qutrit magnetic gate synthesis from nearest-neighbor two-qutrit CP22; 4th-level leakage/crosstalk toy and hardware-cost limits |
+| [`su3_selective_cp_compiler.py`](su3_selective_cp_compiler.py), [`su3_selective_cp_compiler_results.json`](su3_selective_cp_compiler_results.json), [`su3_selective_cp_compiler_output.txt`](su3_selective_cp_compiler_output.txt) | 9-context / 27D exact CP22 circuit reconstruction, 360 entanglers and 1728 local operations, 64D leakage stress |
 
 ## Reproduce
 
@@ -204,6 +206,7 @@ OPENBLAS_NUM_THREADS=1 python3 su3_cubic_casimir_echo.py # SU3 cubic Casimir Z3 
 OPENBLAS_NUM_THREADS=1 python3 su3_native_control_compilation.py # selective SU3 control synthesis and finite timing/error costs (SymPy, NumPy, SciPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_control_mask_scan.py # exhaustive 32-mask refocusing/decoder audit (SymPy, NumPy, SciPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_qutrit_gate_compiler.py # conditional magnetic plaquette Givens compilation and gate-count stress (NumPy, SciPy, SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_selective_cp_compiler.py --output su3_selective_cp_compiler_results.json # full interior SU3 CP22 compilation and 4-level model (NumPy, SciPy, SymPy)
 ```
 
 Existing checks:
