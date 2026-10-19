@@ -71,6 +71,22 @@ def verify_exchange_identity():
     return residual
 
 
+def numerical_commutant_dim(representations):
+    """Independent 9x9 full-matrix commutator nullity crosscheck.
+
+    This floating-point rank check is NOT the proof; Schur–Weyl
+    irreducibility provides the exact representation-theoretic result.
+    """
+    basis=np.eye(81,dtype=complex).reshape((81,9,9))
+    rows=[]
+    for generator in representations:
+        diffs=np.einsum("kij,jl->kil",basis,generator)-np.einsum(
+            "ij,kjl->kil",generator,basis)
+        rows.append(diffs.reshape((81,81)).T)
+    singular=np.linalg.svd(np.concatenate(rows),compute_uv=False)
+    return int(np.sum(singular<1e-9))
+
+
 def su3_commutant_neutral_pointer():
     """Construct a basis of SU3-invariant pointer⊗fundamental operators.
 
@@ -89,12 +105,16 @@ def su3_commutant_neutral_pointer():
             for T in GENS:
                 GT=np.kron(np.eye(3),T)
                 assert np.linalg.norm(M@GT-GT@M)<1e-12
+    # Independently measure both complex commutants in dimension nine.
+    pointer_dim=numerical_commutant_dim([np.kron(np.eye(3),T) for T in GENS])
+    matter_pair_dim=numerical_commutant_dim([np.kron(T,np.eye(3))+np.kron(np.eye(3),T) for T in GENS])
+    assert pointer_dim==9 and matter_pair_dim==2
     # A gauge-invariant two-quark coupling is span I,SWAP.
     test=np.kron(GENS[6],np.eye(3))
     assert np.linalg.norm(SWAP9@test-test@SWAP9)>0.1
-    return {"neutral_pointer_fundamental_invariant_complex_dimension":9,
+    return {"neutral_pointer_fundamental_invariant_complex_dimension":pointer_dim,
             "basis_form":"A_pointer tensor I_3",
-            "fundamental_quark_pair_invariant_complex_dimension":2,
+            "fundamental_quark_pair_invariant_complex_dimension":matter_pair_dim,
             "pair_form":"a I_9 + b SWAP",
             "generated_neutral_pointer_to_quark_entanglement":False,
             "strict_scope":"irreducible SU3 fundamental, neutral pointer, SU3-invariant 1- and 2-register Hamiltonians only",
