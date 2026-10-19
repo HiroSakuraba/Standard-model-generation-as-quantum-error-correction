@@ -40,15 +40,24 @@ def optimize_angle(angle, iterations=7, steps=24, seed=SEED):
                       delta_pulse_mhz=float(result.x[1]),steps=steps)
     low=pulse_candidate(candidate,target=angle,include_noise=True)
     high=pulse_candidate(replace(candidate,steps=2*steps),target=angle,include_noise=True)
-    assert high['coherent_target_F_e']>=0
+    baseline_high=pulse_candidate(replace(old,steps=2*steps),target=angle,include_noise=True)
+    # Never call an optimizer output an improvement if the incumbent wins
+    # under the SAME fine time-discretization.
+    improved=high['coherent_target_F_e']>baseline_high['coherent_target_F_e']
+    chosen_low=low if improved else baseline
+    chosen_high=high if improved else baseline_high
+    assert chosen_high['coherent_target_F_e']>=baseline_high['coherent_target_F_e']-1e-12
     return {
       'target_angle_radians':float(angle),
       'search_bounds_duration_ns':[32.,200.],
       'search_bounds_detuning_mhz':[210.,420.],
       'candidate_baseline':baseline,
       'coarse_step_optimization':low,
-      'finer_step_evaluation':high,
-      'coarse_minus_fine_fidelity':float(low['coherent_target_F_e']-high['coherent_target_F_e']),
+      'optimizer_finer_step_evaluation':high,
+      'baseline_finer_step_evaluation':baseline_high,
+      'optimizer_improved_over_baseline':bool(improved),
+      'finer_step_evaluation':chosen_high,
+      'coarse_minus_fine_fidelity':float(chosen_low['coherent_target_F_e']-chosen_high['coherent_target_F_e']),
       'candidate_evaluations':int(result.nfev),
       'search_seed':seed,
       'iterations':iterations,
