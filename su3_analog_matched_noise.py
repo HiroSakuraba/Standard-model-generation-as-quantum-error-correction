@@ -165,8 +165,23 @@ def syndrome_projectors(syndromes):
         assert np.linalg.norm(p-p.conj().T)<1e-10
         if i<5:assert abs(np.trace(p)-2)<2e-10
     assert np.linalg.norm(sum(ps)-np.eye(DIM))<2e-10
-    assert np.trace(ps[-1]).real==np.trace(ps[-1]).real
+    assert abs(np.trace(ps[-1]).real-(DIM-10))<2e-10
     return ps
+
+
+def tag_syndrome_pointers(y,projectors):
+    """Exact PVM Stinespring isometry into two pointer qutrits, 9 labels.
+
+    Assumes a *nonlocal controlled interaction*. The isometry is
+    mathematically explicit but not a compiled hardware gate network.
+    """
+    if len(projectors)!=6 or y.shape[0]!=DIM:raise ValueError('shape')
+    tagged=np.zeros((9,DIM,y.shape[1]),complex)
+    for r,p in enumerate(projectors):
+        tagged[POINTER_INDEX[r]]=p@y
+    assert abs(np.vdot(tagged,tagged).real-np.vdot(y,y).real)<2e-9
+    assert np.linalg.norm(tagged.sum(axis=0)-y)<2e-9
+    return tagged
 
 
 def pointer_single_transition(read_ns,t1_ns,assignment):
@@ -243,6 +258,8 @@ def study(scenario=Scenario()):
     syndrome,_,gram=syndrome_decoder(*source_data())
     assert gram.rank()==5
     ps=syndrome_projectors(syndrome)
+    tagged=tag_syndrome_pointers(K,ps)
+    assert abs(np.vdot(tagged,tagged).real-2)<1e-9
     confusion=pointer_confusion(scenario)
     segments=propagation_schedule(states,H,scenario)
     # The explicit isometry K -> sum_r P_r K ⊗ |pointer_r> is
@@ -285,7 +302,7 @@ def study(scenario=Scenario()):
           'pointer_self_report_probs':[float(confusion[POINTER_INDEX[r],r]) for r in range(6)],
           'syndrome_sector_ranks':[2]*5+[DIM-10],
           'pointer_register_qutrits':2,'classical_readout_bits_min':3,
-          'random_seed':scenario.seed,'noise_events_per_trial':len(segments)*N,
+          'random_seed':scenario.seed,'noise_events_per_trial':(len(segments)+1)*N,
           'reference_difference_fro_max':float(max(np.linalg.norm(a-analog_ref,'fro'),np.linalg.norm(u-no_control,'fro'))),
           'caveat':('Uncalibrated native SU3 analog Hamiltonian and selective cubic-Casimir clocks; '
                     'gauge-fixed qutrit register amplitude loss/phase diffusion is illustrative, '
