@@ -1,0 +1,41 @@
+name: SU3 matched analog noise and syndrome-pointer verification
+
+on:
+  pull_request:
+    paths:
+      - su3_analog_matched_noise.py
+      - test_su3_analog_matched_noise.py
+      - SU3_ANALOG_MATCHED_NOISE_SYNDROME_AUDIT.md
+      - .github/workflows/su3_analog_matched_noise.yml
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install scientific packages
+        run: python -m pip install numpy scipy sympy
+      - name: Check exact pointer PVM, CPTP models, and time matched source
+        run: python -m unittest -v test_su3_analog_matched_noise
+      - name: Analog vs uncontrolled, 30us register relaxation nominal
+        run: python su3_analog_matched_noise.py --shots 48 --scale-mhz 0.01 --output su3_analog_matched_noise_results.json
+      - name: Higher fictitious energy scale sensitivity arm, same noise
+        run: python su3_analog_matched_noise.py --shots 48 --scale-mhz 0.05 --output su3_analog_matched_noise_faster_results.json
+      - name: Archive sample-level reproducible data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: su3-analog-matched-noise-two-qutrit-syndrome
+          path: |
+            su3_analog_matched_noise_results.json
+            su3_analog_matched_noise_faster_results.json
+          if-no-files-found: ignore
