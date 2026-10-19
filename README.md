@@ -147,6 +147,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su3_four_five_plaquette.py`](su3_four_five_plaquette.py), [`su3_four_five_plaquette_results.txt`](su3_four_five_plaquette_results.txt) | Exact source-table validation, 81/243-state Hamiltonian diagonalization and 441 exact Knill–Laflamme overlaps |
 | [`SU3_FIVE_PLAQUETTE_CHANNEL_RECOVERY.md`](SU3_FIVE_PLAQUETTE_CHANNEL_RECOVERY.md) | Explicit CPTP decoder of 21-element five-face SU(3) error span; time-dressed directed Wilson jumps, coherent kicks and native-Hamiltonian counterexample |
 | [`su3_channel_recovery.py`](su3_channel_recovery.py), [`su3_channel_recovery_results.json`](su3_channel_recovery_results.json), [`su3_channel_recovery_output.txt`](su3_channel_recovery_output.txt) | 243-state Kraus-complete channel benchmark, all four recovered logical matrix units and sampled entanglement fidelity |
+| [`SU3_NATIVE_EIGENPAIR_ENCODING_AUDIT.md`](SU3_NATIVE_EIGENPAIR_ENCODING_AUDIT.md) | Native-Hamiltonian-compatible SU(3) eigenpair alternatives: 153 candidate pairs, 32 normalized local errors, exact-criteria diagnostics and CPTP noise trade-offs |
+| [`su3_native_eigen_encoding.py`](su3_native_eigen_encoding.py), [`su3_native_eigen_encoding_results.json`](su3_native_eigen_encoding_results.json), [`su3_native_eigen_encoding_output.txt`](su3_native_eigen_encoding_output.txt) | Reproducible complete 153-pair score/Pareto dataset, virtual-phase/no-frame evolution, directed Wilson and electric-jump channels, and 5-syndrome flux regression |
 
 ## Reproduce
 
@@ -190,6 +192,7 @@ OPENBLAS_NUM_THREADS=1 python3 su3_three_plaquette_chain.py # exact 27-state sou
 OPENBLAS_NUM_THREADS=1 python3 su3_three_plaquette_error_algebra.py # F97 exact commutant certificate (SymPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_four_five_plaquette.py # four/five-face spectra and restricted local-error KL (SymPy, NumPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_channel_recovery.py # explicit 5-syndrome CPTP decoder + 243D Wilson-noise stress (NumPy, SciPy, SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_native_eigen_encoding.py --output-json su3_native_eigen_encoding_results.json # 153 low-lying eigenstate pair scan and explicit no-inversion channels (NumPy, SciPy, SymPy)
 ```
 
 Existing checks:
