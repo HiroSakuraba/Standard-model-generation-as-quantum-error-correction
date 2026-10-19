@@ -1,0 +1,198 @@
+{
+  "approximate_options": [
+    {
+      "cp22": 32,
+      "operator_norm_error": 0.09458254828475098,
+      "process_entanglement_fidelity": 0.9994898873326473,
+      "single_qutrit_ops": 212,
+      "skipped_double_control_contexts": [
+        [
+          1,
+          2
+        ]
+      ],
+      "two_qutrit_reduction_factor": 11.25
+    },
+    {
+      "cp22": 24,
+      "operator_norm_error": 0.09458254828475109,
+      "process_entanglement_fidelity": 0.998979904832013,
+      "single_qutrit_ops": 160,
+      "skipped_double_control_contexts": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "two_qutrit_reduction_factor": 15.0
+    },
+    {
+      "cp22": 8,
+      "operator_norm_error": 0.10595837219863911,
+      "process_entanglement_fidelity": 0.9975871187470796,
+      "single_qutrit_ops": 56,
+      "skipped_double_control_contexts": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "two_qutrit_reduction_factor": 45.0
+    }
+  ],
+  "assumed_connectivity": "line L-T-R with arbitrary-angle fixed |22> CP and adjacent SU2 plus diagonal qutrit phases",
+  "baseline_cp22": 360,
+  "baseline_local_ops": 1728,
+  "baseline_serial_duration_ns": 260640,
+  "double_control_SU3": 4,
+  "double_control_method": "SU3 cyclic-eigenbasis commutator, four single-control U3 operations, two CP22 per single control",
+  "illustrative_entangler_duration_ns": 580,
+  "illustrative_local_duration_ns": 30,
+  "independent_published_blocks_checked": 9,
+  "one_control_SU3": 4,
+  "optimized_cp22": 40,
+  "optimized_local_ops": 264,
+  "optimized_serial_duration_ns": 31120,
+  "reduction_factor": 9.0,
+  "source": "Chen Mueller Yao PRD 114 074502, Appendix B Table VI; previous 360-CP22 baseline",
+  "test_rows": [
+    {
+      "adjacent_level_swaps": 80,
+      "adjacent_su2_rotations_or_swaps": 203,
+      "approx_32_cp22": {
+        "operator_norm_error": 0.09458254828475098,
+        "process_entanglement_fidelity": 0.9994898873326473
+      },
+      "cp22": 40,
+      "diagonal_qutrit_phase_frames": 61,
+      "dt": 0.19,
+      "magnetic_phase": 2.0943951023931953,
+      "operator_error": 7.260575769652012e-15,
+      "residual_norms": {
+        "1,1": 0.10595837219863899,
+        "1,2": 0.09458254828475024,
+        "2,1": 0.09458254828475025,
+        "2,2": 0.10595837219863903
+      },
+      "same_four_level_model": [
+        {
+          "conditional_no_leakage_entanglement_fidelity": 1.0000000000000049,
+          "counts": {
+            "fixed_CP22_entanglers": 40,
+            "single_qutrit_local_or_swap": 264
+          },
+          "fractional_entangler_phase_error": 0.0,
+          "leak_amplitude": 0.0,
+          "leakage_probability": 0.0,
+          "operator_error_logical_fro": 1.8100063853661532e-14,
+          "spectator_crosstalk_phase": 0.0,
+          "unconditional_entanglement_fidelity": 1.0000000000000049
+        },
+        {
+          "conditional_no_leakage_entanglement_fidelity": 0.9998970189393885,
+          "counts": {
+            "fixed_CP22_entanglers": 40,
+            "single_qutrit_local_or_swap": 264
+          },
+          "fractional_entangler_phase_error": 0.0,
+          "leak_amplitude": 0.01,
+          "leakage_probability": 0.0005127118380079398,
+          "operator_error_logical_fro": 0.0698937011218059,
+          "spectator_crosstalk_phase": 0.002,
+          "unconditional_entanglement_fidelity": 0.9993843599009895
+        },
+        {
+          "conditional_no_leakage_entanglement_fidelity": 0.9989417751502863,
+          "counts": {
+            "fixed_CP22_entanglers": 40,
+            "single_qutrit_local_or_swap": 264
+          },
+          "fractional_entangler_phase_error": 0.02,
+          "leak_amplitude": 0.03,
+          "leakage_probability": 0.004569345150988502,
+          "operator_error_logical_fro": 0.23450100630122098,
+          "spectator_crosstalk_phase": 0.006,
+          "unconditional_entanglement_fidelity": 0.9943772653938835
+        }
+      ],
+      "single_qutrit_ops": 264
+    },
+    {
+      "adjacent_level_swaps": 80,
+      "adjacent_su2_rotations_or_swaps": 203,
+      "approx_32_cp22": {
+        "operator_norm_error": 0.039816297825467015,
+        "process_entanglement_fidelity": 0.9999095908348878
+      },
+      "cp22": 40,
+      "diagonal_qutrit_phase_frames": 61,
+      "dt": 0.08,
+      "magnetic_phase": 0.0,
+      "operator_error": 6.651742264792562e-15,
+      "residual_norms": {
+        "1,1": 0.04467989146006588,
+        "1,2": 0.03981629782546621,
+        "2,1": 0.03981629782546618,
+        "2,2": 0.044679891460065846
+      },
+      "single_qutrit_ops": 264
+    },
+    {
+      "adjacent_level_swaps": 80,
+      "adjacent_su2_rotations_or_swaps": 203,
+      "approx_32_cp22": {
+        "operator_norm_error": 0.14629125614716576,
+        "process_entanglement_fidelity": 0.9987145121543529
+      },
+      "cp22": 40,
+      "diagonal_qutrit_phase_frames": 61,
+      "dt": 0.3,
+      "magnetic_phase": 0.23,
+      "operator_error": 1.3687207969280163e-14,
+      "residual_norms": {
+        "1,1": 0.16395094655050868,
+        "1,2": 0.14629125614716607,
+        "2,1": 0.14520457911801365,
+        "2,2": 0.1639509465505088
+      },
+      "single_qutrit_ops": 264
+    },
+    {
+      "adjacent_level_swaps": 80,
+      "adjacent_su2_rotations_or_swaps": 203,
+      "approx_32_cp22": {
+        "operator_norm_error": 0.023364467185700045,
+        "process_entanglement_fidelity": 0.9999687831489874
+      },
+      "cp22": 40,
+      "diagonal_qutrit_phase_frames": 61,
+      "dt": 0.047,
+      "magnetic_phase": -1.1,
+      "operator_error": 1.4273501649909724e-14,
+      "residual_norms": {
+        "1,1": 0.026230184751053078,
+        "1,2": 0.023364467185699747,
+        "2,1": 0.02335778290019442,
+        "2,2": 0.026230184751053078
+      },
+      "single_qutrit_ops": 264
+    }
+  ],
+  "warning": "Not calibrated transmon gates; arbitrary-angle fixed CP22 remains an assumed primitive. Local rotations and swaps explicitly counted. No noise or pulse physics assumed for correctness."
+}
