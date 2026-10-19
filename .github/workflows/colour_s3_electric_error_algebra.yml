@@ -1,0 +1,37 @@
+name: Finite-S3 full swap group and link electric error algebra
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_electric_error_algebra.py
+      - test_colour_s3_electric_error_algebra.py
+      - COLOUR_S3_ELECTRIC_ERROR_ALGEBRA_AUDIT.md
+      - .github/workflows/colour_s3_electric_error_algebra.yml
+  workflow_dispatch:
+
+jobs:
+  verify-electric:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact dependencies
+        run: python -m pip install numpy scipy
+      - name: Verify S4 permutation group, electric Gauss compatibility and broadened commutant
+        run: python -m unittest -v test_colour_s3_electric_error_algebra
+      - name: Report physical-sector spectra and logical electric error responses
+        run: python colour_s3_electric_error_algebra.py
+      - name: Preserve numerical audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: finite-s3-full-swaps-and-link-electric-algebra
+          path: colour_s3_electric_error_algebra_results.json
+          if-no-files-found: ignore
