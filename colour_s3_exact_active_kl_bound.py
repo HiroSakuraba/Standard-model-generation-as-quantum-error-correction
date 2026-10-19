@@ -155,6 +155,32 @@ def all_S4_character_projectors():
     return projectors,certificate
 
 
+def full_fault_operator_span_ranks(E):
+    """Exact rational dimensions, distinct from NUMBER of Kraus operators.
+
+    The 24 S4 permutation representations span only the isotypic group
+    algebra of dimension 1²+2²+3²=14. The link electric operator E
+    is independent of this span, increasing dimension to 15, NOT 25.
+    Replacing E by the phase R=I-2E yields the same extended span.
+    """
+    classes,lookup,_=four_colour_orbits()
+    actions=positional_s4(classes,lookup)
+    matrices=[integer_permutation_rep(g) for g in actions]
+    columns=[sp.Matrix(list(M)) for M in matrices]
+    group=sp.Matrix.hstack(*columns)
+    rank=group.rank()
+    enlarged=group.row_join(sp.Matrix(list(E)))
+    extra_rank=enlarged.rank()
+    assert rank==14 and extra_rank==15
+    return {
+        "listed_swap_Kraus_operators":24,
+        "swap_operator_linear_span_dimension":rank,
+        "listed_operators_including_electric":25,
+        "swap_plus_electric_operator_linear_span_dimension":extra_rank,
+        "full_operator_span_dimension_is_not_operator_count":True,
+    }
+
+
 def exact_electric_split_on_unique_swap_code(P,E):
     """Exact 4D eigenspectrum via characteristic polynomial of PEP.
 
@@ -310,6 +336,7 @@ def exact_study():
     assert sp.trace(P)==4
     E=ops[-1]
     electric=exact_electric_split_on_unique_swap_code(P,E)
+    span_ranks=full_fault_operator_span_ranks(E)
     table=classify_electric_subgroups(ops)
     nogo=full_group_active_KL_no_go(irreps,electric)
     open_sets=[r["generator_subset"] for r in table
@@ -319,12 +346,13 @@ def exact_study():
         "research_scope":"two-vertex 14D Gauss sector of signed S3 subgroup, one six-state link, four matter fundamentals",
         "S4_irreducible_character_projector_certificate":irreps,
         "electric_action_on_only_possible_all_swap_KL_ququart":electric,
+        "exact_number_versus_linear_span_of_fault_operators":span_ranks,
         "full_exchange_plus_electric_active_KL_no_go":nogo,
         "all_eight_generator_subgroups_with_link_electric_phase":table,
         "candidate_subgroups_without_four_dimensional_common_passive_DFS":open_sets,
         "restricted_active_KL_existence_for_AS_BS_ABS":"open (except full 24-element Kraus set is impossible as proved separately)",
         "scientific_claim_boundaries":[
-            "Full 25-operator set means each of the 24 matter-permutation unitaries and one electric phase are independently in the linear Kraus error span; not merely three generator Hamiltonians plus a single fault.",
+            "Full fault family has 25 listed Kraus unitaries but only exact 15D LINEAR span (24 permutations span 14D); each of the 24 and R is individually allowed, not merely three generator Hamiltonians.",
             "Perfect active KL no-go is stronger than the PR61 no-four-dimensional-noiseless-subsystem result, but only for this specified error SPAN.",
             "Exact passive census tests common SCALAR eigenspaces; it is not a classification of all noiseless subsystems, approximate codes, or actively correctable error sets.",
             "The AS and BS order-six exchange subgroups with electric error have no four-dimensional common passive eigenspace; this alone does NOT prove a 4D active code exists.",
