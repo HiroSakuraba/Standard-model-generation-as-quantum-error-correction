@@ -203,8 +203,8 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
     accrued serially; physical CP22 and local-qutrit pulse parameters
     remain uncalibrated.
     """
-    if shots<1 or cycles<1 or t1_ns<=0 or tphi_ns<=0 or cp_ns<0 or local_ns<0
-       or readout_ns<0 or reset_ns<0 or extraction_entanglers<0:
+    if (shots<1 or cycles<1 or t1_ns<=0 or tphi_ns<=0 or cp_ns<0 or local_ns<0
+       or readout_ns<0 or reset_ns<0 or extraction_entanglers<0):
         raise ValueError("invalid scenario")
     states,K,d,W,H=construct()
     V,_,gram=syndrome_decoder(*source_data())
