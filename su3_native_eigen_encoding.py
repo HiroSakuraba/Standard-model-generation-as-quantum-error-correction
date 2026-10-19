@@ -214,3 +214,4 @@ if __name__=='__main__':
         path=Path(args.output_json)
         path.write_text(json.dumps(result,indent=2,sort_keys=True)+'\n',encoding='utf-8')
         print('WROTE_JSON',str(path))
+
