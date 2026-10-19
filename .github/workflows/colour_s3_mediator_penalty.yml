@@ -1,0 +1,37 @@
+name: S3 charged mediator, detuned gadget and gauge penalty feasibility
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_mediator_penalty_feasibility.py
+      - test_colour_s3_mediator_penalty_feasibility.py
+      - COLOUR_S3_MEDIATOR_PENALTY_AUDIT.md
+      - .github/workflows/colour_s3_mediator_penalty.yml
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical prerequisites
+        run: python -m pip install numpy scipy
+      - name: Verify charge covariance, detuned Kraus gadget and penalty pulse
+        run: python -m unittest -v test_colour_s3_mediator_penalty_feasibility
+      - name: Run all three feasibility probes
+        run: python colour_s3_mediator_penalty_feasibility.py
+      - name: Archive raw physical-assumptions and numerical report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-s3-mediator-and-gauss-penalty-results
+          path: colour_s3_mediator_penalty_results.json
+          if-no-files-found: ignore
