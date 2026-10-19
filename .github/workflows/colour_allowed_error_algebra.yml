@@ -1,0 +1,37 @@
+name: Nine-quark allowed colour-error algebra and syndrome budget
+
+on:
+  pull_request:
+    paths:
+      - colour_allowed_error_algebra_budget.py
+      - test_colour_allowed_error_algebra_budget.py
+      - COLOUR_ALLOWED_ERROR_ALGEBRA_AND_SYNDROME_COST.md
+      - .github/workflows/colour_allowed_error_algebra.yml
+  workflow_dispatch:
+
+jobs:
+  algebra-and-cost:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical dependencies
+        run: python -m pip install numpy scipy
+      - name: Independent nine-qutrit KL rank and gauge-allowed exchange tests
+        run: python -m unittest -v test_colour_allowed_error_algebra_budget
+      - name: Create scientific audit JSON
+        run: python colour_allowed_error_algebra_budget.py
+      - name: Store full numerical report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-allowed-error-algebra-syndrome-budget
+          path: colour_allowed_error_algebra_budget_results.json
+          if-no-files-found: ignore
