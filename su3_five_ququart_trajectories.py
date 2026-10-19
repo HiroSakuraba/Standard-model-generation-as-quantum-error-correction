@@ -100,11 +100,6 @@ def apply_cp22_mixing(mat, pair, angle, leakage=0., detuning=0.):
     return z.reshape(SIZE,2)
 
 
-@lru_cache(maxsize=10000)
-def extend_local_gate(site, angle_key, index):
-    raise RuntimeError("Not used: explicit local compilation is cached by caller")
-
-
 def apply_compiled_site(mat, site, dt, phase, approximate, leakage):
     axes=site_axes(site)
     schedule=compiled_site(site,float(dt),float(phase),bool(approximate))
@@ -172,7 +167,7 @@ def sample_noise(mat,dt,t1,tphi,rng):
     return result,jumps
 
 
-def readout_fidelity(mat,syndromes,pointer_error=0.):
+def readout_fidelity(mat,syndromes,pointer_error=0.,backaction_error=0.):
     """CPTP six-sector projective instrument + classical readout confusion.
 
     Each of 5 correctable syndrome sectors is distinguished perfectly before
@@ -180,9 +175,9 @@ def readout_fidelity(mat,syndromes,pointer_error=0.):
     I/2, as does the syndrome complement. Hence this evaluates a physically
     meaningful CPTP *abstract instrument*, but does NOT compile measurement.
     """
-    if not 0<=pointer_error<1:raise ValueError(pointer_error)
+    if not 0<=pointer_error<1 or not 0<=backaction_error<1:\n        raise ValueError('readout/backaction probabilities')
     assert abs(np.vdot(mat,mat).real-2)<2e-7
-    correct=(1-pointer_error)**2
+    correct=(1-pointer_error)**2*(1-backaction_error)
     comp=mat[COMPUTATIONAL,:]
     coherent=0.
     supported=0.
@@ -198,7 +193,7 @@ def readout_fidelity(mat,syndromes,pointer_error=0.):
 
 def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
              cp_ns=580.,local_ns=30.,shots=4,seed=19,cycles=CYCLES,
-             pointer_error=.001):
+             pointer_error=.001,backaction_error=.0,\n             readout_ns=800.,reset_ns=300.,extraction_entanglers=0):
     """Stochastic full-five-ququart digital run; no silent extrapolation.
 
     40 symmetric stages by default, total 1024-dimensional Hilbert space.
@@ -206,7 +201,7 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
     accrued serially; physical CP22 and local-qutrit pulse parameters
     remain uncalibrated.
     """
-    if shots<1 or cycles<1 or t1_ns<=0 or tphi_ns<=0 or cp_ns<0 or local_ns<0:
+    if shots<1 or cycles<1 or t1_ns<=0 or tphi_ns<=0 or cp_ns<0 or local_ns<0\n       or readout_ns<0 or reset_ns<0 or extraction_entanglers<0:
         raise ValueError("invalid scenario")
     states,K,d,W,H=construct()
     V,_,gram=syndrome_decoder(*source_data())
@@ -236,7 +231,7 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
             total['time_ns']+=duration
             y,jumps=sample_noise(y,duration,t1_ns,tphi_ns,rng)
             total['loss_quanta']+=jumps
-        f,leak=readout_fidelity(y,V,pointer_error)
+        # Time spent extracting and measuring a syndrome exposes ALL data\n        # ququarts to idle noise. Entanglers are a COST assumption only.\n        instrument_ns=readout_ns+reset_ns+extraction_entanglers*cp_ns\n        y,instrument_jumps=sample_noise(y,instrument_ns,t1_ns,tphi_ns,rng)\n        total['loss_quanta']+=instrument_jumps\n        total['time_ns']+=instrument_ns\n        f,leak=readout_fidelity(y,V,pointer_error,backaction_error)
         metrics.append({'trajectory':trajectory,'F_e_sample':f,
                         'population_in_fourth_level_end':leak,
                         'loss_quanta_sampled':total['loss_quanta']})
@@ -250,7 +245,7 @@ def simulate(approximate,leakage=0.01,t1_ns=30000.,tphi_ns=45000.,
             'CP22_leakage_pair':'|22> <-> |31> on addressed physical neighbor edge',
             'assumed_T1_ns':t1_ns,'assumed_Tphi_ns':tphi_ns,
             'per_CP22_duration_ns':cp_ns,'per_local_duration_ns':local_ns,
-            'readout_pointer_error_each':pointer_error,
+            'readout_pointer_error_each':pointer_error,\n            'syndrome_backaction_replacement_error':backaction_error,\n            'assumed_extraction_entanglers_NOT_IMPLEMENTED':extraction_entanglers,\n            'two_pointer_readout_duration_ns':readout_ns,\n            'ancilla_reset_duration_ns':reset_ns,\n            'minimum_pointer_qutrits':2,'minimum_syndrome_bits':3,
             'serial_resources':summary,
             'sample_mean_recovered_entanglement_fidelity':float(fs.mean()),
             'sample_standard_error':float(fs.std(ddof=1)/np.sqrt(shots)) if shots>1 else None,
@@ -268,12 +263,12 @@ def main():
     p.add_argument('--cp-ns',type=float,default=580.)
     p.add_argument('--local-ns',type=float,default=30.)
     p.add_argument('--pointer-error',type=float,default=.001)
-    p.add_argument('--seed',type=int,default=19)
+    p.add_argument('--backaction-error',type=float,default=.0)\n    p.add_argument('--extraction-entanglers',type=int,default=0)\n    p.add_argument('--readout-ns',type=float,default=800.)\n    p.add_argument('--reset-ns',type=float,default=300.)\n    p.add_argument('--seed',type=int,default=19)
     p.add_argument('--output',default='su3_five_ququart_trajectories_results.json')
     args=p.parse_args()
     rows=[simulate(approximate=x,leakage=args.leakage,t1_ns=args.t1_ns,
                    tphi_ns=args.tphi_ns,cp_ns=args.cp_ns,local_ns=args.local_ns,
-                   pointer_error=args.pointer_error,shots=args.shots,
+                   pointer_error=args.pointer_error,backaction_error=args.backaction_error,\n                   readout_ns=args.readout_ns,reset_ns=args.reset_ns,\n                   extraction_entanglers=args.extraction_entanglers,shots=args.shots,
                    seed=args.seed+i*1000) for i,x in enumerate((False,True))]
     out={'study':'five-ququart encoded reference trajectories; exact vs approx digital CP22',
          'noise_model':'stage-lumped bosonic loss + stochastic Gaussian dephasing; explicit coherent CP22 leakage',
