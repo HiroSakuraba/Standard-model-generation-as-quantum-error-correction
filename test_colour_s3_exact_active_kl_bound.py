@@ -9,6 +9,7 @@ from colour_s3_exact_electric_commutant import (
 from colour_s3_exact_active_kl_bound import (
     K, EXPECTED_SUBGROUPS, CHARACTERS,
     all_S4_character_projectors, exact_electric_split_on_unique_swap_code,
+    full_fault_operator_span_ranks,
     generated_group_order, generator_actions, common_eigenspace_dimension,
     classify_electric_subgroups, full_group_active_KL_no_go, exact_study,
     cycle_type,
@@ -55,6 +56,13 @@ class ExactActiveKLNoGoTests(unittest.TestCase):
                          ["0","1/3","2/3","1"])
         self.assertFalse(e["electric_is_scalar_on_unique_four_state_swap_sector"])
         self.assertFalse(e["complete_24_swaps_plus_electric_perfect_KL_four_state_code"])
+
+    def test_number_of_errors_is_not_linear_span_dimension(self):
+        exact=full_fault_operator_span_ranks(self.ops[-1])
+        self.assertEqual(exact["listed_swap_Kraus_operators"],24)
+        self.assertEqual(exact["swap_operator_linear_span_dimension"],14)
+        self.assertEqual(exact["listed_operators_including_electric"],25)
+        self.assertEqual(exact["swap_plus_electric_operator_linear_span_dimension"],15)
 
     def test_full_24_swaps_plus_R_exact_active_KL_no_go(self):
         result=full_group_active_KL_no_go(self.multiplicities,self.electric)
