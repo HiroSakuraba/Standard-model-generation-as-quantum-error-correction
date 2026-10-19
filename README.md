@@ -140,6 +140,26 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su3_complete_minimal_links.py`](su3_complete_minimal_links.py), [`su3_complete_minimal_links_results.txt`](su3_complete_minimal_links_results.txt) | Exhaustive `3^7` irrep enumeration; 324 local Gauss checks; 9-state Haar matrices and five-coupling finite-model spectrum |
 | [`SU3_PUBLISHED_SQUARE_CHAIN_BENCHMARK.md`](SU3_PUBLISHED_SQUARE_CHAIN_BENCHMARK.md) | **Exact published comparison:** Chen–Müller–Yao zero-flux two-plaquette SU(3) Hamiltonian (PRD Appendix B Table VI, Eqs. 3–5, 10–11) matches the complete nine-state model |
 | [`su3_published_square_chain_benchmark.py`](su3_published_square_chain_benchmark.py), [`su3_published_square_chain_benchmark_results.txt`](su3_published_square_chain_benchmark_results.txt) | Independent qutrit-to-link bijection, all 162 directed Wilson entries, electric term and complete source-normalized 9×9 Hamiltonian identity |
+| [`SU3_THREE_PLAQUETTE_PUBLISHED_CHAIN_AUDIT.md`](SU3_THREE_PLAQUETTE_PUBLISHED_CHAIN_AUDIT.md) | **Three-square SU(3)** complete minimal qutrit chain (27 states, 10 links), all nine exact published magnetic blocks, electric/magnetic error-algebra classification and finite-volume comparison |
+| [`su3_three_plaquette_chain.py`](su3_three_plaquette_chain.py), [`su3_three_plaquette_results.txt`](su3_three_plaquette_results.txt) | Exact PRD Tables I/VI crosscheck, 27D Hamiltonian, 9D parent regression and dimensionless finite-size spectra/correlations |
+| [`su3_three_plaquette_error_algebra.py`](su3_three_plaquette_error_algebra.py), [`su3_three_plaquette_error_algebra_results.txt`](su3_three_plaquette_error_algebra_results.txt) | Exact finite-field commutant-rank witness: Hermitian M14⊕M13, complex Wilson M27; not an active-code no-go |
+| [`SU3_FOUR_FIVE_PLAQUETTE_BOUNDED_ERRORS.md`](SU3_FOUR_FIVE_PLAQUETTE_BOUNDED_ERRORS.md) | Four/five-face SU(3) finite-size gaps and charge-conjugation/reflection sectors; exact 21-element local-error-span code and Wilson counterexamples |
+| [`su3_four_five_plaquette.py`](su3_four_five_plaquette.py), [`su3_four_five_plaquette_results.txt`](su3_four_five_plaquette_results.txt) | Exact source-table validation, 81/243-state Hamiltonian diagonalization and 441 exact Knill–Laflamme overlaps |
+| [`SU3_FIVE_PLAQUETTE_CHANNEL_RECOVERY.md`](SU3_FIVE_PLAQUETTE_CHANNEL_RECOVERY.md) | Explicit CPTP decoder of 21-element five-face SU(3) error span; time-dressed directed Wilson jumps, coherent kicks and native-Hamiltonian counterexample |
+| [`su3_channel_recovery.py`](su3_channel_recovery.py), [`su3_channel_recovery_results.json`](su3_channel_recovery_results.json), [`su3_channel_recovery_output.txt`](su3_channel_recovery_output.txt) | 243-state Kraus-complete channel benchmark, all four recovered logical matrix units and sampled entanglement fidelity |
+| [`SU3_NATIVE_EIGENPAIR_ENCODING_AUDIT.md`](SU3_NATIVE_EIGENPAIR_ENCODING_AUDIT.md) | Native-Hamiltonian-compatible SU(3) eigenpair alternatives: 153 candidate pairs, 32 normalized local errors, exact-criteria diagnostics and CPTP noise trade-offs |
+| [`su3_native_eigen_encoding.py`](su3_native_eigen_encoding.py), [`su3_native_eigen_encoding_results.json`](su3_native_eigen_encoding_results.json), [`su3_native_eigen_encoding_output.txt`](su3_native_eigen_encoding_output.txt) | Reproducible complete 153-pair score/Pareto dataset, virtual-phase/no-frame evolution, directed Wilson and electric-jump channels, and 5-syndrome flux regression |
+| [`SU3_CUBIC_CASIMIR_REFOCUSING_AUDIT.md`](SU3_CUBIC_CASIMIR_REFOCUSING_AUDIT.md) | Exact SU(3) cubic-electric Z3 clock cancellation of native magnetic terms; finite symmetric pulses, overrotation, real-time costs and directed-jump limits |
+| [`su3_cubic_casimir_echo.py`](su3_cubic_casimir_echo.py), [`su3_cubic_casimir_echo_results.json`](su3_cubic_casimir_echo_results.json), [`su3_cubic_casimir_echo_output.txt`](su3_cubic_casimir_echo_output.txt) | Reproduce 243D 5-plaquette electric-clock echo, finite-width gauge-invariant pulse and CPTP error comparisons |
+| [`SU3_CONTROL_SYNTHESIS_AND_COST_AUDIT.md`](SU3_CONTROL_SYNTHESIS_AND_COST_AUDIT.md) | SU3 refocusing control compilation: local cubic-electric versus conditional programmable magnetic phases, quadratic-only obstruction, exact selective twirl, finite-pulse cost |
+| [`su3_native_control_compilation.py`](su3_native_control_compilation.py), [`su3_native_control_compilation_results.json`](su3_native_control_compilation_results.json) | 243D 5-face selective clock/complex-drive pulse sweeps and native Hamiltonian noise stress |
+| [`su3_control_mask_scan.py`](su3_control_mask_scan.py), [`su3_control_mask_scan_results.json`](su3_control_mask_scan_results.json) | Exhaustive all-32 face-control subset optimization with fixed nonlocal decoder and source-normalized dynamics |
+| [`SU3_TRANSMON_QUTRIT_GATE_COMPILATION_AUDIT.md`](SU3_TRANSMON_QUTRIT_GATE_COMPILATION_AUDIT.md) | Native transmon-qutrit candidate: exact 99 neighbor-conditioned Wilson transitions, conditional two-level Givens and 8-cycle gate-depth/leakage-cost sensitivity |
+| [`su3_qutrit_gate_compiler.py`](su3_qutrit_gate_compiler.py), [`su3_qutrit_gate_compiler_results.json`](su3_qutrit_gate_compiler_results.json), [`su3_qutrit_gate_compiler_output.txt`](su3_qutrit_gate_compiler_output.txt) | Five-qutrit Strang compiler validated against full 243D source Hamiltonian and explicit toy CPTP failure mixture |
+| [`SU3_INTERIOR_TRANSMON_GATE_COMPILATION.md`](SU3_INTERIOR_TRANSMON_GATE_COMPILATION.md) | Constructive full interior SU3 three-qutrit magnetic gate synthesis from nearest-neighbor two-qutrit CP22; 4th-level leakage/crosstalk toy and hardware-cost limits |
+| [`su3_selective_cp_compiler.py`](su3_selective_cp_compiler.py), [`su3_selective_cp_compiler_results.json`](su3_selective_cp_compiler_results.json), [`su3_selective_cp_compiler_output.txt`](su3_selective_cp_compiler_output.txt) | 9-context / 27D exact CP22 circuit reconstruction, 360 entanglers and 1728 local operations, 64D leakage stress |
+| [`SU3_MULTIPLEXED_COMMUTATOR_COMPILER_AUDIT.md`](SU3_MULTIPLEXED_COMMUTATOR_COMPILER_AUDIT.md) | Optimized exact SU(3) nine-context interior magnetic interaction: 360→40 CP22 gates; optional 32-gate approximate compiler with measured norm error; matched 4-level stress |
+| [`su3_multiplexed_commutator_compiler.py`](su3_multiplexed_commutator_compiler.py), [`su3_multiplexed_commutator_results.json`](su3_multiplexed_commutator_results.json), [`su3_multiplexed_commutator_output.txt`](su3_multiplexed_commutator_output.txt) | Executable neighbor-multiplexor and SU3 commutator synthesis, full 27D unitary matrix tests, 64D leaky CP22 model and gate-cost Pareto scan |
 
 ## Reproduce
 
@@ -179,6 +199,17 @@ OPENBLAS_NUM_THREADS=1 python3 su3_two_plaquette_spin_network.py # two adjacent 
 OPENBLAS_NUM_THREADS=1 python3 su3_two_plaquette_extended.py # exact 19-state SU3 flux-fusion audit (SymPy, NumPy, SciPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_complete_minimal_links.py # full 9-state minimal-link SU3 Gauss sector (SymPy, NumPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_published_square_chain_benchmark.py # exact source-to-code match to PRD 114 074502 Table VI (SymPy, NumPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_three_plaquette_chain.py # exact 27-state source-benchmarked SU3 chain (SymPy, NumPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_three_plaquette_error_algebra.py # F97 exact commutant certificate (SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_four_five_plaquette.py # four/five-face spectra and restricted local-error KL (SymPy, NumPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_channel_recovery.py # explicit 5-syndrome CPTP decoder + 243D Wilson-noise stress (NumPy, SciPy, SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_native_eigen_encoding.py --output-json su3_native_eigen_encoding_results.json # 153 low-lying eigenstate pair scan and explicit no-inversion channels (NumPy, SciPy, SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_cubic_casimir_echo.py # SU3 cubic Casimir Z3 Hamiltonian refocusing and finite-duration control (NumPy, SciPy, SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_native_control_compilation.py # selective SU3 control synthesis and finite timing/error costs (SymPy, NumPy, SciPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_control_mask_scan.py # exhaustive 32-mask refocusing/decoder audit (SymPy, NumPy, SciPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_qutrit_gate_compiler.py # conditional magnetic plaquette Givens compilation and gate-count stress (NumPy, SciPy, SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_selective_cp_compiler.py --output su3_selective_cp_compiler_results.json # full interior SU3 CP22 compilation and 4-level model (NumPy, SciPy, SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_multiplexed_commutator_compiler.py --output su3_multiplexed_commutator_results.json # exact 40 CP22 and approximate 32/24/8 gate options (NumPy, SciPy, SymPy)
 ```
 
 Existing checks:

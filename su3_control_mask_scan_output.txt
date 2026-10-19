@@ -1,0 +1,33 @@
+MASK {"F_raw": 0.2546927035131753, "F_recovered": 0.6327493502360204, "cost_links": 0, "subset": []}
+MASK {"F_raw": 0.32632609167100496, "F_recovered": 0.6756950220366305, "cost_links": 1, "subset": [0]}
+MASK {"F_raw": 0.2945493200747316, "F_recovered": 0.651643271579399, "cost_links": 1, "subset": [1]}
+MASK {"F_raw": 0.31954571969970436, "F_recovered": 0.6681840169371877, "cost_links": 1, "subset": [2]}
+MASK {"F_raw": 0.2831831975302516, "F_recovered": 0.6515327900807697, "cost_links": 1, "subset": [3]}
+MASK {"F_raw": 0.3834190853154641, "F_recovered": 0.8795137883786003, "cost_links": 1, "subset": [4]}
+MASK {"F_raw": 0.42000402168632844, "F_recovered": 0.701257581170418, "cost_links": 2, "subset": [0, 1]}
+MASK {"F_raw": 0.41324087959259775, "F_recovered": 0.6894481752691468, "cost_links": 2, "subset": [0, 2]}
+MASK {"F_raw": 0.36249478565089766, "F_recovered": 0.6918449590212921, "cost_links": 2, "subset": [0, 3]}
+MASK {"F_raw": 0.4911774031568216, "F_recovered": 0.9489613842114999, "cost_links": 2, "subset": [0, 4]}
+MASK {"F_raw": 0.4132653988958526, "F_recovered": 0.6894488009023816, "cost_links": 2, "subset": [1, 2]}
+MASK {"F_raw": 0.3287775897116877, "F_recovered": 0.6651656446970979, "cost_links": 2, "subset": [1, 3]}
+MASK {"F_raw": 0.443538795954634, "F_recovered": 0.908842269968541, "cost_links": 2, "subset": [1, 4]}
+MASK {"F_raw": 0.36249834336420067, "F_recovered": 0.6918441626175539, "cost_links": 2, "subset": [2, 3]}
+MASK {"F_raw": 0.4827540463057042, "F_recovered": 0.9385881626147109, "cost_links": 2, "subset": [2, 4]}
+MASK {"F_raw": 0.4236135067271978, "F_recovered": 0.9106603993879159, "cost_links": 2, "subset": [3, 4]}
+MASK {"F_raw": 0.589276783333315, "F_recovered": 0.7063555121219623, "cost_links": 3, "subset": [0, 1, 2]}
+MASK {"F_raw": 0.4688108016559756, "F_recovered": 0.7058295387368094, "cost_links": 3, "subset": [0, 1, 3]}
+MASK {"F_raw": 0.6324512439390029, "F_recovered": 0.9874114825284599, "cost_links": 3, "subset": [0, 1, 4]}
+MASK {"F_raw": 0.4687877529901415, "F_recovered": 0.7058288280779607, "cost_links": 3, "subset": [0, 2, 3]}
+MASK {"F_raw": 0.6243041209142272, "F_recovered": 0.9712050636103436, "cost_links": 3, "subset": [0, 2, 4]}
+MASK {"F_raw": 0.5422556543555368, "F_recovered": 0.9769874263774303, "cost_links": 3, "subset": [0, 3, 4]}
+MASK {"F_raw": 0.4688140441680499, "F_recovered": 0.7058283895592317, "cost_links": 3, "subset": [1, 2, 3]}
+MASK {"F_raw": 0.624340842238321, "F_recovered": 0.9712058628799436, "cost_links": 3, "subset": [1, 2, 4]}
+MASK {"F_raw": 0.49181824984631384, "F_recovered": 0.933090938663653, "cost_links": 3, "subset": [1, 3, 4]}
+MASK {"F_raw": 0.5422608401603405, "F_recovered": 0.9769875352345796, "cost_links": 3, "subset": [2, 3, 4]}
+MASK {"F_raw": 0.6684838187143717, "F_recovered": 0.7058288996169262, "cost_links": 4, "subset": [0, 1, 2, 3]}
+MASK {"F_raw": 0.8902501012996124, "F_recovered": 0.9939971007198154, "cost_links": 4, "subset": [0, 1, 2, 4]}
+MASK {"F_raw": 0.7012938691447193, "F_recovered": 0.9999965231955263, "cost_links": 4, "subset": [0, 1, 3, 4]}
+MASK {"F_raw": 0.7012590413679594, "F_recovered": 0.999997182468116, "cost_links": 4, "subset": [0, 2, 3, 4]}
+MASK {"F_raw": 0.7012983703773814, "F_recovered": 0.9999964604323368, "cost_links": 4, "subset": [1, 2, 3, 4]}
+MASK {"F_raw": 0.9999841483455459, "F_recovered": 0.9999973033959231, "cost_links": 5, "subset": [0, 1, 2, 3, 4]}
+ALL 32 MASKS AUDITED: best four-site mask [0, 2, 3, 4] F_e 0.999997182468116

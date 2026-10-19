@@ -1,0 +1,272 @@
+{
+  "CPTP_code_conditioned_F_e": 1,
+  "KL_error_operators": 21,
+  "coherent_B3_sign_kick_rows": [
+    {
+      "F_raw": 0.9911734736336375,
+      "F_recovered": 0.9999944731839606,
+      "outside": 7.369088128039714e-06,
+      "plaquette": 3,
+      "t": 0.0,
+      "theta": 0.1
+    },
+    {
+      "F_raw": 0.9249308025383389,
+      "F_recovered": 0.9995705643255479,
+      "outside": 0.0005725808993393144,
+      "plaquette": 3,
+      "t": 0.0,
+      "theta": 0.3
+    },
+    {
+      "F_raw": 0.98909167061358,
+      "F_recovered": 0.9980511639092916,
+      "outside": 0.0023542224003311185,
+      "plaquette": 3,
+      "t": 0.6,
+      "theta": 0.1
+    },
+    {
+      "F_raw": 0.9082831856695543,
+      "F_recovered": 0.9837843041167704,
+      "outside": 0.019485055924290395,
+      "plaquette": 3,
+      "t": 0.6,
+      "theta": 0.3
+    }
+  ],
+  "directed_Wilson_jump_rows": [
+    {
+      "F_raw_after_ideal_inverse": 1.00000000000006,
+      "F_recovered": 1.0000000000000595,
+      "jump": "W3",
+      "p_per_event": 0.0,
+      "syndrome_outside_probability": 4.440892098500626e-16,
+      "t": 0.0
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9911308641975902,
+      "F_recovered": 0.9963925905258504,
+      "jump": "W3",
+      "p_per_event": 0.02,
+      "syndrome_outside_probability": 0.0033333333333336324,
+      "t": 0.0
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9560493827161066,
+      "F_recovered": 0.9820367739814642,
+      "jump": "W3",
+      "p_per_event": 0.1,
+      "syndrome_outside_probability": 0.01666666666666705,
+      "t": 0.0
+    },
+    {
+      "F_raw_after_ideal_inverse": 1.00000000000006,
+      "F_recovered": 1.0000000000000595,
+      "jump": "Wdag3",
+      "p_per_event": 0.0,
+      "syndrome_outside_probability": 4.440892098500626e-16,
+      "t": 0.0
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9911308641975904,
+      "F_recovered": 0.9963925905258504,
+      "jump": "Wdag3",
+      "p_per_event": 0.02,
+      "syndrome_outside_probability": 0.0033333333333336324,
+      "t": 0.0
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9560493827161068,
+      "F_recovered": 0.982036773981464,
+      "jump": "Wdag3",
+      "p_per_event": 0.1,
+      "syndrome_outside_probability": 0.01666666666666672,
+      "t": 0.0
+    },
+    {
+      "F_raw_after_ideal_inverse": 1.00000000000006,
+      "F_recovered": 1.0000000000000595,
+      "jump": "W4",
+      "p_per_event": 0.0,
+      "syndrome_outside_probability": 4.440892098500626e-16,
+      "t": 0.0
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9604000000000579,
+      "F_recovered": 0.9653500000000579,
+      "jump": "W4",
+      "p_per_event": 0.02,
+      "syndrome_outside_probability": 0.019800000000000706,
+      "t": 0.0
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.8100000000000486,
+      "F_recovered": 0.8337500000000486,
+      "jump": "W4",
+      "p_per_event": 0.1,
+      "syndrome_outside_probability": 0.09500000000000164,
+      "t": 0.0
+    },
+    {
+      "F_raw_after_ideal_inverse": 1.0000000000000586,
+      "F_recovered": 1.0000000000000586,
+      "jump": "W3",
+      "p_per_event": 0.0,
+      "syndrome_outside_probability": 2.220446049250313e-16,
+      "t": 0.15
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.991019889515644,
+      "F_recovered": 0.9963053360897848,
+      "jump": "W3",
+      "p_per_event": 0.02,
+      "syndrome_outside_probability": 0.003417334608264322,
+      "t": 0.15
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9555006833425369,
+      "F_recovered": 0.9816015407914633,
+      "jump": "W3",
+      "p_per_event": 0.1,
+      "syndrome_outside_probability": 0.01708935466769046,
+      "t": 0.15
+    },
+    {
+      "F_raw_after_ideal_inverse": 1.0000000000000586,
+      "F_recovered": 1.0000000000000586,
+      "jump": "Wdag3",
+      "p_per_event": 0.0,
+      "syndrome_outside_probability": 2.220446049250313e-16,
+      "t": 0.15
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9910198895156449,
+      "F_recovered": 0.9963053360897856,
+      "jump": "Wdag3",
+      "p_per_event": 0.02,
+      "syndrome_outside_probability": 0.0034173346082641,
+      "t": 0.15
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9555006833425373,
+      "F_recovered": 0.9816015407914636,
+      "jump": "Wdag3",
+      "p_per_event": 0.1,
+      "syndrome_outside_probability": 0.017089354667690126,
+      "t": 0.15
+    },
+    {
+      "F_raw_after_ideal_inverse": 1.0000000000000586,
+      "F_recovered": 1.0000000000000586,
+      "jump": "W4",
+      "p_per_event": 0.0,
+      "syndrome_outside_probability": 2.220446049250313e-16,
+      "t": 0.15
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9604895009257106,
+      "F_recovered": 0.9654243826251108,
+      "jump": "W4",
+      "p_per_event": 0.02,
+      "syndrome_outside_probability": 0.019737541832290484,
+      "t": 0.15
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.810412090731928,
+      "F_recovered": 0.834104309544502,
+      "jump": "W4",
+      "p_per_event": 0.1,
+      "syndrome_outside_probability": 0.09472150168205684,
+      "t": 0.15
+    },
+    {
+      "F_raw_after_ideal_inverse": 1.000000000000055,
+      "F_recovered": 1.0000000000000546,
+      "jump": "W3",
+      "p_per_event": 0.0,
+      "syndrome_outside_probability": 2.220446049250313e-16,
+      "t": 0.6
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.99031450241184,
+      "F_recovered": 0.9955596683150129,
+      "jump": "W3",
+      "p_per_event": 0.02,
+      "syndrome_outside_probability": 0.004175805352869433,
+      "t": 0.6
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9519992289242794,
+      "F_recovered": 0.9778611716570184,
+      "jump": "W3",
+      "p_per_event": 0.1,
+      "syndrome_outside_probability": 0.02087587870893437,
+      "t": 0.6
+    },
+    {
+      "F_raw_after_ideal_inverse": 1.000000000000055,
+      "F_recovered": 1.0000000000000546,
+      "jump": "Wdag3",
+      "p_per_event": 0.0,
+      "syndrome_outside_probability": 2.220446049250313e-16,
+      "t": 0.6
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.9903145024118407,
+      "F_recovered": 0.995559668315013,
+      "jump": "Wdag3",
+      "p_per_event": 0.02,
+      "syndrome_outside_probability": 0.004175805352868878,
+      "t": 0.6
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.951999228924277,
+      "F_recovered": 0.9778611716570158,
+      "jump": "Wdag3",
+      "p_per_event": 0.1,
+      "syndrome_outside_probability": 0.020875878708934592,
+      "t": 0.6
+    },
+    {
+      "F_raw_after_ideal_inverse": 1.000000000000055,
+      "F_recovered": 1.0000000000000546,
+      "jump": "W4",
+      "p_per_event": 0.0,
+      "syndrome_outside_probability": 2.220446049250313e-16,
+      "t": 0.6
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.963236127047247,
+      "F_recovered": 0.9672163574782164,
+      "jump": "W4",
+      "p_per_event": 0.02,
+      "syndrome_outside_probability": 0.01580332977617993,
+      "t": 0.6
+    },
+    {
+      "F_raw_after_ideal_inverse": 0.8232877520253596,
+      "F_recovered": 0.8426204674422941,
+      "jump": "W4",
+      "p_per_event": 0.1,
+      "syndrome_outside_probability": 0.07627104174180122,
+      "t": 0.6
+    }
+  ],
+  "model": "five-plaquette, 243D, zero-external-flux, g2=1, ideal Hamiltonian inverse for compensated rows",
+  "native_evolution_without_inverse": [
+    {
+      "F_raw": 1.0000000000000302,
+      "F_recovered": 1.0000000000000293,
+      "outside": 2.220446049250313e-16,
+      "t": 0.0
+    },
+    {
+      "F_raw": 0.25469270351316636,
+      "F_recovered": 0.6327493502360377,
+      "outside": 0.281965883411867,
+      "t": 0.6
+    }
+  ],
+  "syndrome_rank": 5
+}

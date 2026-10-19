@@ -1,0 +1,20 @@
+EXACT: C3(3)=+10/9, C3(bar3)=-10/9; all 1215 directed W_i transitions have Z3 clock charge 1
+EXACT: 3-phase average cancels every directed fundamental magnetic W_i and adjoint; quadratic electric cannot refocus logical X
+NUMERICAL twirled Hamiltonian: max residual 3.552713678800501e-15
+NATIVE no-control t=.6: F_raw 0.2546927035131753 F_fixed_recovery 0.6327493502360204
+SYMMETRIC {"F_fixed_recovery": 0.9805594622492756, "F_raw": 0.9017591617412195, "clock_calibration_error": 0.0, "code_leakage": 0.09802176313009814, "cycles": 1, "global_clock_pulses": 4, "t": 0.6}
+SYMMETRIC {"F_fixed_recovery": 0.9992157892885548, "F_raw": 0.9954995537117811, "clock_calibration_error": 0.0, "code_leakage": 0.004492932229392066, "cycles": 2, "global_clock_pulses": 8, "t": 0.6}
+SYMMETRIC {"F_fixed_recovery": 0.9999557584713245, "F_raw": 0.9997410595903433, "clock_calibration_error": 0.0, "code_leakage": 0.00025851874216420434, "cycles": 4, "global_clock_pulses": 16, "t": 0.6}
+SYMMETRIC {"F_fixed_recovery": 0.9999973033959227, "F_raw": 0.9999841483455459, "clock_calibration_error": 0.0, "code_leakage": 1.5825938906699477e-05, "cycles": 8, "global_clock_pulses": 32, "t": 0.6}
+SYMMETRIC {"F_fixed_recovery": 0.999999832510156, "F_raw": 0.9999990143942089, "clock_calibration_error": 0.0, "code_leakage": 9.840081729439731e-07, "cycles": 16, "global_clock_pulses": 64, "t": 0.6}
+SYMMETRIC {"F_fixed_recovery": 0.9999999895481699, "F_raw": 0.999999938479415, "clock_calibration_error": 0.0, "code_leakage": 6.142088260219225e-08, "cycles": 32, "global_clock_pulses": 128, "t": 0.6}
+NEGATIVE_CONTROL_BINARY {"F_fixed_recovery": 0.6809075632900277, "F_raw": 0.6808978481873291, "control": "quadratic_occupation_Z2", "cycles": 8}
+FINITE_DURATION_PULSE {"F_fixed_recovery": 0.99992458786326, "F_raw": 0.9998251820813118, "control_amplitude_per_top_link": 4188.790204786391, "cycles": 8, "elapsed_time": 0.616, "pulse_count": 32, "pulse_duration": 0.0005}
+FINITE_DURATION_PULSE {"F_fixed_recovery": 0.9988791398989944, "F_raw": 0.9980360526476875, "control_amplitude_per_top_link": 1047.1975511965977, "cycles": 8, "elapsed_time": 0.6639999999999999, "pulse_count": 32, "pulse_duration": 0.002}
+FINITE_DURATION_PULSE {"F_fixed_recovery": 0.9893801042339939, "F_raw": 0.9849945221943832, "control_amplitude_per_top_link": 209.43951023931956, "cycles": 8, "elapsed_time": 0.9199999999999999, "pulse_count": 32, "pulse_duration": 0.01}
+PULSE_CALIBRATION {"F_fixed_recovery": 0.9996796577000369, "F_raw": 0.9996365635370441, "clock_calibration_error": 0.01, "cycles": 8}
+PULSE_CALIBRATION {"F_fixed_recovery": 0.9921291450587845, "F_raw": 0.9904810595153071, "clock_calibration_error": 0.05, "cycles": 8}
+PULSE_CALIBRATION {"F_fixed_recovery": 0.9687811174615459, "F_raw": 0.9612108975319654, "clock_calibration_error": 0.1, "cycles": 8}
+UNCONDITIONED_DIRECTED_JUMP {"F_fixed_recovery": 0.9906116004066124, "F_raw": 0.9777452478070012, "cycles_per_half": 8, "jump_probability": 0.1, "jump_site": 3, "t": 0.6}
+UNCONDITIONED_DIRECTED_JUMP {"F_fixed_recovery": 0.9124998532581454, "F_raw": 0.8999991188281354, "cycles_per_half": 8, "jump_probability": 0.1, "jump_site": 4, "t": 0.6}
+ALL CUBIC-CASIMIR Z3 DECOUPLING TESTS PASS

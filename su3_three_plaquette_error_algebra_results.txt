@@ -1,0 +1,5 @@
+FINITELY VERIFIED exact commutant real D+B0+B1+B2 = 2 (mod 97 rank 727; explicit I,C)
+Hermitian error algebra = M_14(C) + M_13(C), dimension=365, no noiseless qubit
+FINITELY VERIFIED exact commutant complex D+W_i+W_i^dagger = 1 (mod 97 rank 728; explicit I)
+Full directed-loop error algebra = M_27(C), dimension=729
+ALL EXACT MODULAR CERTIFICATE TESTS PASS
