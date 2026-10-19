@@ -151,6 +151,9 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su3_native_eigen_encoding.py`](su3_native_eigen_encoding.py), [`su3_native_eigen_encoding_results.json`](su3_native_eigen_encoding_results.json), [`su3_native_eigen_encoding_output.txt`](su3_native_eigen_encoding_output.txt) | Reproducible complete 153-pair score/Pareto dataset, virtual-phase/no-frame evolution, directed Wilson and electric-jump channels, and 5-syndrome flux regression |
 | [`SU3_CUBIC_CASIMIR_REFOCUSING_AUDIT.md`](SU3_CUBIC_CASIMIR_REFOCUSING_AUDIT.md) | Exact SU(3) cubic-electric Z3 clock cancellation of native magnetic terms; finite symmetric pulses, overrotation, real-time costs and directed-jump limits |
 | [`su3_cubic_casimir_echo.py`](su3_cubic_casimir_echo.py), [`su3_cubic_casimir_echo_results.json`](su3_cubic_casimir_echo_results.json), [`su3_cubic_casimir_echo_output.txt`](su3_cubic_casimir_echo_output.txt) | Reproduce 243D 5-plaquette electric-clock echo, finite-width gauge-invariant pulse and CPTP error comparisons |
+| [`SU3_CONTROL_SYNTHESIS_AND_COST_AUDIT.md`](SU3_CONTROL_SYNTHESIS_AND_COST_AUDIT.md) | SU3 refocusing control compilation: local cubic-electric versus conditional programmable magnetic phases, quadratic-only obstruction, exact selective twirl, finite-pulse cost |
+| [`su3_native_control_compilation.py`](su3_native_control_compilation.py), [`su3_native_control_compilation_results.json`](su3_native_control_compilation_results.json) | 243D 5-face selective clock/complex-drive pulse sweeps and native Hamiltonian noise stress |
+| [`su3_control_mask_scan.py`](su3_control_mask_scan.py), [`su3_control_mask_scan_results.json`](su3_control_mask_scan_results.json) | Exhaustive all-32 face-control subset optimization with fixed nonlocal decoder and source-normalized dynamics |
 
 ## Reproduce
 
@@ -196,6 +199,8 @@ OPENBLAS_NUM_THREADS=1 python3 su3_four_five_plaquette.py # four/five-face spect
 OPENBLAS_NUM_THREADS=1 python3 su3_channel_recovery.py # explicit 5-syndrome CPTP decoder + 243D Wilson-noise stress (NumPy, SciPy, SymPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_native_eigen_encoding.py --output-json su3_native_eigen_encoding_results.json # 153 low-lying eigenstate pair scan and explicit no-inversion channels (NumPy, SciPy, SymPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_cubic_casimir_echo.py # SU3 cubic Casimir Z3 Hamiltonian refocusing and finite-duration control (NumPy, SciPy, SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_native_control_compilation.py # selective SU3 control synthesis and finite timing/error costs (SymPy, NumPy, SciPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_control_mask_scan.py # exhaustive 32-mask refocusing/decoder audit (SymPy, NumPy, SciPy)
 ```
 
 Existing checks:

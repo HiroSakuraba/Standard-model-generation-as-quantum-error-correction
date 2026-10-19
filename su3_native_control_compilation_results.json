@@ -1,0 +1,535 @@
+{
+  "dimension": 243,
+  "g2": 1.0,
+  "model": "minimal-link SU3 square chain Chen-Muller-Yao with constructed controls",
+  "rows": [
+    {
+      "raw": 0.2546927035131753,
+      "recovered": 0.6327493502360204,
+      "type": "native_no_control"
+    },
+    {
+      "cycles": 2,
+      "link_phase_actions": 8,
+      "pulse_count": 8,
+      "raw": 0.3831801527607189,
+      "recovered": 0.8791102391275859,
+      "subset": [
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 4,
+      "link_phase_actions": 16,
+      "pulse_count": 16,
+      "raw": 0.38340992656589734,
+      "recovered": 0.8794948238055398,
+      "subset": [
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 8,
+      "link_phase_actions": 32,
+      "pulse_count": 32,
+      "raw": 0.3834190853154641,
+      "recovered": 0.8795137883786003,
+      "subset": [
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 2,
+      "link_phase_actions": 16,
+      "pulse_count": 8,
+      "raw": 0.4232224788480935,
+      "recovered": 0.9101729594995388,
+      "subset": [
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 4,
+      "link_phase_actions": 32,
+      "pulse_count": 16,
+      "raw": 0.42358405162096885,
+      "recovered": 0.910631810255996,
+      "subset": [
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 8,
+      "link_phase_actions": 64,
+      "pulse_count": 32,
+      "raw": 0.4236135067271978,
+      "recovered": 0.9106603993879159,
+      "subset": [
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 2,
+      "link_phase_actions": 24,
+      "pulse_count": 8,
+      "raw": 0.5405037715837484,
+      "recovered": 0.9761078857622149,
+      "subset": [
+        2,
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 4,
+      "link_phase_actions": 48,
+      "pulse_count": 16,
+      "raw": 0.5420838671133803,
+      "recovered": 0.9769361308494013,
+      "subset": [
+        2,
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 8,
+      "link_phase_actions": 96,
+      "pulse_count": 32,
+      "raw": 0.5422608401603405,
+      "recovered": 0.9769875352345796,
+      "subset": [
+        2,
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 2,
+      "link_phase_actions": 32,
+      "pulse_count": 8,
+      "raw": 0.6983086099898749,
+      "recovered": 0.9989828345719048,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 4,
+      "link_phase_actions": 64,
+      "pulse_count": 16,
+      "raw": 0.7010520346725418,
+      "recovered": 0.9999420569014427,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 8,
+      "link_phase_actions": 128,
+      "pulse_count": 32,
+      "raw": 0.7012983703773814,
+      "recovered": 0.9999964604323368,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 2,
+      "link_phase_actions": 40,
+      "pulse_count": 8,
+      "raw": 0.9954995537117811,
+      "recovered": 0.9992157892885548,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 4,
+      "link_phase_actions": 80,
+      "pulse_count": 16,
+      "raw": 0.9997410595903435,
+      "recovered": 0.9999557584713247,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "cycles": 8,
+      "link_phase_actions": 160,
+      "pulse_count": 32,
+      "raw": 0.9999841483455459,
+      "recovered": 0.9999973033959231,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "subset_refocus"
+    },
+    {
+      "fractional_error": 0.01,
+      "raw": 0.7010880897820341,
+      "recovered": 0.9997122222700763,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "electric_clock_angle_error"
+    },
+    {
+      "fractional_error": 0.05,
+      "raw": 0.6955115749265833,
+      "recovered": 0.9926417531750211,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "electric_clock_angle_error"
+    },
+    {
+      "elapsed_time": 0.616,
+      "integrated_abs_control_link_radians": 268.082573106329,
+      "per_addressed_link_control_amplitude": 4188.790204786391,
+      "pulse_tau": 0.0005,
+      "raw": 0.7012702471993537,
+      "recovered": 0.9999327855016904,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "finite_electric_pulse"
+    },
+    {
+      "elapsed_time": 0.6639999999999999,
+      "integrated_abs_control_link_radians": 268.082573106329,
+      "per_addressed_link_control_amplitude": 1047.1975511965977,
+      "pulse_tau": 0.002,
+      "raw": 0.7066669234266398,
+      "recovered": 0.9990922414301093,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "finite_electric_pulse"
+    },
+    {
+      "elapsed_time": 0.9199999999999999,
+      "integrated_abs_control_link_radians": 268.082573106329,
+      "per_addressed_link_control_amplitude": 209.43951023931953,
+      "pulse_tau": 0.01,
+      "raw": 0.8491495879628623,
+      "recovered": 0.9907505932539047,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "finite_electric_pulse"
+    },
+    {
+      "fractional_error": 0.01,
+      "raw": 0.7011984801100022,
+      "recovered": 0.9998691584903625,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "magnetic_drive_phase_error"
+    },
+    {
+      "fractional_error": 0.05,
+      "raw": 0.698768067321799,
+      "recovered": 0.9972120099530951,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "magnetic_drive_phase_error"
+    },
+    {
+      "fraction_of_phase_on_unaddressed_links": 0.02,
+      "raw": 0.7022386534462742,
+      "recovered": 0.9998280347278157,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "drive_phase_crosstalk"
+    },
+    {
+      "fraction_of_phase_on_unaddressed_links": 0.05,
+      "raw": 0.7071228320998408,
+      "recovered": 0.9989551804398793,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "drive_phase_crosstalk"
+    },
+    {
+      "fractional_error": 0.01,
+      "raw": 0.9996365635370441,
+      "recovered": 0.9996796577000369,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "electric_clock_angle_error"
+    },
+    {
+      "fractional_error": 0.05,
+      "raw": 0.9904810595153071,
+      "recovered": 0.9921291450587845,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "electric_clock_angle_error"
+    },
+    {
+      "elapsed_time": 0.616,
+      "integrated_abs_control_link_radians": 335.1032163829112,
+      "per_addressed_link_control_amplitude": 4188.790204786391,
+      "pulse_tau": 0.0005,
+      "raw": 0.9998251820813118,
+      "recovered": 0.99992458786326,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "finite_electric_pulse"
+    },
+    {
+      "elapsed_time": 0.6639999999999999,
+      "integrated_abs_control_link_radians": 335.1032163829112,
+      "per_addressed_link_control_amplitude": 1047.1975511965977,
+      "pulse_tau": 0.002,
+      "raw": 0.9980360526476875,
+      "recovered": 0.9988791398989944,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "finite_electric_pulse"
+    },
+    {
+      "elapsed_time": 0.9199999999999999,
+      "integrated_abs_control_link_radians": 335.1032163829112,
+      "per_addressed_link_control_amplitude": 209.43951023931953,
+      "pulse_tau": 0.01,
+      "raw": 0.9849945221943832,
+      "recovered": 0.9893801042339939,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "finite_electric_pulse"
+    },
+    {
+      "fractional_error": 0.01,
+      "raw": 0.9997944951280636,
+      "recovered": 0.9998370245897673,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "magnetic_drive_phase_error"
+    },
+    {
+      "fractional_error": 0.05,
+      "raw": 0.9951836303375015,
+      "recovered": 0.9967355518016361,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "magnetic_drive_phase_error"
+    },
+    {
+      "fraction_of_phase_on_unaddressed_links": 0.02,
+      "raw": 0.9999841483455459,
+      "recovered": 0.9999973033959231,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "drive_phase_crosstalk"
+    },
+    {
+      "fraction_of_phase_on_unaddressed_links": 0.05,
+      "raw": 0.9999841483455459,
+      "recovered": 0.9999973033959231,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "drive_phase_crosstalk"
+    },
+    {
+      "elapsed_time": 0.6639999999999999,
+      "phase_ramp_tau": 0.002,
+      "ramp_slew_max_rad_per_dimensionless_time": 1047.1975511965977,
+      "raw": 0.7062961453061445,
+      "recovered": 0.9985798031452403,
+      "steps_per_ramp": 16,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "finite_drive_phase_ramp"
+    },
+    {
+      "elapsed_time": 0.9199999999999999,
+      "phase_ramp_tau": 0.01,
+      "ramp_slew_max_rad_per_dimensionless_time": 209.43951023931953,
+      "raw": 0.8382658762262739,
+      "recovered": 0.9786056501871481,
+      "steps_per_ramp": 16,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "finite_drive_phase_ramp"
+    },
+    {
+      "jump_strength_p": 0.1,
+      "raw": 0.6856918287259993,
+      "recovered": 0.9884248882023379,
+      "site": 3,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "single_directed_wilson_jump"
+    },
+    {
+      "jump_strength_p": 0.1,
+      "raw": 0.631168599506835,
+      "recovered": 0.9124968897644666,
+      "site": 4,
+      "subset": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "single_directed_wilson_jump"
+    },
+    {
+      "jump_strength_p": 0.1,
+      "raw": 0.9777307182611062,
+      "recovered": 0.990609142392803,
+      "site": 3,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "single_directed_wilson_jump"
+    },
+    {
+      "jump_strength_p": 0.1,
+      "raw": 0.8999858278590582,
+      "recovered": 0.9124976373001669,
+      "site": 4,
+      "subset": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "type": "single_directed_wilson_jump"
+    }
+  ],
+  "time": 0.6
+}
