@@ -6,7 +6,8 @@ from colour_s3_recovery_pulse_compiler import (
     DIM,POINTER,TOTAL,NINPUT,
     pointer_generators,controls_for_group,target_three_outcome,
     pulse_pattern,SpectralCompiler,compile_depth,
-    native_operation_expansion,finite_gradient_error,study,
+    native_operation_expansion,finite_gradient_error,
+    single_fault_logical_recovery_fidelity,study,
 )
 
 
@@ -133,6 +134,40 @@ class LocalFortyTwoDimensionalCompilerTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             native_operation_expansion(info,readout_ns=float("nan"))
 
+    def test_ideal_42D_target_perfectly_recovers_all_seven_faults(self):
+        for label in ("AS","BS"):
+            _,target,_,_,_=target_three_outcome(label)
+            r=single_fault_logical_recovery_fidelity(target,label,.37)
+            self.assertAlmostEqual(r[
+                "unconditional_seven_fault_mixture_logical_F_e"],1.,places=10)
+            self.assertEqual(len(r["individual_faults"]),7)
+            for fault in r["individual_faults"]:
+                self.assertAlmostEqual(fault[
+                    "unconditional_recovered_logical_entanglement_fidelity"],
+                    1.,places=10)
+                self.assertAlmostEqual(fault[
+                    "logical_code_capture_probability"],1.,places=10)
+                self.assertLess(fault[
+                    "pointer_2_flagged_probability"],1e-10)
+                self.assertLess(fault[
+                    "unflagged_outside_logical_code_probability"],1e-10)
+
+    def test_identity_pulse_is_not_falsely_treated_as_recovered_electric_fault(self):
+        for label in ("AS","BS"):
+            r=single_fault_logical_recovery_fidelity(
+                np.eye(42),label,.37)
+            self.assertAlmostEqual(r[
+                "unconditional_seven_fault_mixture_logical_F_e"],
+                .63+.37/9,places=10)
+            bad=next(x for x in r["individual_faults"] if
+                     x["error"]=="electric_phase")
+            self.assertAlmostEqual(bad[
+                "unconditional_recovered_logical_entanglement_fidelity"],
+                1/9,places=10)
+            with self.assertRaises(ValueError):
+                single_fault_logical_recovery_fidelity(
+                    np.eye(42),label,1.1)
+
     def test_warmstart_depth_never_silent_reset(self):
         first=compile_depth("AS",1,maxiter=5)
         second=compile_depth("AS",2,maxiter=5,
@@ -154,7 +189,7 @@ class LocalFortyTwoDimensionalCompilerTests(unittest.TestCase):
         self.assertTrue(sample["no_device_performance_claim"])
         self.assertFalse(report["benchmark"][0][
             "fidelity_diagnostics"]["no_postselection_used"] is False)
-        self.assertTrue(any("not the same" in item
+        self.assertTrue(any("NOT the same" in item
                             for item in report["limitations"]))
 
 if __name__=="__main__":
