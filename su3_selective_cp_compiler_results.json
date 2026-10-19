@@ -1,0 +1,299 @@
+{
+  "computational_states": 27,
+  "dt": 0.19,
+  "exact_27D_operator_error": 2.0242935160999058e-15,
+  "fixed_CP22_27D_error": 2.0242935160999058e-15,
+  "fixed_CP22_adjacent_level_swap_count": 112,
+  "fixed_CP22_four_level_rows": [
+    {
+      "conditional_no_leakage_entanglement_fidelity": 1.0000000000000016,
+      "counts": {
+        "fixed_CP22_entanglers": 40,
+        "single_qutrit_local_or_swap": 152
+      },
+      "leak_amplitude": 0,
+      "leakage_probability": 0.0,
+      "operator_error_logical_fro": 5.6789062412901975e-15,
+      "relative_CP_angle_error": 0,
+      "spectator_crosstalk_phase": 0,
+      "unconditional_entanglement_fidelity": 1.0000000000000016
+    },
+    {
+      "conditional_no_leakage_entanglement_fidelity": 0.999999923173447,
+      "counts": {
+        "fixed_CP22_entanglers": 40,
+        "single_qutrit_local_or_swap": 152
+      },
+      "leak_amplitude": 0.01,
+      "leakage_probability": 0.00010575106572030535,
+      "operator_error_logical_fro": 0.0016111594737321952,
+      "relative_CP_angle_error": 0,
+      "spectator_crosstalk_phase": 0,
+      "unconditional_entanglement_fidelity": 0.9998941721158512
+    },
+    {
+      "conditional_no_leakage_entanglement_fidelity": 0.9999937954873525,
+      "counts": {
+        "fixed_CP22_entanglers": 40,
+        "single_qutrit_local_or_swap": 152
+      },
+      "leak_amplitude": 0.03,
+      "leakage_probability": 0.000947688793362822,
+      "operator_error_logical_fro": 0.01447698387819828,
+      "relative_CP_angle_error": 0,
+      "spectator_crosstalk_phase": 0,
+      "unconditional_entanglement_fidelity": 0.9990461125739367
+    },
+    {
+      "conditional_no_leakage_entanglement_fidelity": 0.9999010240122048,
+      "counts": {
+        "fixed_CP22_entanglers": 40,
+        "single_qutrit_local_or_swap": 152
+      },
+      "leak_amplitude": 0.01,
+      "leakage_probability": 0.0001060654578490805,
+      "operator_error_logical_fro": 0.06887474289587847,
+      "relative_CP_angle_error": 0,
+      "spectator_crosstalk_phase": 0.002,
+      "unconditional_entanglement_fidelity": 0.9997949690522892
+    },
+    {
+      "conditional_no_leakage_entanglement_fidelity": 0.9998136280043225,
+      "counts": {
+        "fixed_CP22_entanglers": 40,
+        "single_qutrit_local_or_swap": 152
+      },
+      "leak_amplitude": 0.01,
+      "leakage_probability": 0.00010687879915427523,
+      "operator_error_logical_fro": 0.07094031486496732,
+      "relative_CP_angle_error": 0.01,
+      "spectator_crosstalk_phase": 0,
+      "unconditional_entanglement_fidelity": 0.9997067691243833
+    },
+    {
+      "conditional_no_leakage_entanglement_fidelity": 0.9984689340151341,
+      "counts": {
+        "fixed_CP22_entanglers": 40,
+        "single_qutrit_local_or_swap": 152
+      },
+      "leak_amplitude": 0.03,
+      "leakage_probability": 0.0009769343351144766,
+      "operator_error_logical_fro": 0.24260663130001917,
+      "relative_CP_angle_error": 0.02,
+      "spectator_crosstalk_phase": 0.006,
+      "unconditional_entanglement_fidelity": 0.9974934954309496
+    }
+  ],
+  "fixed_CP22_native_gate_counts": {
+    "CP22": 40,
+    "LOCAL_AT": 152
+  },
+  "four_level_states": 64,
+  "full_interior_plaquette": {
+    "context_gate_counts": {
+      "0,0": {
+        "adjacent_swaps": 232,
+        "cp22": 40,
+        "local": 272
+      },
+      "0,1": {
+        "adjacent_swaps": 192,
+        "cp22": 40,
+        "local": 232
+      },
+      "0,2": {
+        "adjacent_swaps": 152,
+        "cp22": 40,
+        "local": 192
+      },
+      "1,0": {
+        "adjacent_swaps": 192,
+        "cp22": 40,
+        "local": 232
+      },
+      "1,1": {
+        "adjacent_swaps": 152,
+        "cp22": 40,
+        "local": 192
+      },
+      "1,2": {
+        "adjacent_swaps": 112,
+        "cp22": 40,
+        "local": 152
+      },
+      "2,0": {
+        "adjacent_swaps": 152,
+        "cp22": 40,
+        "local": 192
+      },
+      "2,1": {
+        "adjacent_swaps": 112,
+        "cp22": 40,
+        "local": 152
+      },
+      "2,2": {
+        "adjacent_swaps": 72,
+        "cp22": 40,
+        "local": 112
+      }
+    },
+    "full_27D_operator_error": 9.763589660103495e-15,
+    "full_4_level_toy_error": {
+      "conditional_no_leakage_entanglement_fidelity": 0.9919974510989769,
+      "counts": {
+        "fixed_CP22_entanglers": 360,
+        "single_qutrit_local_or_swap": 1728
+      },
+      "leakage_probability": 0.0009794878544878705,
+      "operator_error_logical_fro": 0.6186143278818542,
+      "unconditional_entanglement_fidelity": 0.9910258016439425
+    },
+    "full_CP22_count": 360,
+    "full_single_qutrit_ops": 1728,
+    "full_swap_count": 1368,
+    "published_blocks": 9,
+    "total_contexts": 9
+  },
+  "illustrative_total_nominal_duration_ns": 27760.0,
+  "illustrative_unverified_gate_times_ns": {
+    "one_qutrit_SU2_mixer_ns": 30.0,
+    "selective_CP_ns": 580.0
+  },
+  "local_block_B": [
+    [
+      [
+        -0.0,
+        0.0
+      ],
+      [
+        -0.0962250448649376,
+        -0.1666666666666667
+      ],
+      [
+        -0.0962250448649376,
+        0.1666666666666667
+      ]
+    ],
+    [
+      [
+        -0.0962250448649376,
+        0.1666666666666667
+      ],
+      [
+        -0.0,
+        0.0
+      ],
+      [
+        -0.16666666666666657,
+        -0.28867513459481287
+      ]
+    ],
+    [
+      [
+        -0.0962250448649376,
+        -0.1666666666666667
+      ],
+      [
+        -0.16666666666666657,
+        0.28867513459481287
+      ],
+      [
+        -0.0,
+        0.0
+      ]
+    ]
+  ],
+  "magnetic_phase_rad": 2.0943951023931953,
+  "max_nonadjacent_single_qutrit_mixers": 0,
+  "native_assumed_selective_CP": 40,
+  "native_single_qutrit_mixers": 40,
+  "noise_model": "Each CP uses a 4-level pair Hamiltonian with resonant-style |2,1> <-> |3,0> coupling (dimensionless), separate spectator conditional phase, and fractional intended CP-phase bias. No stochastic relaxation, waveform, crosstalk calibration or qutrit coherence simulation.",
+  "number_su2_factors": 5,
+  "previous_published_transcription_crosschecked": true,
+  "source": "Chen, Mueller, Yao PRD 114 074502 Table VI; experimental qutrit CP references are not the assumed universal selective CP",
+  "target_context": [
+    1,
+    2
+  ],
+  "test_rows": [
+    {
+      "leak_amplitude": 0,
+      "leakage_probability": -1.5543122344752192e-15,
+      "native_counts": {
+        "selective_two_ququart_CP": 40,
+        "single_qutrit_U2_mixers": 40
+      },
+      "no_leakage_conditioned_entanglement_fidelity": 1.0,
+      "operator_error_logical_fro": 5.6789062412901975e-15,
+      "relative_CP_angle_error": 0,
+      "spectator_crosstalk_phase": 0,
+      "unconditional_entanglement_fidelity": 1.0000000000000016
+    },
+    {
+      "leak_amplitude": 0.01,
+      "leakage_probability": 0.00020457538010831833,
+      "native_counts": {
+        "selective_two_ququart_CP": 40,
+        "single_qutrit_U2_mixers": 40
+      },
+      "no_leakage_conditioned_entanglement_fidelity": 0.9999996580860342,
+      "operator_error_logical_fro": 0.0034710523416985077,
+      "relative_CP_angle_error": 0,
+      "spectator_crosstalk_phase": 0,
+      "unconditional_entanglement_fidelity": 0.999795082775873
+    },
+    {
+      "leak_amplitude": 0.03,
+      "leakage_probability": 0.0018318466653922671,
+      "native_counts": {
+        "selective_two_ququart_CP": 40,
+        "single_qutrit_U2_mixers": 40
+      },
+      "no_leakage_conditioned_entanglement_fidelity": 0.9999723888531001,
+      "operator_error_logical_fro": 0.031180392767201432,
+      "relative_CP_angle_error": 0,
+      "spectator_crosstalk_phase": 0,
+      "unconditional_entanglement_fidelity": 0.9981405927670952
+    },
+    {
+      "leak_amplitude": 0.01,
+      "leakage_probability": 0.00020416567297310007,
+      "native_counts": {
+        "selective_two_ququart_CP": 40,
+        "single_qutrit_U2_mixers": 40
+      },
+      "no_leakage_conditioned_entanglement_fidelity": 0.9997591589153298,
+      "operator_error_logical_fro": 0.09214378003356212,
+      "relative_CP_angle_error": 0,
+      "spectator_crosstalk_phase": 0.002,
+      "unconditional_entanglement_fidelity": 0.9995550424138389
+    },
+    {
+      "leak_amplitude": 0.01,
+      "leakage_probability": 0.00020479808687956513,
+      "native_counts": {
+        "selective_two_ququart_CP": 40,
+        "single_qutrit_U2_mixers": 40
+      },
+      "no_leakage_conditioned_entanglement_fidelity": 0.9998119876925823,
+      "operator_error_logical_fro": 0.07126609455152574,
+      "relative_CP_angle_error": 0.01,
+      "spectator_crosstalk_phase": 0,
+      "unconditional_entanglement_fidelity": 0.9996072281102636
+    },
+    {
+      "leak_amplitude": 0.03,
+      "leakage_probability": 0.0018257692866867625,
+      "native_counts": {
+        "selective_two_ququart_CP": 40,
+        "single_qutrit_U2_mixers": 40
+      },
+      "no_leakage_conditioned_entanglement_fidelity": 0.996783935699305,
+      "operator_error_logical_fro": 0.31968720652177357,
+      "relative_CP_angle_error": 0.02,
+      "spectator_crosstalk_phase": 0.006,
+      "unconditional_entanglement_fidelity": 0.9949640382040424
+    }
+  ],
+  "warning": "Assumed arbitrary-angle two-qutrit CP22 and uncounted internal arbitrary-SU2 waveform decomposition. CP22 duration 580ns is only an illustrative choice anchored to a different demonstrated CZ gate; not a physical gate-time lower bound or calibration."
+}
