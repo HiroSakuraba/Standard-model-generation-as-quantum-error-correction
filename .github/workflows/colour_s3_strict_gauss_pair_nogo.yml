@@ -1,0 +1,37 @@
+name: S3 strict gauge-preserving pair operation no-go
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_strict_gauss_pair_nogo.py
+      - test_colour_s3_strict_gauss_pair_nogo.py
+      - COLOUR_S3_STRICT_GAUSS_PAIR_NOGO_AUDIT.md
+      - .github/workflows/colour_s3_strict_gauss_pair_nogo.yml
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical tools
+        run: python -m pip install numpy scipy
+      - name: Verify conserved link irrep sectors and no-go witnesses
+        run: python -m unittest -v test_colour_s3_strict_gauss_pair_nogo
+      - name: Verify full pair-operator algebra closure and pointer experiment
+        run: python colour_s3_strict_gauss_pair_nogo.py
+      - name: Archive machine-readable evidence and scope
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-s3-strict-gauss-pair-no-go
+          path: colour_s3_strict_gauss_pair_nogo_results.json
+          if-no-files-found: ignore
