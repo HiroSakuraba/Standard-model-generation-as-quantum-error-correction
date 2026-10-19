@@ -894,7 +894,8 @@
           "W2",
           "W2"
         ]
-      },      {
+      },
+      {
         "KL_max_centered_Frobenius": 0.47994318270511477,
         "delta_energy": 3.8772283862185413,
         "pair": [
@@ -1793,7 +1794,8 @@
           "I",
           "W4"
         ]
-      },      {
+      },
+      {
         "KL_max_centered_Frobenius": 0.1393799081764593,
         "delta_energy": 0.5557423201804985,
         "pair": [
