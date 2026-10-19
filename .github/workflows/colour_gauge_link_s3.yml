@@ -1,0 +1,35 @@
+name: Finite gauge-link dressed exchange and local Gauss pointer
+on:
+  pull_request:
+    paths:
+      - colour_gauge_link_s3.py
+      - test_colour_gauge_link_s3.py
+      - COLOUR_GAUGE_LINK_S3_AUDIT.md
+      - .github/workflows/colour_gauge_link_s3.yml
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical dependency
+        run: python -m pip install numpy
+      - name: Check Gauss covariance, finite group, local pointer CPTP and dressed-swap syndrome
+        run: python -m unittest -v test_colour_gauge_link_s3
+      - name: Record the explicit finite-group gauge-link result
+        run: python colour_gauge_link_s3.py
+      - name: Publish machine-readable physics audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-s3-link-gauss-pointer-results
+          path: colour_gauge_link_s3_results.json
+          if-no-files-found: ignore
