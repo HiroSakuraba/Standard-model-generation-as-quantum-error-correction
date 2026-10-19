@@ -1,0 +1,37 @@
+name: Exact S3 rational electric commutant and restricted active-code check
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_exact_electric_commutant.py
+      - test_colour_s3_exact_electric_commutant.py
+      - COLOUR_S3_EXACT_ELECTRIC_COMMUTANT_AUDIT.md
+      - .github/workflows/colour_s3_exact_electric_commutant.yml
+  workflow_dispatch:
+
+jobs:
+  rational-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical and exact symbolic dependencies
+        run: python -m pip install numpy scipy sympy
+      - name: Verify exact 14-orbit integer/rational matrices and restricted KL construction
+        run: python -m unittest -v test_colour_s3_exact_electric_commutant
+      - name: Generate exact commutant rank and modular independent crosschecks
+        run: python colour_s3_exact_electric_commutant.py
+      - name: Upload exact algebra evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exact-s3-matter-electric-commutant
+          path: colour_s3_exact_electric_commutant_results.json
+          if-no-files-found: ignore
