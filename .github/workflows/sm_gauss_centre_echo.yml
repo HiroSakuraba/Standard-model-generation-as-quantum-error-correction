@@ -1,0 +1,27 @@
+name: SM finite Gauss-constrained centre echo
+on:
+  pull_request:
+    paths:
+      - sm_center_gauss_constrained.py
+      - test_sm_center_gauss_constrained.py
+      - SM_GAUSS_CENTRE_ECHO_AUDIT.md
+      - .github/workflows/sm_gauss_centre_echo.yml
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy scipy
+      - run: python -m unittest -v test_sm_center_gauss_constrained
+      - run: python sm_center_gauss_constrained.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sm-centre-gauss-quotient-negative-control
+          path: sm_center_gauss_constrained_results.json
