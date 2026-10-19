@@ -5,10 +5,11 @@ import numpy as np
 from colour_gauge_link_s3 import (
     DIM, G, physical_isometry, transform, dressed_exchange,
 )
-from colour_s3_edge_logical_syndrome import code_isometry
+from colour_s3_edge_logical_syndrome import code_isometry, onsite_swap
 from colour_s3_charged_bus_transport import initialize, gauss_acceptance
 from colour_s3_gauge_admissible_passive import (
     DLOG, P_SOURCE, canonical_swap_passive_code,
+    canonical_dihedral_trivial_code,
     alternate_dressed_exchange, active_ideal_second_swap_metric,
     passive_fault_metrics, colour_mode_weights,
     passive_exact_number_dephasing, comparison_row,
@@ -21,7 +22,8 @@ class SameGaugePassiveTests(unittest.TestCase):
     def setUpClass(cls):
         cls.W=physical_isometry()
         cls.K,_,_=code_isometry(cls.W)
-        cls.C=canonical_swap_passive_code(cls.W)
+        cls.C=canonical_dihedral_trivial_code(cls.W)
+        cls.Cweak=canonical_swap_passive_code(cls.W)
 
     def test_exact_plus_one_dressed_swap_sector_rank_ten(self):
         S=self.W.conj().T@dressed_exchange(self.W)
@@ -42,6 +44,10 @@ class SameGaugePassiveTests(unittest.TestCase):
             for acceptance in gauss_acceptance(z).values():
                 self.assertAlmostEqual(acceptance,1.,places=10)
 
+    def test_dihedral_exchange_trivial_sector_is_six_dimensional(self):
+        for op in (dressed_exchange,onsite_swap,alternate_dressed_exchange):
+            self.assertLess(np.linalg.norm(op(self.C)-self.C),1e-10)
+
     def test_same_channel_has_exact_passive_immunity(self):
         for p in (0.,.37,1.):
             result=passive_fault_metrics(self.C,p)
@@ -57,9 +63,15 @@ class SameGaugePassiveTests(unittest.TestCase):
                 self.assertLess(np.linalg.norm(residual),1e-10)
         r=passive_fault_metrics(self.C,.37)
         self.assertTrue(0<=r["alternate_dressed_exchange_S_A1_B0_channel_F_e"]<=1.)
-        self.assertLess(r["alternate_dressed_exchange_S_A1_B0_channel_F_e"],1.-1e-5)
+        self.assertAlmostEqual(
+            r["alternate_dressed_exchange_S_A1_B0_channel_F_e"],
+            1.,places=10)
+        weak=passive_fault_metrics(self.Cweak,.37)
+        self.assertLess(
+            weak["alternate_dressed_exchange_S_A1_B0_channel_F_e"],
+            1.-1e-5)
         active=active_ideal_second_swap_metric(self.K,.37)
-        self.assertTrue(0<=active<=1+1e-10)
+        self.assertAlmostEqual(active,1.,places=10)
 
     def test_exact_dephasing_initial_weights_include_reference_singlet(self):
         weights=colour_mode_weights(self.C)
@@ -115,6 +127,11 @@ class SameGaugePassiveTests(unittest.TestCase):
     def test_full_report_preserves_hardware_and_error_algebra_boundaries(self):
         data=run()
         self.assertEqual(data["known_dressed_swap_plus_sector_dimension"],10)
+        self.assertEqual(data["common_three_reflection_trivial_sector_dimension"],6)
+        self.assertLess(data["weak_swap_only_passive_negative_control"][
+            "alternate_dressed_exchange_S_A1_B0_channel_F_e"],1.)
+        self.assertAlmostEqual(data["exact_passive_known_error"][
+            "alternate_dressed_exchange_S_A1_B0_channel_F_e"],1.,places=10)
         self.assertEqual(data["logical_dimension_each"],4)
         self.assertTrue(data["same_original_matter_link_registers"])
         self.assertEqual(len(data["noiseless_loss_matched_rows"]),3)
