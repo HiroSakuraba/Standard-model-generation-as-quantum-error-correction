@@ -139,6 +139,8 @@ def bare_reference(duration_ns, hopping_mhz=HOPPING_OVER_H_MHZ,
         "matched_probability_X_fault_before_loss_F_e":float((1-source_p)*fe),
         "matched_probability_X_fault_unconditional_F_e":float((1-source_p)*fe*survival),
         "logical_channel_equivalence":"Probability and dimension only, NOT same microscopic gauge-dressed exchange",
+        "bare_subspace_in_local_S3_Gauss_sector":False,
+        "bare_external_hardware_reference_not_gauge_admissible":True,
         "comparison_assumptions":"Bare two-colour-qubit memory uses same time/T1 and mode-number dephasing rate, no control or readout errors"}
 
 
@@ -296,6 +298,7 @@ def run():
         "analytic_bare_noise_vs_encoded_stochastic_noise_at_U30":noisy,
         "limits":[
             "Direct bare ququart uses two occupied fermionic colour-qutrits with two colours per orbital; coded finite-S3 memory uses four active fermions plus ideal spectators/reference",
+            "Direct two-colour bare qubits are NOT gauge-invariant subspaces of the finite S3 group; they represent a separate external hardware memory, NOT a second admissible Gauss-constrained encoding",
             "Bare 37% logical X is probability/dimension-matched but not the same physical noise process as the encoded dressed exchange",
             "Bare clean-no-logical-error memory is the ideal direct storage reference, not a challenged error-correction experiment",
             "Both memories use exactly the same encoded total elapsed duration per grid cell, not the same gate count",
