@@ -70,8 +70,9 @@ class PersistentHubbardTests(unittest.TestCase):
         z=apply_microscopic_gate(x,'A0',(1,2),20.,10.,25.)
         for vertex in ('A','B'):
             for h in range(G):
-                self.assertLess(np.linalg.norm(gauge_transform(z,h,vertex)-
-                  apply_microscopic_gate(gauge_transform(x,h,vertex),'A0',(1,2),20.,10.,25.)),1e-10)
+                covariance_residual=np.linalg.norm(gauge_transform(z,h,vertex)-
+                  apply_microscopic_gate(gauge_transform(x,h,vertex),'A0',(1,2),20.,10.,25.))
+                self.assertLess(covariance_residual/np.linalg.norm(x),1e-12)
 
     def test_leakage_survives_transport_and_next_exchange(self):
         opt=optimize_pulse(20.)
