@@ -97,6 +97,12 @@ The simulator checks all **seven possible error Kraus operators** separately, re
 
 This is an **abstract/global recovery specification**, not a compiled finite-S3 or physical SU3 syndrome circuit. The earlier PRs #48–57 construct hardware-inspired syndrome implementations for *different code spaces*; one cannot transfer those gate counts or fidelity values to this new code without a fresh compilation.
 
+### Explicit two-step fault negative control
+
+The program also tests **electric phase R followed by each possible matter permutation g**, giving composite \(gR\), which is **outside** the original seven-alternative *single-fault* set. The same ideal recovery now fails on some such sequences. In the evaluated group representation, four nontrivial composites retain only about **0.4583** of their probability inside the intended code-plus-electric-syndrome projectors; the remaining **0.5417** is flagged rather than being renormalized away. Their unconditional recovered entanglement fidelity is approximately **0.1146**, not 1. Other subgroup elements happen to commute suitably and preserve recovery, but that does **not** imply correction of all repeated errors.
+
+This makes the boundary operational: **perfect one-fault correction does not imply fault tolerance under two sequential errors**. A microscopic error process that naturally produces correlated exchange-electric sequences would require a redesigned decoder or another code. Virtual high-energy processes and omitted field fluctuations could be relevant to the frequency and structure of those compound errors in hardware.
+
 ## 5. How virtual particles fit—and what remains absent
 
 The entire research program currently has two different dynamical resolutions:
