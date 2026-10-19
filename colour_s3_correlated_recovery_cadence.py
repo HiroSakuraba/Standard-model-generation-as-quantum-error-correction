@@ -18,10 +18,10 @@ or of a native implementation of the recovery.
 
 A coherent, explicitly GAUGE-PRESERVING 14D-plus-neutral-pointer
 unitary is given:
-  U_synd = (I-P_V) tensor I_2 + P_V tensor X,
-  U_feed = I_14 tensor |0><0| + F tensor |1><1|,
+  U_synd = P_C tensor I_3 + P_V tensor SWAP_01 + P_rest tensor SWAP_02,
+  U_feed = I_14 tensor |0><0| + F tensor |1><1| + I_14 tensor |2><2|,
   F = C V† + V C† + (I-P_C-P_V).
-This proves a finite-dimensional isometric syndrome instrument
+This proves a complete three-outcome finite-dimensional syndrome instrument
 and recovery, but these projectors operate on the GLOBAL gauge
 physical space and are NOT synthesized from affordable local gates.
 
@@ -103,43 +103,54 @@ def corrected_two_round(C,V,early,late):
 
 
 def global_gauge_preserving_instrument(C,V):
-    """Explicit 28x28 syndrome+feedback unitary (NOT a local gate circuit).
+    """Complete 42x42 three-outcome gauge-invariant pointer instrument.
 
-    Neutral pointer, initially |0>. U_synd flips it on V; U_feed
-    applies F on pointer=1. Both are mathematically unitary. Since C
-    and V sit in the simultaneous physical Gauss sector, their
-    projectors lifted as W P W† commute with independent local Gauss
-    actions. That does not make the gates few-body or fast.
+    Code C -> pointer 0, syndrome V -> pointer 1 with V->C feedback,
+    six-dimensional complement -> pointer 2 FLAG. Pointer is NEUTRAL.
+    Operators are globally supported, NOT compiled few-body gates.
     """
     I=np.eye(D)
     P=C@C.conj().T
     Q=V@V.conj().T
-    X=np.array([[0.,1.],[1.,0.]])
-    z=np.diag([1.,0.])
-    o=np.diag([0.,1.])
-    F=C@V.conj().T+V@C.conj().T+I-P-Q
-    Us=np.kron(I-Q,np.eye(2))+np.kron(Q,X)
-    Uf=np.kron(I,z)+np.kron(F,o)
+    T=I-P-Q
+    pointer=np.eye(3)
+    swap01=pointer[[1,0,2]]
+    swap02=pointer[[2,1,0]]
+    k0=np.diag([1.,0.,0.])
+    k1=np.diag([0.,1.,0.])
+    k2=np.diag([0.,0.,1.])
+    F=C@V.conj().T+V@C.conj().T+T
+    Us=np.kron(P,pointer)+np.kron(Q,swap01)+np.kron(T,swap02)
+    Uf=np.kron(I,k0)+np.kron(F,k1)+np.kron(I,k2)
     U=Uf@Us
     assert np.linalg.norm(F.conj().T@F-I)<5e-11
-    assert np.linalg.norm(U.conj().T@U-np.eye(28))<5e-11
-    input_code=np.kron(C,np.array([[1.],[0.]]))
-    input_error=np.kron(V,np.array([[1.],[0.]]))
-    expected_code=input_code
-    expected_error=np.kron(C,np.array([[0.],[1.]]))
-    residual_code=float(np.linalg.norm(U@input_code-expected_code))
-    residual_error=float(np.linalg.norm(U@input_error-expected_error))
-    assert max(residual_code,residual_error)<5e-11
+    assert np.linalg.norm(U.conj().T@U-np.eye(42))<5e-11
+    ket0=np.eye(3)[:,[0]]
+    ket1=np.eye(3)[:,[1]]
+    ket2=np.eye(3)[:,[2]]
+    input_code=np.kron(C,ket0)
+    input_error=np.kron(V,ket0)
+    eigs,W=np.linalg.eigh(T)
+    complement=W[:,eigs>.5]
+    assert complement.shape==(D,6)
+    input_flag=np.kron(complement,ket0)
+    residual_code=float(np.linalg.norm(U@input_code-input_code))
+    residual_error=float(np.linalg.norm(U@input_error-np.kron(C,ket1)))
+    residual_flag=float(np.linalg.norm(
+        U@input_flag-np.kron(complement,ket2)))
+    assert max(residual_code,residual_error,residual_flag)<5e-11
     return {
-        "pointer_levels":2,
+        "pointer_levels":3,
         "logical_code_rank":LOGICAL,
         "orthogonal_syndrome_rank":LOGICAL,
-        "joint_unitary_dimension":28,
+        "orthogonal_flagged_complement_rank":6,
+        "joint_unitary_dimension":42,
         "unitary_unverified_as_native_few_body":True,
         "full_logical_code_path_residual":residual_code,
         "full_error_syndrome_path_residual":residual_error,
-        "coherent_syndrome_operator":"(I-P_V) tensor I_2 + P_V tensor X",
-        "pointer_controlled_feedback_operator":"I_14 tensor |0><0| + F tensor |1><1|",
+        "flagged_complement_path_residual":residual_flag,
+        "coherent_syndrome_operator":"P_C tensor I_3 + P_V tensor SWAP_01 + P_rest tensor SWAP_02",
+        "pointer_controlled_feedback_operator":"I_14 tensor |0><0| + F tensor |1><1| + I_14 tensor |2><2|",
         "physical_register_count_before_pointer":"four matter qutrits plus one 6-level gauge link",
         "only_global_projector_implementation_shown":True,
     }
@@ -301,7 +312,7 @@ def lifetime_cadence_comparison(channel,passive,p_e,
         "two_rounds_with_ideal_recovery_between_fault_windows_F_e"]
     passive_cond=1-(5/9)*p_e
     critical=None
-    if channel["single_round_conditional_F_e"]<1:
+    if channel["single_round_conditional_F_e"]<1-1e-12:
         # Two rounds worth extra time iff eta > F_one.
         threshold=-FOUR_FERMIONS*round_duration_us/np.log(
             channel["single_round_conditional_F_e"])
@@ -360,7 +371,7 @@ def study():
             "The seven single-step Kraus errors are individually corrected, but four of six electric-before-exchange gR composites are not corrected by ONE round",
             "Exchange-before-electric Rg is perfectly recovered in one round because every exchange g fixes the logical code",
             "The two-round perfect result assumes a perfect GLOBAL ideal recovery between fault windows; it does not mean arbitrary repeated faults within one round are corrected",
-            "The 28D pointer and feedback unitaries are explicitly constructed and gauge-preserving when lifted to the full physical Gauss sector, but they rely on nonlocal 14D projectors and are NOT natively compiled",
+            "The 42D three-outcome pointer/feedback unitaries explicitly flag the 6D orthogonal complement and are gauge-preserving when lifted to the physical sector, but rely on nonlocal 14D projectors and are NOT natively compiled",
             "The passive 4/9 optimum is exact only inside the six-dimensional exchange-invariant subspace, not a global all-14D code optimization",
             "Loss model is uniform four active fermions, flagged erasure; no loss of spectator, pointer, link or reference and no T2, calibration or explicit microscopic post-jump branches",
             "Round duration 1us is illustrative only; physical control depth, synthesis errors and resource costs of the new global syndrome are unknown",
