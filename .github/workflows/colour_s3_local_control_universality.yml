@@ -1,0 +1,37 @@
+name: Finite-S3 local gauge control and charged-bus fractional exchange
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_local_control_universality.py
+      - test_colour_s3_local_control_universality.py
+      - COLOUR_S3_LOCAL_CONTROL_UNIVERSALITY_AUDIT.md
+      - .github/workflows/colour_s3_local_control_universality.yml
+  workflow_dispatch:
+
+jobs:
+  local-control-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numeric and exact arithmetic dependencies
+        run: python -m pip install numpy scipy sympy
+      - name: Prove modular u14 ranks and crosscheck charged two-body controls
+        run: python -m unittest -v test_colour_s3_local_control_universality
+      - name: Archive exact controllability and five-gate bus evidence
+        run: python colour_s3_local_control_universality.py
+      - name: Upload exact modular and full-486D audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: finite-s3-local-gauge-control
+          path: colour_s3_local_control_universality_results.json
+          if-no-files-found: ignore
