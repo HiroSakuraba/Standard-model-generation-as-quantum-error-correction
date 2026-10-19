@@ -1,0 +1,37 @@
+name: S3 continuous gauge-covariant multibody syndrome
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_covariant_multibody_control.py
+      - test_colour_s3_covariant_multibody_control.py
+      - COLOUR_S3_COVARIANT_MULTIBODY_AUDIT.md
+      - .github/workflows/colour_s3_covariant_multibody.yml
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical prerequisites
+        run: python -m pip install numpy scipy
+      - name: Verify continuous Gauss-covariant Hamiltonian and matched noise
+        run: python -m unittest -v test_colour_s3_covariant_multibody_control
+      - name: Execute complete multibody-vs-pair sensitivity model
+        run: python colour_s3_covariant_multibody_control.py
+      - name: Archive numerical report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-s3-covariant-multibody-syndrome
+          path: colour_s3_covariant_multibody_control_results.json
+          if-no-files-found: ignore
