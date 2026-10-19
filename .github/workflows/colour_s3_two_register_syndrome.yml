@@ -1,0 +1,37 @@
+name: S3 gauge-link logical syndrome pair-register compilation
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_two_register_syndrome.py
+      - test_colour_s3_two_register_syndrome.py
+      - COLOUR_S3_TWO_REGISTER_SYNDROME_AUDIT.md
+      - .github/workflows/colour_s3_two_register_syndrome.yml
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install prerequisites
+        run: python -m pip install numpy scipy
+      - name: Test two-register factorization, Gauss exposure, noise sampling
+        run: python -m unittest -v test_colour_s3_two_register_syndrome
+      - name: Generate complete pair-circuit result JSON
+        run: python colour_s3_two_register_syndrome.py
+      - name: Archive reproducible gate and gauge traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-s3-two-register-syndrome
+          path: colour_s3_two_register_syndrome_results.json
+          if-no-files-found: ignore
