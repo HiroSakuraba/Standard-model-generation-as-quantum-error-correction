@@ -7,7 +7,7 @@
 **Answer.**
 - The generation's binary shadow is the 16-point Reed–Muller code, and puncturing ν^c gives the 15-qubit code with a transversal T gate.
 - SO(10) is the smallest SO(2r) whose generation gives a non-Clifford transversal gate.
-- Built from fermions, the 15-mode code's logical qubit is fermion parity, so it is forbidden by superselection. Adding ν^c repairs it.
+- Built from fermions, the isolated 15-mode logical basis spans different parity sectors, making its coherent superposition unphysical without a reference. Adding ν^c permits a **distinct two-dimensional even-total-parity relational code** if one imposes only total parity; the **full unpunctured RM(1,4) stabilizer set has k=0** and fixes just one state.
 - The mod-16 anomaly itself does not appear in these codes. A mod-8 count does.
 
 ## The binary shadow
@@ -49,7 +49,7 @@ A superposition of logical states mixes fermion parities, and superselection for
 
   (|0_L⟩|0⟩_ν + |1_L⟩|1⟩_ν) / √2.
 
-Every branch has N ∈ {0, 8, 16}, so the state is fermion-even. It is invariant under i^N and under e^{iπN/4}, but not under e^{iπN/8}. The right-handed neutrino is the reference mode that makes the logical qubit physical. This is the fermionic version of the superselection-with-reference-frame point in the paper: ν^c is the frame.
+Every branch has N ∈ {0, 8, 16}, so the state is fermion-even. It is invariant under i^N and under e^{iπN/4}, but not under e^{iπN/8}. This unique state is a particular prepared reference-state configuration, **not** an encoded arbitrary qubit. If the all-16-mode X stabilizer is omitted while retaining the total-parity condition, the two states |0_L,0_ν> and |1_L,1_ν> span an even-parity **one-logical-qubit relational code**. See [the explicit parity-reference audit](FERMIONIC_PARITY_REFERENCE_AUDIT.md).
 
 ## A mod-8 count, not mod 16
 

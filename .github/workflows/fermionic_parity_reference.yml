@@ -1,0 +1,33 @@
+name: Fermionic parity reference and k=0 versus k=1 audit
+
+on:
+  pull_request:
+    paths:
+      - fermionic_parity_reference.py
+      - test_fermionic_parity_reference.py
+      - FERMIONIC_PARITY_REFERENCE_AUDIT.md
+      - FERMIONIC_GENERATION_CODE.md
+      - spinor_reed_muller.py
+      - .github/workflows/fermionic_parity_reference.yml
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy
+      - name: Check parity-even 16-mode two-dimensional logical encoding and zero-logical unpunctured state
+        run: python -m unittest -v test_fermionic_parity_reference
+      - name: Output explicit parity-frame and Reed-Muller rank certificate
+        run: python fermionic_parity_reference.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fermionic-parity-reference-certificate
+          path: fermionic_parity_reference_results.json
