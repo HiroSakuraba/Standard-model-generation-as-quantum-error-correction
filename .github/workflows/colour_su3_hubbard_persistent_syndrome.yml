@@ -1,0 +1,37 @@
+name: Persistent SU3 Hubbard Fock leakage through charged-mediator syndrome
+
+on:
+  pull_request:
+    paths:
+      - colour_su3_hubbard_persistent_syndrome.py
+      - test_colour_su3_hubbard_persistent_syndrome.py
+      - COLOUR_SU3_HUBBARD_PERSISTENT_SYNDROME.md
+      - .github/workflows/colour_su3_hubbard_persistent_syndrome.yml
+  workflow_dispatch:
+
+jobs:
+  persistent-fock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical requirements
+        run: python -m pip install numpy scipy
+      - name: Test complete persistent Fock syndrome and gauge covariance
+        run: python -m unittest -v test_colour_su3_hubbard_persistent_syndrome
+      - name: Produce independently reproducible whole-syndrome report
+        run: python colour_su3_hubbard_persistent_syndrome.py
+      - name: Archive whole-circuit occupation and fidelity analysis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-su3-persistent-hubbard-syndrome
+          path: colour_su3_hubbard_persistent_syndrome_results.json
+          if-no-files-found: ignore
