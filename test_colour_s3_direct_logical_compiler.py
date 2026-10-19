@@ -146,7 +146,7 @@ class DirectLogicalFidelityTests(unittest.TestCase):
         self.assertEqual([r["pulse_count"] for r in b["benchmark"]],[13,26])
         self.assertEqual(len(b["benchmark"][1]["attempts"]),4)
         self.assertTrue(b["equality_of_two_block_and_full_seven_error_channel"])
-        self.assertTrue(any("NOT the same" in t for t in b["claim_limits"]))
+        self.assertTrue(any("not the former" in t for t in b["claim_limits"]))
         self.assertTrue(all(x["logical_fidelity"][
             "actual_unconditional_logical_entanglement_F_e"]>=
             x["logical_fidelity"]["do_nothing_baseline_logical_F_e"]-1e-10
