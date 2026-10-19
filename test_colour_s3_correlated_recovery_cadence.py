@@ -67,8 +67,10 @@ class OrderedCorrelatedFaultTests(unittest.TestCase):
     def test_coherent_pointer_recovery_unitary_is_explicit_not_local(self):
         for label,C,V,G,E,sizes in self.cases:
             result=global_gauge_preserving_instrument(C,V)
-            self.assertEqual(result["joint_unitary_dimension"],28)
-            self.assertEqual(result["pointer_levels"],2)
+            self.assertEqual(result["joint_unitary_dimension"],42)
+            self.assertEqual(result["pointer_levels"],3)
+            self.assertEqual(result["orthogonal_flagged_complement_rank"],6)
+            self.assertLess(result["flagged_complement_path_residual"],1e-10)
             self.assertLess(result["full_logical_code_path_residual"],1e-10)
             self.assertLess(result["full_error_syndrome_path_residual"],1e-10)
             self.assertTrue(result["only_global_projector_implementation_shown"])
