@@ -158,6 +158,8 @@ The five open steps from earlier versions are now worked through in [`OPEN_STEPS
 | [`su3_qutrit_gate_compiler.py`](su3_qutrit_gate_compiler.py), [`su3_qutrit_gate_compiler_results.json`](su3_qutrit_gate_compiler_results.json), [`su3_qutrit_gate_compiler_output.txt`](su3_qutrit_gate_compiler_output.txt) | Five-qutrit Strang compiler validated against full 243D source Hamiltonian and explicit toy CPTP failure mixture |
 | [`SU3_INTERIOR_TRANSMON_GATE_COMPILATION.md`](SU3_INTERIOR_TRANSMON_GATE_COMPILATION.md) | Constructive full interior SU3 three-qutrit magnetic gate synthesis from nearest-neighbor two-qutrit CP22; 4th-level leakage/crosstalk toy and hardware-cost limits |
 | [`su3_selective_cp_compiler.py`](su3_selective_cp_compiler.py), [`su3_selective_cp_compiler_results.json`](su3_selective_cp_compiler_results.json), [`su3_selective_cp_compiler_output.txt`](su3_selective_cp_compiler_output.txt) | 9-context / 27D exact CP22 circuit reconstruction, 360 entanglers and 1728 local operations, 64D leakage stress |
+| [`SU3_MULTIPLEXED_COMMUTATOR_COMPILER_AUDIT.md`](SU3_MULTIPLEXED_COMMUTATOR_COMPILER_AUDIT.md) | Optimized exact SU(3) nine-context interior magnetic interaction: 360→40 CP22 gates; optional 32-gate approximate compiler with measured norm error; matched 4-level stress |
+| [`su3_multiplexed_commutator_compiler.py`](su3_multiplexed_commutator_compiler.py), [`su3_multiplexed_commutator_results.json`](su3_multiplexed_commutator_results.json), [`su3_multiplexed_commutator_output.txt`](su3_multiplexed_commutator_output.txt) | Executable neighbor-multiplexor and SU3 commutator synthesis, full 27D unitary matrix tests, 64D leaky CP22 model and gate-cost Pareto scan |
 
 ## Reproduce
 
@@ -207,6 +209,7 @@ OPENBLAS_NUM_THREADS=1 python3 su3_native_control_compilation.py # selective SU3
 OPENBLAS_NUM_THREADS=1 python3 su3_control_mask_scan.py # exhaustive 32-mask refocusing/decoder audit (SymPy, NumPy, SciPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_qutrit_gate_compiler.py # conditional magnetic plaquette Givens compilation and gate-count stress (NumPy, SciPy, SymPy)
 OPENBLAS_NUM_THREADS=1 python3 su3_selective_cp_compiler.py --output su3_selective_cp_compiler_results.json # full interior SU3 CP22 compilation and 4-level model (NumPy, SciPy, SymPy)
+OPENBLAS_NUM_THREADS=1 python3 su3_multiplexed_commutator_compiler.py --output su3_multiplexed_commutator_results.json # exact 40 CP22 and approximate 32/24/8 gate options (NumPy, SciPy, SymPy)
 ```
 
 Existing checks:
