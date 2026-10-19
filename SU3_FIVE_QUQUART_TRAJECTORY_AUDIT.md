@@ -61,9 +61,12 @@ The workflow now adds a separate **deliberately speculative optimistic arm**
 with 25 ns CP22, 1 ns local gates, 1 ms T1 and Tφ, and lower leakage
 coupling. These are stress-test assumptions, **not** plausible measured
 parameters supplied by the cited papers. Both arms run exact 40-CP22 and
-approximate 32-CP22 layouts, each with four sampled trajectories. Four
-samples are too few to establish tight performance bounds: treat means
-and standard errors as exploratory diagnostics, not experimental forecasts.
+approximate 32-CP22 layouts. The standard serial arm uses four sampled
+trajectories per compiler because it tests a strong-decay regime. The
+speculative high-coherence arm uses 24 trajectories per compiler. Even
+24 samples may be insufficient to rank circuits reliably; report sample
+standard error and never infer a precise physical threshold from these
+toy parameter scenarios.
 
 The pulse optimizer retains the *independently verified finer-time-step
 baseline* whenever the bounded random search does not improve fidelity.
