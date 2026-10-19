@@ -1,0 +1,95 @@
+# Gauge-admissible four-dimensional passive memory vs active Hubbard syndrome
+
+**19 October 2026.** Follow-up to merged PR #58, which compared our finite-S3 gauge-inspired code to a **different, ungauged two-fermion direct storage device**. The earlier comparison had unequal active fermion inventories and the bare colour-qubit subspace did not satisfy the finite-S3 Gauss constraint.
+
+## Experimental question and exact construction
+
+Can a gauge-admissible four-dimensional memory avoid the *same specific gauge-invariant dressed exchange* error that the active code corrects, while using **the same original two-vertex gauge system** and the same loss/dephasing assumptions?
+
+Yes. This is an exact, error-tailored **passive alternative**, not a universal solution to quantum error correction.
+
+Our original physical system is a 486D Hilbert space containing four colour qutrits (A0, A1, B0, B1) and one six-element oriented S3 link, with **14** linearly independent states satisfying both independent vertex Gauss constraints. Let W be the exact 486×14 physical isometry. Define the physical **link-dressed exchange** \(S=S_{A0,B0}\), which is unitary, involutory (\(S^2=I\)) and gauge invariant.
+
+On the 14D physical space, \(S\) has eigenvalues +1 with multiplicity **10** and −1 with multiplicity **4**. Choose a deterministic orthonormal four-dimensional subspace \(C\) inside the ten-dimensional \(S=+1\) eigenspace. Then
+
+\[
+G_A(h)C=C,\quad G_B(h)C=C,\quad SC=C\qquad (\text{all }h\in S_3).
+\]
+
+Consequently the exact *same* physical error channel used throughout PRs #47–58,
+
+\[
+\mathcal E(\rho)=(1-p)\rho+p\,S\rho S^\dagger,\qquad p=0.37,
+\]
+
+acts **as the identity** on every logical state of \(C\). This makes \(C\) a four-dimensional **decoherence-free subspace (DFS) for this single specified swap operator**, without a syndrome or feedback.
+
+### Important terminology correction
+
+A four-dimensional state space inside the local Gauss constraints is **necessarily an encoding in gauge-invariant physical degrees of freedom**. The experiment therefore compares two **encodings with the same local Gauss law**, one passive and the other requiring active syndrome extraction. This is *not* a literal unencoded fundamental colour-qubit memory. PR #58's external direct colour-qubit memory remains a separate, meaningful hardware reference, but it is not gauge admissible.
+
+This experiment also **does not** prove passive immunity to all physically possible gauge-compatible errors. In fact, the same code is tested under a second gauge-invariant dressed exchange \(S_{A1,B0}=A_{\rm onsite} S A_{\rm onsite}\). No claim of correctability is made before measuring that channel.
+
+## Common physical error, inventory and duration
+
+**Active:** The previous four-dimensional \(\omega\)-eigenphase code \(K\), measured using the charged-mediator pointer and corrected with PR #57's full **15 finite-U, 495D Hubbard pulses** (12 syndrome plus 3 microscopic feedback), **6** ideal S3 charge-link transports and a hypothetical **300 ns** pointer readout.
+
+**Passive:** Four-dimensional \(S=+1\) code \(C\), stored idle in the **same** original matter/link register and initialized with the **same charged mediator + stationary conjugate-charge singlet** (as in PR #53). No syndrome, pointer control or feedback is performed. The passive memory is held for **exactly the full active duration**, even though in a real usage scenario it could be read earlier.
+
+Both have the *same active four-fermion orbitals* A0, A1, B0, mobile mediator M (one fermion initially in each). The spectator colour B1, gauge link and stationary reference are included as ideal spectator degrees of freedom. Both get **the same** uniform active-particle loss rate, so their identical no-jump probability is
+
+\[
+\eta=e^{-4T/T_1}.
+\]
+
+At \(T_1=30\,\mu{\rm s}\) and other *hypothetical* PR #57 device parameters, passive unconditional entanglement fidelity under **only the known dressed-swap plus particle loss** is simply \(\eta\). Active fidelity is \(\eta F_{\rm active}\), where \(F_{\rm active}\) is **directly recalculated** from the complete persistent 495D microscopic Hubbard syndrome and feedback, not from a product of isolated-gate fidelities.
+
+As a mathematical consequence, for this *single specific swap channel*, with identical equal-duration 4-fermion loss, no finite \(T_1\) crossover makes active recovery outperform the passive eigen-code (unless new errors or other constraints are added). This is an **exact condition within the model**, not a universal statement about active QEC.
+
+## Same occupation-noise channel on both codes
+
+To go beyond purely unitary dressed exchange, compare the **same Lindblad operators and per-operator rate** on the same active four colour orbitals A0, A1, B0, M:
+
+- **Gauge-preserving orbital-charge bath:** \(L_j=\sqrt{2\gamma}\sum_{\alpha} n_{j\alpha}\) for each active orbital. While the passive memory is singly occupied and idle, each \(L_j\) is a scalar on the code; therefore it has **exactly no dephasing**. The active syndrome can still dephase when virtual doublon/hole occupations are populated during Hubbard pulses, even though this bath remains gauge invariant.
+- **Generally gauge-breaking colour-mode bath:** \(L_{j\alpha}=\sqrt{2\gamma}\,n_{j\alpha}\) for all twelve colour modes, using identical mode indexing and rate in both memories. The idle passive calculation can be done **analytically** because the occupation operators commute. Its 4D entanglement fidelity is
+\[
+F_e^{\rm passive}=\frac1{4^2}\sum_{x,y}t_x t_y\exp[-2\gamma T_{\rm dimless}\,d_H(x,y)],
+\]
+where \(x,y\in\{0,1,2\}^4\) are the **81** single-occupation strings of the four active orbitals; \(d_H\) is Hamming distance; and \(t_x\) is the *diagonal logical projector weight*, obtained by tracing over the six-state link, spectator B1, four logical columns and stationary reference. The mobile charged mediator's colour is **uniformly distributed over three outcomes due to its physical gauge singlet with the reference**; it is not omitted.
+
+The active comparator reuses the *existing* PR #57 exact 495D persistent Fock dynamics plus **stochastic Monte Carlo number-dephasing during every physical pulse**, link transport interval and pointer readout delay, with **six trajectories per bath at U/t=30**. A reported Monte Carlo standard error must accompany active estimates; passive diagonal dephasing is exact and does not require sampling.
+
+Both codes are subjected to the **same specified noise-operator family, duration, gamma and total active-fermion loss**. Their occupation *histories* differ because the active architecture performs nontrivial operations while passive storage idles. That is exactly the overhead under test. Spectator, pointer, link and reference loss remain omitted **in both**, and additional control/encoding preparation costs are uncalibrated.
+
+## Second dressed-swap negative control
+
+The original code \(C\) is deliberately chosen inside \(S_{A0,B0}=+1\). Construct a distinct gauge-covariant error
+
+\[
+S'=S_{A1,B0}=A_{\rm onsite} S_{A0,B0} A_{\rm onsite}.
+\]
+
+The code calculates the exact logical-fidelity response of passive \(C\) under \((1-p)I+p S'\) and the *ideal* active PR #48 phase pointer with known-\(S\) feedback when faced with \(S'\). This negative control tests how the highly favorable passive result depends on knowing the error operator in advance. It is a two-error **probe**, not a claim of general recovery or a microscopic noise process for both exchanges.
+
+Previous nine-quark algebra results show how unrestricted exchange words can destroy passive decoherence-free protection despite each known exchange individually having special subspaces. The four-qutrit finite-S3 model is a different Hilbert space; no automatic transfer of the nine-quark theorem is implied.
+
+## Physical limitations and interpretation
+
+- The shared injected dressed-swap *operator* is identical. It is still a **high-level physically allowed unitary error**, not a measured microscopic fault process generated by a specified device bath or Hamiltonian.
+- Selecting \(C\) from the \(S=+1\) eigenspace is an **error-tailored code design**, whose state preparation and logical readout may be difficult or expensive. Those costs are excluded; the comparison does **not** establish overall hardware superiority.
+- Active charged-link transports remain idealized finite-S3 primitives; SU3-invariant local Hubbard hopping is explicit only within the shared gauge vertex.
+- The code does not include loss of gauge links, spectator B1, charged reference or pointer, unequal fermion lifetimes, post-jump dynamics, readout assignment noise or repumping.
+- Nominal hopping \(t/h=10\)MHz, transport 100ns, readout 300ns, and active-particle \(T_1=30\mu\)s remain hypothetical, not measurements.
+- Neither the original nine-quark 21D code nor its **65-syndrome** physical decoder has been implemented.
+
+**Decision:** For one known gauge-invariant dressed swap, this simple passive four-dimensional physical memory is **already immune to the fault**, and active error correction imposes additional microscopic gate exposure. The meaningful next error-correction question therefore is a **broader physically grounded error algebra or environmental channel** where this passive eigenspace does not survive. Build that common microscopic channel and measure both real encoding and control overhead before making any claim of useful gauge-based QEC.
+
+## Reproduction
+
+\`\`\`bash
+python -m pip install numpy scipy
+OPENBLAS_NUM_THREADS=1 python -m unittest -v test_colour_s3_gauge_admissible_passive
+OPENBLAS_NUM_THREADS=1 python colour_s3_gauge_admissible_passive.py
+\`\`\`
+
+The dedicated GitHub Actions job archives numerical code-isometry checks, full Gauss acceptance including charged reference, exact known and alternate dressed-swap channels, three 495D Hubbard anchors, equal-inventory particle loss, and matched Lindblad occupation dephasing with explicit uncertainties.
