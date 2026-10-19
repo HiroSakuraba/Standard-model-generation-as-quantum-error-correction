@@ -205,7 +205,7 @@ def matched_channel(C,V,group,E,sizes,p_e=.37,p_g=.4,
         ])
     total=sum(w for _,_,w in events)
     assert abs(total-1)<5e-12
-    one=0.;capture=0.;single=0.
+    one=0.;capture=0.
     event_rows=[]
     for name,op,w in events:
         _,record=branch_kraus(C,V,op)
@@ -217,7 +217,6 @@ def matched_channel(C,V,group,E,sizes,p_e=.37,p_g=.4,
         })
     expected=1-(85/144)*p_e*p_g*electric_first_fraction
     assert abs(one-expected)<2e-11,(one,expected)
-    assert abs(single-0)<1e-12
     return {
         "p_electric":p_e,"p_exchange":p_g,
         "conditional_electric_before_exchange_fraction":electric_first_fraction,
@@ -229,7 +228,7 @@ def matched_channel(C,V,group,E,sizes,p_e=.37,p_g=.4,
         "two_rounds_with_ideal_recovery_between_fault_windows_F_e":1.,
         "analytic_single_round_F_e":"1-(85/144)*p_e*p_g*f",
         "enumerated_event_rows":event_rows,
-        "all_21_events_probability_sum":float(total),
+        "all_20_events_probability_sum":float(total),
     }
 
 
