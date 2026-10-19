@@ -58,6 +58,22 @@ and computes the full gradient using forward states and backward-adjoint states.
 
 **This is a meaningful coherent target-isometry score**, but it is not automatically the *unconditional quantum-memory entanglement fidelity* under a particular stochastic electric/exchange noise mixture. The tool separately evaluates code, electric and six-dimensional flagged input branches, their intended pointer-label probabilities, off-label probability, and target-overlap fidelity without postselection.
 
+### Separate operational logical-channel fidelity, not just target overlap
+
+To test whether the ACTUAL compiled pulse sequence corrects anything, apply to the same four-dimensional code C each of the **seven admitted physical error unitaries** from PR #63: all six individual exchange permutations \(g\) of one chosen subgroup, plus the electric phase \(R=I-2E\). Initialize the pointer to \(|0\rangle\), apply the real compiled 42D pulse product, and read the three pointer outcomes.
+
+For recognized pointer outcomes 0 and 1, project the *physical output* back onto the intended code C. Each output defines an unnormalized logical Kraus matrix \(K_j=C^\dagger \langle j| U_{\rm compiled}(F_i C\otimes|0\rangle)\). The **unconditional recovered logical entanglement fidelity** for fault \(F_i\) is
+
+\[
+F_e(F_i)=\sum_{j=0,1}\frac{|\operatorname{Tr} K_j|^2}{4^2}.
+\]
+
+Probability appearing in **pointer outcome 2** or in physical states **outside C even with pointer 0 or 1** is counted as loss of the logical state. No renormalization or postselection is allowed. The output archive reports each fault separately, all code-capture and flag probabilities, the worst individual-fault fidelity, and a synthetic **normalized seven-operator stochastic channel** with electric-phase probability \(p_e=0.37\) and uniform probability \((1-p_e)/6\) over the six subgroup permutations.
+
+This channel is a controlled mathematical test, NOT the device-correlated Bernoulli fault mixture from PR #64 and NOT a measured physical distribution. The ideal global target must obtain **F_e=1 for all seven faults**; the do-nothing identity circuit obtains exactly \(F_e=(1-p_e)+p_e/9\), or about **0.671111** at \(p_e=0.37\), because the electric fault has scalar overlap \(-I/3\). Both analytical reference values are asserted in dedicated tests.
+
+The new **operational channel F_e** is more relevant to correctness of the approximate recovery than coherent isometry overlap, but even it excludes pulse noise, virtual Hubbard leakage, charge/reference loss, pointer assignment error and any faults during recovery. It is not a physical quantum-memory demonstration.
+
 ## 3. Finite depth sweep: report failures rather than assuming success
 
 The default experiment fits both \(AS\) and \(BS\) recovery targets at **1, 2, 4, 8 and 16 cycles**, or respectively **13, 26, 52, 104 and 208** tunable rotations, with a bounded iteration budget. It tries identity, reproducible small random angles, and a warm start from the preceding depth when available. It always keeps the best verified result, including the unoptimized identity schedule as a reference.
@@ -95,7 +111,8 @@ The regression suite checks, for **both** selected gauge-exchange subgroups wher
 7. The 5-step bus expansion is explicitly counted and its dressed-edge phase angle is \(-2\theta\).
 8. Nonphysical pulse rates or time parameters are rejected.
 9. Reproducible seeded optimization and smaller-depth warm starts work.
-10. The result retains all physical limitations in the JSON audit rather than asserting a hardware-native recovery.
+10. Actual seven-error recovered logical entanglement fidelity is evaluated without postselection, with ideal-target F_e=1 and identity-circuit F_e=(1-p_e)+p_e/9 regression baselines.
+11. The result retains all physical limitations in the JSON audit rather than asserting a hardware-native recovery.
 
 The exact finite-\(S_3\) mathematical controllability certificate remains in PR #65; this PR addresses **numerical constructive efficiency**.
 
