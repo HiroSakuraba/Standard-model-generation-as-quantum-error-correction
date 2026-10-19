@@ -83,7 +83,8 @@ def main():
     Path(args.output).write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
     for row in rows:print('PULSE_OPT',json.dumps({
        'target_angle':row['target_angle_radians'],
-       'baseline_F':row['candidate_baseline']['coherent_target_F_e'],
+       'baseline_F_same_fine_steps':row['baseline_finer_step_evaluation']['coherent_target_F_e'],
+       'optimizer_improved_over_baseline':row['optimizer_improved_over_baseline'],
        'optimized_F':row['finer_step_evaluation']['coherent_target_F_e'],
        'duration_ns':row['finer_step_evaluation']['duration_ns'],
        'detuning_mhz':row['finer_step_evaluation']['delta_pulse_mhz'],
