@@ -292,7 +292,12 @@ def compile_direct(label,cycles,maxiter=100,seed=66,
         "logical_fidelity":outcome,
         "identity_policy_retained_even_if_optimizer_fails":True,
     }
-    report["native_primitive_cost"]=native_operation_expansion(report)
+    # Identity policy performs NO syndrome readout and pays no readout
+    # clock time. A real nonzero controlled sequence pays the assumed 300ns.
+    report["native_primitive_cost"]=native_operation_expansion(
+        report,readout_ns=(300. if np.any(np.abs(angles)>1e-9) else 0.))
+    report["readout_skipped_for_literal_identity_policy"]=bool(
+        not np.any(np.abs(angles)>1e-9))
     duration=report["native_primitive_cost"][
         "hypothetical_serial_duration_ns_including_readout"]
     report["optimistic_four_active_fermion_30us_T1_weighted_logical_F_e_not_physical"]=float(
