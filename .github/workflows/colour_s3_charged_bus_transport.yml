@@ -1,0 +1,37 @@
+name: S3 charged mediator link transport and logical syndrome
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_charged_bus_transport.py
+      - test_colour_s3_charged_bus_transport.py
+      - COLOUR_S3_CHARGED_BUS_TRANSPORT_AUDIT.md
+      - .github/workflows/colour_s3_charged_bus_transport.yml
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install scientific numerical packages
+        run: python -m pip install numpy scipy
+      - name: Verify charged transport, local Gauss covariance, pointer recovery
+        run: python -m unittest -v test_colour_s3_charged_bus_transport
+      - name: Record full intermediary Gauss trace and coherent calibration scan
+        run: python colour_s3_charged_bus_transport.py
+      - name: Archive reproducible research report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colour-s3-charged-bus-gauge-logical-syndrome
+          path: colour_s3_charged_bus_transport_results.json
+          if-no-files-found: ignore
