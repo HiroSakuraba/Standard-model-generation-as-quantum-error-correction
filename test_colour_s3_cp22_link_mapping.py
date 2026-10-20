@@ -105,9 +105,8 @@ class CP22FiniteS3MappingTests(unittest.TestCase):
         self.assertEqual(len(doc["exact_gate_mappings"]),3)
         self.assertEqual(doc["onsite_qutrit_SWAP_ideal_CP22_upper_bound"],12)
         self.assertGreater(len(doc["explicitly_NOT_compiled"]),2)
-        self.assertIn("not device calibrated"," ".join(doc["limitations"]).lower()
-                      if "not device calibrated" in " ".join(doc["limitations"]).lower()
-                      else "not device calibrated")
+        self.assertIn("not measured hardware gate counts",
+                      " ".join(doc["limitations"]).lower())
 
 
 if __name__=="__main__":
