@@ -1,0 +1,37 @@
+name: Finite-S3 selective CP22 link-encoding and Gauss audit
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_cp22_link_mapping.py
+      - test_colour_s3_cp22_link_mapping.py
+      - COLOUR_S3_CP22_LINK_ENCODING_AUDIT.md
+      - .github/workflows/colour_s3_cp22_link_mapping.yml
+  workflow_dispatch:
+
+jobs:
+  native-link-mapping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact group and numerical dependencies
+        run: python -m pip install numpy scipy sympy
+      - name: Check link projector, CP22 identities and intermediate Gauss leakage
+        run: python -m unittest -v test_colour_s3_cp22_link_mapping
+      - name: Export exact gate counts and Gauss constraint audit
+        run: python colour_s3_cp22_link_mapping.py
+      - name: Archive native-style gate mapping evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: finite-s3-selective-cp22-link-mapping
+          path: colour_s3_cp22_link_mapping_results.json
+          if-no-files-found: ignore
