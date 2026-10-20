@@ -1,0 +1,37 @@
+name: Finite-S3 four-level pointer and matched-time noise audit
+
+on:
+  pull_request:
+    paths:
+      - colour_s3_open_system_instrument.py
+      - test_colour_s3_open_system_instrument.py
+      - COLOUR_S3_OPEN_SYSTEM_INSTRUMENT_AUDIT.md
+      - .github/workflows/colour_s3_open_system_instrument.yml
+  workflow_dispatch:
+
+jobs:
+  open-system-instrument:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact and numerical dependencies
+        run: python -m pip install numpy scipy sympy
+      - name: Verify unconditional CPTP pointer channel and matched controls
+        run: python -m unittest -v test_colour_s3_open_system_instrument
+      - name: Reproduce two 104-control schedules and compare matched-time noise
+        run: python colour_s3_open_system_instrument.py
+      - name: Preserve scenarios, raw channel outcomes and resource ledger
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: finite-s3-four-level-pointer-noise
+          path: colour_s3_open_system_results.json
+          if-no-files-found: ignore
