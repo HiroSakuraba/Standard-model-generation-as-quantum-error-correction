@@ -71,3 +71,13 @@ The output is a machine-readable JSON with exact residuals at θ=π/7, π/2, π,
 4. **Noise and comparison:** use the same hardware native pulse times, amplitude damping/dephasing, leakage and gauge penalty for passive, digital and analog echo approaches.
 
 **Scientific status:** an exact native-style decomposition for specific finite-S3 Hamiltonians and an equally exact intermediate-symmetry warning. **Not** a complete SU(3) quantum error-correcting memory, physical device calibration, or a demonstration of advantage over passive storage.
+
+## Verified first GitHub Actions result
+
+The first [dedicated CI run](https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction/actions/runs/39354245264) passed **7/7 tests** and independently reproduced the encoded-link projector and ideal CP22 gate identities for multiple angles.
+
+For a model electric rotation `θ=0.7 rad`, after **only the first** selective Fourier-mode phase, the full 486-dimensional matter-plus-link model has **0.9244135602** probability inside the vertex-B Gauss-invariant sector, averaged over its 14 physical basis states. This is approximately **7.56% transient Gauss-sector leakage**, even though no physical energy-penalty or dissipative model has been applied. Vertex A remains invariant to floating-point precision.
+
+After the **second** selective mode phase, Gauss acceptance is **1.0 to numerical precision at both vertices**, and the standard-electric projector commutes exactly with both local group actions (computed residual 0). The single-mode projector has a right-vertex commutator Frobenius norm of **2.0** for a suitable local group action. These are algebraic facts about the toy register and pulse factorization, **not observed hardware leakage probabilities**.
+
+The result shows why native selective CP22 decompositions **cannot automatically be substituted** for continuously gauge-preserving abstract Hamiltonians. The finite-S3 encoded final gate can be correct even when intermediate states experience a substantial forbidden-sector excursion.
