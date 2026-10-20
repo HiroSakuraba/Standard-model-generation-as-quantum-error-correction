@@ -166,3 +166,37 @@ comparison**, and parameter rejection.
 should we invest in full physical-control synthesis. Otherwise prioritize
 a native gauge-register/charged-bus encoding and a same-device
 digital-versus-analog hardware model before more blind pulse-depth growth.
+
+## First completed numerical results (dedicated CI)
+
+The [initial workflow](https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction/actions/runs/39352785779)
+passed **10/10 new regression tests** and completed both 104-control
+pulse schedules under the assumed `T1=30 μs` active-particle loss
+and pointer decay, `Tphi=45 μs` pointer/electric dephasing,
+300 ns readout, 300 ns reset and 0.005 readout-label error.
+The reported values are the **unconditional logical entanglement
+fidelity including separately flagged four-particle erasure**, NOT
+postselected fidelity. They are reproducible within the specified
+phenomenological model.
+
+| Schedule | Noisy compiled recovery | Same-time passive storage | Difference |
+|---|---:|---:|---:|
+| AS, illustrative coherent pointer level-3 mixing | 0.304206 | 0.376978 | **−0.072772** |
+| BS, illustrative coherent pointer level-3 mixing | 0.311722 | 0.372601 | **−0.060878** |
+| AS, pointer level-3 mixing disabled | 0.304254 | 0.376978 | **−0.072724** |
+| BS, pointer level-3 mixing disabled | 0.311751 | 0.372601 | **−0.060849** |
+
+For these settings, coherent leakage into the extra pointer
+level is tiny (approximately **3.36×10⁻⁵ AS** and **1.53×10⁻⁵ BS**
+of the final physical pointer population). Its suppression changes
+`F_e` only by about **0.000048** and **0.000029** respectively.
+Those small numbers should **not** be generalized to genuine
+CP22 ququart leakage in another device: no hardware mapping exists.
+
+**Decision:** neither compiled schedule beats matched passive storage
+in this explicit noise proxy, even with pointer-level mixing disabled.
+The dominant observed issue is that the compiled recovery already
+fails to reproduce the ideal three-outcome instrument. This is a
+negative result for **these two fixed schedules and assumptions**;
+it is not evidence that symmetry-protected recovery is impossible
+with a different encoding, control alphabet or hardware.
