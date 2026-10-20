@@ -105,3 +105,20 @@ If higher-fidelity candidates emerge, next build a complete device-specific
 open-system instrument and count readout, feedback and reset in a
 duration-matched comparison against both passive memory and analog
 refocusing. **No memory advantage is claimed in this PR.**
+
+## First completed GitHub Actions benchmark (19 October 2026, Eastern)
+
+The first complete dedicated [CI run](https://github.com/HiroSakuraba/Standard-model-generation-as-quantum-error-correction/actions/runs/39351069597) passed **7/7 new tests** and archived all eight selected schedules/independent instrument certificates. The following are **actual bounded numerical outcomes**, not upper bounds or hardware fidelity estimates. Values rounded to three decimals.
+
+| Cyclic controls | AS minimum coherent branch | BS minimum coherent branch | AS projected seven-fault F_e* | BS projected seven-fault F_e* |
+|---:|---:|---:|---:|---:|
+| 13 | 0.002 | 0.002 | 0.630 | 0.639 |
+| 26 | 0.284 | 0.272 | 0.306 | 0.295 |
+| 52 | 0.458 | 0.473 | 0.479 | 0.478 |
+| 104 | **0.578** | **0.556** | **0.579** | **0.555** |
+
+`*F_e` here is an **optimistic diagnostic** that assumes an ideal final logical-code projection. No selected circuit passed the independent full-instrument 0.99 threshold. The zero-gate projected reference under this toy seven-fault channel is **0.671111**.
+
+At 104 controls the expanded abstract primitive counts were **136 (AS)** and **136 (BS)**; assumed serial durations including a nominal readout were ~**3.992 µs (AS)** and ~**4.002 µs (BS)**. These numbers do **not** include a fully calibrated pointer, charged mediator, feedback/reset circuit and must not be interpreted as physical gate counts on a specific device.
+
+**Interpretation:** the two-stage search makes a measurable difference to the *worst branch of full instrument transfer* as depth grows, but improving that metric has not produced higher recovered logical fidelity than doing nothing. This experiment rules out **these eight selected numerical schedules** as demonstrated full-instrument recoveries; it does not rule out better pulse orderings, devices, control libraries, or deeper schedules.
